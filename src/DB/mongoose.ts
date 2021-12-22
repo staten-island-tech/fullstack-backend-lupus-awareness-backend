@@ -1,9 +1,9 @@
-import mongoose, { Schema, model, connect } from 'mongoose'
-import {config} from 'dotenv'
+import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+dotenv.config()
 
-config({ path: '../../variables.env' })
-console.log(typeof process.env.DATABASE)
-// mongoose.connect(`${process.env.DATABASE}`)
-// mongoose.connection.on('error', (err) => {
-//     console.log(err.message)
-// })
+mongoose.connect(`${process.env.DB}`).then(() => { console.log('connected to mongo') })
+
+mongoose.connection.on('error', (err) => {
+    console.log(err.message)
+})
