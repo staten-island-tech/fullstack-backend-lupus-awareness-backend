@@ -9,7 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.homePage = exports.authPage = exports.authMiddleware = void 0;
+exports.getUsers = exports.createUser = exports.homePage = exports.authPage = exports.authMiddleware = void 0;
+const User_1 = require("../models/User");
+const User = User_1.userModel;
 const authMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.body.user) {
         next();
@@ -43,3 +45,24 @@ const homePage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.homePage = homePage;
+const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const user = new User(req.body);
+        yield user.save();
+        res.json(user);
+    }
+    catch (error) {
+        res.json(error);
+    }
+});
+exports.createUser = createUser;
+const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const Users = yield User.find();
+        res.json(Users);
+    }
+    catch (error) {
+        res.json(error);
+    }
+});
+exports.getUsers = getUsers;

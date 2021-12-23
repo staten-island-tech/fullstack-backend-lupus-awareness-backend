@@ -1,9 +1,13 @@
 "use strict";
-// import mongoose, { Schema, model, connect } from 'mongoose'
-// import {config} from 'dotenv'
-// config({ path: '../../variables.env' })
-// console.log(typeof process.env.DATABASE)
-// // mongoose.connect(`${process.env.DATABASE}`)
-// // mongoose.connection.on('error', (err) => {
-// //     console.log(err.message)
-// // })
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = __importDefault(require("mongoose"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+console.log(`${process.env.DB}`);
+mongoose_1.default.connect(`${process.env.DB}`).then(() => { console.log('connected to mongo'); });
+mongoose_1.default.connection.on('error', (err) => {
+    console.log(err.message);
+});
