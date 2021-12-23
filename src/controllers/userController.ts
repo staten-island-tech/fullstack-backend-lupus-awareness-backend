@@ -1,4 +1,6 @@
-import express, {Request, Response, NextFunction} from 'express'
+import { Request, Response, NextFunction } from 'express'
+import { userModel } from '../models/User'
+const User = userModel
 
 export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
     if (req.body.user) {
@@ -35,3 +37,22 @@ export const homePage = async (req: Request, res: Response) => {
         console.log(error)
     }
 };
+
+export const createUser = async (req: Request, res: Response) => {
+    try {
+        const user = new User(req.body)
+        await user.save()
+        res.json(user)
+    } catch (error) {
+        res.json(error)
+    }
+}
+
+export const getUsers = async (req: Request, res: Response) => {
+    try {
+        const Users = await User.find()
+        res.json(Users)
+    } catch (error) {
+        res.json(error)
+    }
+}
