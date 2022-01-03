@@ -10,3 +10,4 @@ const router = express_1.default.Router();
 exports.router = router;
 router.get('/', userController_1.getUsers);
 router.post('/add', userController_1.createUser);
+router.patch('./user/:id', userController_1.updateUsers);

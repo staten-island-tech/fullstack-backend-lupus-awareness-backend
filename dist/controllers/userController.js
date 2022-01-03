@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUsers = exports.createUser = exports.homePage = exports.authPage = exports.authMiddleware = void 0;
+exports.updateUsers = exports.getUsers = exports.createUser = exports.homePage = exports.authPage = exports.authMiddleware = void 0;
 const User_1 = require("../models/User");
 const User = User_1.userModel;
 const authMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -66,3 +66,19 @@ const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getUsers = getUsers;
+const updateUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        // interface IObjectKeys {
+        //     [key: string]: string | number;
+        //   }
+        const Users = yield User.findById(req.params.id);
+        const updates = Object.keys(req.body);
+        updates.forEach((e) = (Users[e] = req.body[e]));
+        console.log(updates);
+        res.json(updates);
+    }
+    catch (error) {
+        res.json(error);
+    }
+});
+exports.updateUsers = updateUsers;
