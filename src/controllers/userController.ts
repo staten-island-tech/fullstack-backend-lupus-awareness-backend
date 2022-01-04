@@ -60,13 +60,9 @@ export const getUsers = async (req: Request, res: Response) => {
 
 export const updateUsers = async (req: Request, res: Response) => {
     try {
-        const Users = await User.findById(req.params.id)
+        const user = await User.findById(req.params.id)
         const updates = Object.keys(req.body)
-<<<<<<< HEAD
-        updates.forEach((e) = ( Users[e] = req.body[e]))
-=======
-        updates.forEach((e: string) => ( Users[e] = req.body[e]))
->>>>>>> bf4f71bf551352ad92fb300f242609f00f97849c
+        // updates.forEach((e: string) => ( Users[e] = req.body[e]))
         console.log(updates)
         res.json(updates)
     } catch (error) {
