@@ -68,9 +68,6 @@ const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.getUsers = getUsers;
 const updateUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // interface IObjectKeys {
-        //     [key: string]: string | number;
-        //   }
         const Users = yield User.findById(req.params.id);
         const updates = Object.keys(req.body);
         updates.forEach((e) = (Users[e] = req.body[e]));
