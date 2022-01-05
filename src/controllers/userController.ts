@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import { stringify } from 'querystring'
+import { isShorthandPropertyAssignment } from 'typescript'
 import { userModel } from '../models/User'
 const User = userModel
 
@@ -62,11 +63,11 @@ export const getUsers = async (req: Request, res: Response) => {
 
 export const updateUsers = async (req: Request, res: Response) => {
     try {
-        const user = await User.findById(req.params.id)
+        const user: any = await User.findById(req.params.id)
         const updates: string[] = Object.keys(req.body)
-        // updates.forEach((e: string) => ( Users[e] = req.body[e]))
-        
-        console.log(updates)
+        updates.forEach((e: string) => ( user![e] = req.body[e]))
+        await user.save()
+        console.log(user)
         res.json(updates)
     } catch (error) {
         res.json(error)

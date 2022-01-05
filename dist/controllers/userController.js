@@ -70,8 +70,9 @@ const updateUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     try {
         const user = yield User.findById(req.params.id);
         const updates = Object.keys(req.body);
-        // updates.forEach((e: string) => ( Users[e] = req.body[e]))
-        console.log(updates);
+        updates.forEach((e) => (user[e] = req.body[e]));
+        yield user.save();
+        console.log(user);
         res.json(updates);
     }
     catch (error) {
