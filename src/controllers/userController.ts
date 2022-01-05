@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
+import { stringify } from 'querystring'
 import { userModel } from '../models/User'
 const User = userModel
 
@@ -43,6 +44,7 @@ export const createUser = async (req: Request, res: Response) => {
         const user = new User(req.body)
         await user.save()
         res.json(user)
+       
         
     } catch (error) {
         res.json(error)
@@ -61,8 +63,9 @@ export const getUsers = async (req: Request, res: Response) => {
 export const updateUsers = async (req: Request, res: Response) => {
     try {
         const user = await User.findById(req.params.id)
-        type updates = keyof 
+        const updates: string[] = Object.keys(req.body)
         // updates.forEach((e: string) => ( Users[e] = req.body[e]))
+        
         console.log(updates)
         res.json(updates)
     } catch (error) {
@@ -70,3 +73,15 @@ export const updateUsers = async (req: Request, res: Response) => {
     }
 }
 
+export const deleteUser = async (req: Request, res: Response) => {
+    try {
+   
+        const user = await User.findByIdAndDelete(req.params.id)
+        if(!user){
+            res.status(404).send()
+        }
+        // res.json(`${user.name} was deleted from DB`)
+    } catch (error) {
+        console.log(error)
+    }
+}
