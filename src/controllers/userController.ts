@@ -80,7 +80,7 @@ export const deleteUser = async (req: Request, res: Response) => {
         if(!user){
             res.status(404).send()
         }
-        // res.json(`${user.name} was deleted from DB`)
+        res.json(`${user!.name} was deleted from DB`)
     } catch (error) {
         console.log(error)
     }
