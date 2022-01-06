@@ -9,42 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.updateUsers = exports.getUsers = exports.createUser = exports.homePage = exports.authPage = exports.authMiddleware = void 0;
+exports.deleteUser = exports.updateUsers = exports.getUsers = exports.createUser = void 0;
 const User_1 = require("../models/User");
 const User = User_1.userModel;
-const authMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    if (req.body.user) {
-        next();
-    }
-    else {
-        res.json('sign in please');
-    }
-});
-exports.authMiddleware = authMiddleware;
-const authPage = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        res.json(`hello, ${req.body.user}`);
-    }
-    catch (error) {
-        console.log(error);
-    }
-});
-exports.authPage = authPage;
-const homePage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const newUser = {
-        id: 1234,
-        name: 'bob',
-        admin: false,
-        gender: 'unspecified'
-    };
-    try {
-        res.json(newUser);
-    }
-    catch (error) {
-        console.log(error);
-    }
-});
-exports.homePage = homePage;
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = new User(req.body);
@@ -72,7 +39,6 @@ const updateUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const updates = Object.keys(req.body);
         updates.forEach((e) => (user[e] = req.body[e]));
         yield user.save();
-        console.log(user);
         res.json(updates);
     }
     catch (error) {
