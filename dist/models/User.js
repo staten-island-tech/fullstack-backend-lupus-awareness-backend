@@ -9,6 +9,7 @@ const slugify_1 = __importDefault(require("slugify"));
 const userSchema = new mongoose_1.Schema({
     name: { type: String, trim: true, required: true },
     email: { type: String, required: true },
+    subscribers: { type: [] },
     avatar: String,
     slug: String
 });
