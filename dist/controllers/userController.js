@@ -8,8 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.updateUsers = exports.getUsers = exports.createUser = void 0;
+exports.checkJwt = exports.testing = exports.deleteUser = exports.updateUsers = exports.getUsers = exports.createUser = void 0;
+const jwks_rsa_1 = __importDefault(require("jwks-rsa"));
+const express_jwt_1 = __importDefault(require("express-jwt"));
 const User_1 = require("../models/User");
 const User = User_1.userModel;
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -59,3 +64,35 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.deleteUser = deleteUser;
+const testing = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const timesheet = req.body;
+        res.status(200).send(timesheet);
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+exports.testing = testing;
+const checkJwt = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        (0, express_jwt_1.default)({
+            // Dynamically provide a signing key based on the kid in the header and the signing keys provided by the JWKS endpoint
+            secret: jwks_rsa_1.default.expressJwtSecret({
+                cache: true,
+                rateLimit: true,
+                jwksRequestsPerMinute: 5,
+                jwksUri: `https://lupusawareness.us.auth0.com/.well-known/jwks.json`
+            }),
+            // Validate the audience and the issuer
+            audience: '{YOUR_API_IDENTIFIER}',
+            issuer: 'https://lupusawareness.us.auth0.com/',
+            algorithms: ['RS256']
+        });
+        next();
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+exports.checkJwt = checkJwt;

@@ -24,10 +24,7 @@ app.use(express.urlencoded({
     extended: true
 }))
 
-// Create timesheets API endpoint
-app.post('/timesheets', function(req, res){
-    res.status(201).send({message: "This is the POST /timesheets endpoint"});
-  })
+
   
 app.use('/', router)
 app.listen(port, ()=> {
