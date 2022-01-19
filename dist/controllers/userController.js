@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkJwt = exports.testing = exports.deleteUser = exports.updateUsers = exports.getUsers = exports.createUser = void 0;
+exports.testing = exports.checkJwt = exports.deleteUser = exports.updateUsers = exports.getUsers = exports.createUser = void 0;
 const jwks_rsa_1 = __importDefault(require("jwks-rsa"));
 const express_jwt_1 = __importDefault(require("express-jwt"));
 const User_1 = require("../models/User");
@@ -64,16 +64,6 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.deleteUser = deleteUser;
-const testing = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const timesheet = req.body;
-        res.status(200).send(timesheet);
-    }
-    catch (error) {
-        console.log(error);
-    }
-});
-exports.testing = testing;
 const checkJwt = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         (0, express_jwt_1.default)({
@@ -85,7 +75,7 @@ const checkJwt = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
                 jwksUri: `https://lupusawareness.us.auth0.com/.well-known/jwks.json`
             }),
             // Validate the audience and the issuer
-            audience: '{YOUR_API_IDENTIFIER}',
+            audience: 'https://lupusawareness.us.auth0.com/api/v2/',
             issuer: 'https://lupusawareness.us.auth0.com/',
             algorithms: ['RS256']
         });
@@ -96,3 +86,13 @@ const checkJwt = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
     }
 });
 exports.checkJwt = checkJwt;
+const testing = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const timesheet = req.body;
+        res.status(200).send(timesheet);
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+exports.testing = testing;

@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import { stringify } from 'querystring'
 import jwksRsa from 'jwks-rsa'
 import jwt from 'express-jwt'
+import jwtAuthz from 'express-jwt-authz'
 import { isShorthandPropertyAssignment } from 'typescript'
 import { userModel } from '../models/User'
 const User = userModel
@@ -54,15 +55,6 @@ export const deleteUser = async (req: Request, res: Response) => {
     }
 }
 
-export const testing = async (req: Request, res: Response) => {
-    try {
-        const timesheet = req.body
-        res.status(200).send(timesheet);
-    } catch (error) {
-        console.log(error)
-    }
-}
-
 export const checkJwt = async (req: Request, res: Response, next: NextFunction) => {
     try {
         jwt({
@@ -75,12 +67,22 @@ export const checkJwt = async (req: Request, res: Response, next: NextFunction) 
             }),
           
             // Validate the audience and the issuer
-            audience: '{YOUR_API_IDENTIFIER}', //replace with your API's audience, available at Dashboard > APIs
+            audience: 'https://lupusawareness.us.auth0.com/api/v2/', //replace with your API's audience, available at Dashboard > APIs
             issuer: 'https://lupusawareness.us.auth0.com/',
             algorithms: [ 'RS256' ]
-          });
+          });          
        next()
     } catch (error) {
         console.log(error)
     }
 }
+
+export const testing = async (req: Request, res: Response) => {
+    try {
+        const timesheet = req.body
+        res.status(200).send(timesheet);
+    } catch (error) {
+        console.log(error)
+    }
+}
+
