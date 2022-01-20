@@ -57,6 +57,7 @@ export const deleteUser = async (req: Request, res: Response) => {
 
 export const checkJwt = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        res.status(200).send({message: "This is the POST before the final/timesheets endpoint"});
         jwt({
             // Dynamically provide a signing key based on the kid in the header and the signing keys provided by the JWKS endpoint
             secret: jwksRsa.expressJwtSecret({
@@ -80,7 +81,7 @@ export const checkJwt = async (req: Request, res: Response, next: NextFunction) 
 export const testing = async (req: Request, res: Response) => {
     try {
         const timesheet = req.body
-        res.status(200).send(timesheet);
+        res.status(200).send({message: "This is the POST /timesheets endpoint"});
     } catch (error) {
         console.log(error)
     }
