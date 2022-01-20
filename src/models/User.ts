@@ -5,7 +5,10 @@ import slugify from "slugify"
 interface User {
     name: string,
     email: string,
+    role: number,
     subscribers: [],
+    interestedEvents: []
+    events?: [],
     avatar?: string,
     slug?: string
 }
@@ -13,7 +16,10 @@ interface User {
 const userSchema = new Schema<User>({
     name: {type: String, trim: true, required: true},
     email: {type: String, required: true},
-    subscribers: {type:[]},
+    role: {type: Number, required: true},
+    subscribers: {type:[], required: true},
+    interestedEvents: {type:[], required: true},
+    events: {type:[]},
     avatar: String,
     slug: String
 })
