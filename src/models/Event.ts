@@ -1,36 +1,33 @@
 import mongoose, { Schema, model, connect } from 'mongoose'
 import slugify from "slugify"
-import {userModel} from './User'
+import {User} from './User'
 
-export interface UserComment {
-    user: typeof userModel,
+interface UserComment {
+    user: User,
     date: Date,
     content: string,
-    replies: [UserComment]
+    replies: UserComment[]
 }
 
 interface Event {
-    user: typeof userModel,
+    user: User,
     date: Date,
     hours?: number,
     location: string,
     description: string,
-    interestedUsers: [],
-    comments: {
-        commentDate: Date,
-        content: string,
-        replies: [UserComment]
-    },
+    interestedUsers: User[],
+    comments: UserComment[],
     slug?: string
 }
 
 const eventSchema = new Schema<Event>({
-    user: {type: userModel, required: true},
+    user: {type: User, required: true},
     date: {type: Date, required: true},
     hours: {type: Number},
     location: {type: String, required: true},
     description: {type: String, required: true},
-    interestedUsers: {type: [], required: true},
+    interestedUsers: {required: true},
+    comments: {type: User, required: true},
     slug: String
 })
 
