@@ -57,7 +57,7 @@ export const deleteUser = async (req: Request, res: Response) => {
 
 export const checkJwt = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        res.status(200).send({message: "This is the POST before the final/timesheets endpoint"});
+        // res.status(200).send({message: "This is the POST before the final/timesheets endpoint"});
         jwt({
             // Dynamically provide a signing key based on the kid in the header and the signing keys provided by the JWKS endpoint
             secret: jwksRsa.expressJwtSecret({

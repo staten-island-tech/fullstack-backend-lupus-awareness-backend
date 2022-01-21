@@ -66,7 +66,7 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.deleteUser = deleteUser;
 const checkJwt = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.status(200).send({ message: "This is the POST before the final/timesheets endpoint" });
+        // res.status(200).send({message: "This is the POST before the final/timesheets endpoint"});
         (0, express_jwt_1.default)({
             // Dynamically provide a signing key based on the kid in the header and the signing keys provided by the JWKS endpoint
             secret: jwks_rsa_1.default.expressJwtSecret({
