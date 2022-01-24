@@ -68,15 +68,13 @@ const checkJwt = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
     try {
         // res.status(200).send({message: "This is the POST before the final/timesheets endpoint"});
         (0, express_jwt_1.default)({
-            // Dynamically provide a signing key based on the kid in the header and the signing keys provided by the JWKS endpoint
             secret: jwks_rsa_1.default.expressJwtSecret({
                 cache: true,
                 rateLimit: true,
                 jwksRequestsPerMinute: 5,
-                jwksUri: `https://lupusawareness.us.auth0.com/.well-known/jwks.json`
+                jwksUri: 'https://lupusawareness.us.auth0.com/.well-known/jwks.json'
             }),
-            // Validate the audience and the issuer
-            audience: 'https://lupusawareness.us.auth0.com/api/v2/',
+            audience: 'https://test-api-endpoint',
             issuer: 'https://lupusawareness.us.auth0.com/',
             algorithms: ['RS256']
         });

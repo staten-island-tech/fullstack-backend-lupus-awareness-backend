@@ -58,20 +58,17 @@ export const deleteUser = async (req: Request, res: Response) => {
 export const checkJwt = async (req: Request, res: Response, next: NextFunction) => {
     try {
         // res.status(200).send({message: "This is the POST before the final/timesheets endpoint"});
-        jwt({
-            // Dynamically provide a signing key based on the kid in the header and the signing keys provided by the JWKS endpoint
+         jwt({
             secret: jwksRsa.expressJwtSecret({
-              cache: true,
-              rateLimit: true,
-              jwksRequestsPerMinute: 5,
-              jwksUri: `https://lupusawareness.us.auth0.com/.well-known/jwks.json`
-            }),
-          
-            // Validate the audience and the issuer
-            audience: 'https://lupusawareness.us.auth0.com/api/v2/', //replace with your API's audience, available at Dashboard > APIs
-            issuer: 'https://lupusawareness.us.auth0.com/',
-            algorithms: [ 'RS256' ]
-          });          
+                cache: true,
+                rateLimit: true,
+                jwksRequestsPerMinute: 5,
+                jwksUri: 'https://lupusawareness.us.auth0.com/.well-known/jwks.json'
+          }),
+          audience: 'https://test-api-endpoint',
+          issuer: 'https://lupusawareness.us.auth0.com/',
+          algorithms: ['RS256']
+      });  
        next()
     } catch (error) {
         console.log(error)
