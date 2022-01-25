@@ -8,24 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteUser = exports.updateUsers = exports.getUsers = exports.createUser = void 0;
 const User_1 = require("../models/User");
 const User = User_1.userModel;
-const bcrypt_1 = __importDefault(require("bcrypt"));
-const salt = 10;
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const newUser = new User(req.body);
-        bcrypt_1.default.genSalt(salt, function (err, salt) {
-            bcrypt_1.default.hash(newUser.password, salt, function (err, hash) {
-                newUser.password = hash;
-                console.log(hash);
-            });
-        });
         yield newUser.save();
         res.json(newUser);
     }

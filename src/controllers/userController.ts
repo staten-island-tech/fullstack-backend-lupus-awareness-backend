@@ -1,20 +1,10 @@
 import { Request, Response, NextFunction } from 'express'
 import { userModel } from '../models/User'
 const User = userModel
-import bcrypt from 'bcrypt'
-const salt = 10
-
 
 export const createUser = async (req: Request, res: Response) => {
     try {
         const newUser = new User(req.body)
-        bcrypt.genSalt(salt, function(err, salt) {
-            bcrypt.hash(newUser.password, salt, function(err, hash) {
-               newUser.password = hash;
-        console.log(hash)
-
-            });
-        });
         await newUser.save()
          res.json(newUser)
     } catch (error) {
