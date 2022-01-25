@@ -19,9 +19,9 @@ const User_1 = require("../models/User");
 const User = User_1.userModel;
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = new User(req.body);
-        yield user.save();
-        res.json(user);
+        const newUser = new User(req.body);
+        yield newUser.save();
+        res.json(newUser);
     }
     catch (error) {
         res.json(error);

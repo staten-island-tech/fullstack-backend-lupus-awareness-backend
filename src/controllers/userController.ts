@@ -11,11 +11,9 @@ const User = userModel
 
 export const createUser = async (req: Request, res: Response) => {
     try {
-        const user = new User(req.body)
-        await user.save()
-        res.json(user)
-       
-        
+        const newUser = new User(req.body)
+        await newUser.save()
+         res.json(newUser)
     } catch (error) {
         res.json(error)
     }

@@ -1,9 +1,15 @@
 import mongoose, { Schema, model, connect } from 'mongoose'
 import slugify from "slugify"
 
-interface User {
+
+export interface User {
     name: string,
     email: string,
+    password: string,
+    role: string,
+    subscribers: [],
+    interestedEvents: []
+    events: [],
     avatar?: string,
     slug?: string
 }
@@ -11,6 +17,11 @@ interface User {
 const userSchema = new Schema<User>({
     name: {type: String, trim: true, required: true},
     email: {type: String, required: true},
+    password: {type: String, required: true},
+    role: {type: String, required: true},
+    subscribers: {type:[], required: true},
+    interestedEvents: {type:[], required: true},
+    events: {type:[], required: true},
     avatar: String,
     slug: String
 })
