@@ -15,10 +15,10 @@ const app = (0, express_1.default)();
 const config = {
     authRequired: false,
     auth0Logout: true,
-    secret: 'a long, randomly-generated string stored in env',
-    baseURL: 'http://localhost:3000',
-    clientID: 'W27qMzcn1MeFLgZFreqtfjYLppDKeUcK',
-    issuerBaseURL: 'https://lupusawareness.us.auth0.com'
+    secret: process.env.SECRET,
+    baseURL: process.env.BASEURL,
+    clientID: process.env.CLIENTID,
+    issuerBaseURL: process.env.ISSUERBASEURL,
 };
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use((0, express_openid_connect_1.auth)(config));

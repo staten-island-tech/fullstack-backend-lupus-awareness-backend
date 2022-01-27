@@ -1,6 +1,6 @@
 import mongoose, { Schema, model, connect } from 'mongoose'
 import slugify from "slugify"
-import {User} from './User'
+import {User, userModel} from './User'
 
 interface UserComment {
     user: User,
@@ -21,13 +21,13 @@ interface Event {
 }
 
 const eventSchema = new Schema<Event>({
-    user: {type: User, required: true},
+    user: {type: userModel, required: true},
     date: {type: Date, required: true},
     hours: {type: Number},
     location: {type: String, required: true},
     description: {type: String, required: true},
-    interestedUsers: {required: true},
-    comments: {type: User, required: true},
+    interestedUsers: {type: [], required: true},
+    comments: {type: [], required: true},
     slug: String
 })
 
