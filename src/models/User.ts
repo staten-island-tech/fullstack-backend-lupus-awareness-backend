@@ -22,7 +22,7 @@ const userSchema = new Schema<User>({
     subscribers: {type:[], required: true},
     interestedEvents: {type:[], required: true},
     events: {type:[], required: true},
-    avatar: String,
+    avatar: {type: String, default: null},
     slug: String
 })
 

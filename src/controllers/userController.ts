@@ -14,6 +14,8 @@ const User = userModel
 export const createUser = async (req: Request, res: Response) => {
     try {
         const newUser = new User(req.body)
+        console.log(req.body)
+        req.body.email = newUser.email
         await newUser.save()
          res.json(newUser)
     } catch (error) {
