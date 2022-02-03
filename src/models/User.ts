@@ -17,11 +17,11 @@ export interface User {
 const userSchema = new Schema<User>({
     name: {type: String, trim: true, required: true},
     email: {type: String, required: true},
-    password: {type: String, required: true},
-    role: {type: String, required: true},
-    subscribers: {type:[], required: true},
-    interestedEvents: {type:[], required: true},
-    events: {type:[], required: true},
+    password: {type: String, required: false},
+    role: {type: String, required: false, },
+    subscribers: {type:[], required: false},
+    interestedEvents: {type:[], required: false},
+    events: {type:[], required: false},
     avatar: String,
     slug: String
 })

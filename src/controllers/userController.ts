@@ -14,9 +14,9 @@ const User = userModel
 export const createUser = async (req: Request, res: Response) => {
     try {
         const authResponse = req.oidc.user 
-        const newUser = new User(authResponse)
+        const newUser = new User(req.body)
         await newUser.save()
-         res.json(authResponse)
+         res.json(newUser)
     } catch (error) {
         res.json(error)
     }
@@ -55,5 +55,16 @@ export const deleteUser = async (req: Request, res: Response) => {
         console.log(error)
     }
 }
+
+
+export const test = async (req: Request, res: Response) => {
+    try {
+        const authResponse = req.oidc.user
+        res.json(authResponse)
+    } catch (error) {
+        res.json(error)
+    }
+}
+
 
 
