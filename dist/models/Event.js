@@ -10,7 +10,7 @@ const eventSchema = new mongoose_1.Schema({
     location: { type: String, required: true },
     description: { type: String, required: true },
     interestedUsers: { required: true },
-    comments: { type: User, required: true },
+    comments: { type: [], required: true },
     slug: String
 });
 const eventModel = (0, mongoose_1.model)('Event', eventSchema);

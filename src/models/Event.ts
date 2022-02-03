@@ -27,7 +27,7 @@ const eventSchema = new Schema<Event>({
     location: {type: String, required: true},
     description: {type: String, required: true},
     interestedUsers: {required: true},
-    comments: {type: User, required: true},
+    comments: {type: [], required: true},
     slug: String
 })
 
