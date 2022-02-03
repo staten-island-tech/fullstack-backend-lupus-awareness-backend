@@ -26,8 +26,8 @@ const eventSchema = new Schema<Event>({
     hours: {type: Number},
     location: {type: String, required: true},
     description: {type: String, required: true},
-    interestedUsers: {type: [], required: true},
-    comments: {type: [], required: true},
+    interestedUsers: {required: true},
+    comments: {type: User, required: true},
     slug: String
 })
 

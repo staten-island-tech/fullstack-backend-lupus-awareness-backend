@@ -8,17 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.testing = exports.checkJwt = exports.deleteUser = exports.updateUsers = exports.getUsers = exports.createUser = void 0;
-const jwks_rsa_1 = __importDefault(require("jwks-rsa"));
-const express_jwt_1 = __importDefault(require("express-jwt"));
+exports.test = exports.deleteUser = exports.updateUsers = exports.getUsers = exports.createUser = void 0;
 const User_1 = require("../models/User");
 const User = User_1.userModel;
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const authResponse = req.oidc.user;
         const newUser = new User(req.body);
         console.log(req.body);
         req.body.email = newUser.email;
@@ -66,34 +62,13 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.deleteUser = deleteUser;
-const checkJwt = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const test = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // res.status(200).send({message: "This is the POST before the final/timesheets endpoint"});
-        (0, express_jwt_1.default)({
-            secret: jwks_rsa_1.default.expressJwtSecret({
-                cache: true,
-                rateLimit: true,
-                jwksRequestsPerMinute: 5,
-                jwksUri: 'https://lupusawareness.us.auth0.com/.well-known/jwks.json'
-            }),
-            audience: 'https://test-api-endpoint',
-            issuer: 'https://lupusawareness.us.auth0.com/',
-            algorithms: ['RS256']
-        });
-        next();
+        const authResponse = req.oidc.user;
+        res.json(authResponse);
     }
     catch (error) {
-        console.log(error);
+        res.json(error);
     }
 });
-exports.checkJwt = checkJwt;
-const testing = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const timesheet = req.body;
-        res.status(200).send({ message: "This is the POST /timesheets endpoint" });
-    }
-    catch (error) {
-        console.log(error);
-    }
-});
-exports.testing = testing;
+exports.test = test;

@@ -9,8 +9,8 @@ const eventSchema = new mongoose_1.Schema({
     hours: { type: Number },
     location: { type: String, required: true },
     description: { type: String, required: true },
-    interestedUsers: { type: [], required: true },
-    comments: { type: [], required: true },
+    interestedUsers: { required: true },
+    comments: { type: User, required: true },
     slug: String
 });
 const eventModel = (0, mongoose_1.model)('Event', eventSchema);

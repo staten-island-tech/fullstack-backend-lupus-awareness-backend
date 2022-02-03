@@ -13,6 +13,7 @@ const User = userModel
 
 export const createUser = async (req: Request, res: Response) => {
     try {
+        const authResponse = req.oidc.user 
         const newUser = new User(req.body)
         console.log(req.body)
         req.body.email = newUser.email
@@ -57,32 +58,15 @@ export const deleteUser = async (req: Request, res: Response) => {
     }
 }
 
-export const checkJwt = async (req: Request, res: Response, next: NextFunction) => {
+
+export const test = async (req: Request, res: Response) => {
     try {
-        // res.status(200).send({message: "This is the POST before the final/timesheets endpoint"});
-         jwt({
-            secret: jwksRsa.expressJwtSecret({
-                cache: true,
-                rateLimit: true,
-                jwksRequestsPerMinute: 5,
-                jwksUri: 'https://lupusawareness.us.auth0.com/.well-known/jwks.json'
-          }),
-          audience: 'https://test-api-endpoint',
-          issuer: 'https://lupusawareness.us.auth0.com/',
-          algorithms: ['RS256']
-      });  
-       next()
+        const authResponse = req.oidc.user
+        res.json(authResponse)
     } catch (error) {
-        console.log(error)
+        res.json(error)
     }
 }
 
-export const testing = async (req: Request, res: Response) => {
-    try {
-        const timesheet = req.body
-        res.status(200).send({message: "This is the POST /timesheets endpoint"});
-    } catch (error) {
-        console.log(error)
-    }
-}
+
 
