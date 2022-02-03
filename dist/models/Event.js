@@ -4,7 +4,7 @@ exports.eventModel = void 0;
 const mongoose_1 = require("mongoose");
 const User_1 = require("./User");
 const eventSchema = new mongoose_1.Schema({
-    user: { type: User_1.userModel, required: true },
+    user: { type: User_1.userSchema, required: true },
     date: { type: Date, required: true },
     hours: { type: Number },
     location: { type: String, required: true },

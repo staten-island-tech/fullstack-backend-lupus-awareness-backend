@@ -20,6 +20,8 @@ const User = User_1.userModel;
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const newUser = new User(req.body);
+        console.log(req.body);
+        req.body.email = newUser.email;
         yield newUser.save();
         res.json(newUser);
     }

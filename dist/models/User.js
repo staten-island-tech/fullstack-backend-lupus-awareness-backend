@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userModel = void 0;
+exports.userSchema = exports.userModel = void 0;
 const mongoose_1 = require("mongoose");
 const slugify_1 = __importDefault(require("slugify"));
 const userSchema = new mongoose_1.Schema({
@@ -14,9 +14,10 @@ const userSchema = new mongoose_1.Schema({
     subscribers: { type: [], required: true },
     interestedEvents: { type: [], required: true },
     events: { type: [], required: true },
-    avatar: String,
+    avatar: { type: String, default: null },
     slug: String
 });
+exports.userSchema = userSchema;
 const userModel = (0, mongoose_1.model)('User', userSchema);
 exports.userModel = userModel;
 userSchema.pre('save', function (next) {

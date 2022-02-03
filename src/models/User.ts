@@ -37,4 +37,4 @@ userSchema.pre('save', function (next) {
     next()
 })
 
-export {userModel}
+export {userModel, userSchema}
