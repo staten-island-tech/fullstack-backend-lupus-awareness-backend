@@ -19,9 +19,9 @@ const Event = Event_1.eventModel;
 // import { isShorthandPropertyAssignment } from 'typescript'
 const createEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = req.oidc.user;
+        req.body.user = req.oidc.user;
+        req.body.date = new Date();
         const newEvent = new Event(req.body);
-        req.body.user = user;
         console.log(req.body);
         yield newEvent.save();
         res.json(newEvent);

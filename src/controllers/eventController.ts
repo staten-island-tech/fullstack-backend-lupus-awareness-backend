@@ -11,9 +11,9 @@ const Event = eventModel
 
 export const createEvent = async (req: Request, res: Response) => {
     try {
-        const user = req.oidc.user
+        req.body.user = req.oidc.user
+        req.body.date = new Date()
         const newEvent = new Event(req.body)
-        req.body.user = user
         console.log(req.body)
         await newEvent.save()
         res.json(newEvent)

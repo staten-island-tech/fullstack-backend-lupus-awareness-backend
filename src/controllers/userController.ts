@@ -15,7 +15,6 @@ export const createUser = async (req: Request, res: Response) => {
     try {
         const authResponse = req.oidc.user 
         const newUser = new User(req.body)
-        console.log(req.body)
         req.body.email = newUser.email
         await newUser.save()
          res.json(newUser)
@@ -52,7 +51,7 @@ export const deleteUser = async (req: Request, res: Response) => {
         if(!user){
             res.status(404).send()
         }
-        res.json(`${user!.name} was deleted from DB`)
+        res.json(`${user!.firstName} ${user!.lastName} was deleted from DB`)
     } catch (error) {
         console.log(error)
     }

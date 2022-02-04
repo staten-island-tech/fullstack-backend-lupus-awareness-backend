@@ -16,7 +16,6 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         const authResponse = req.oidc.user;
         const newUser = new User(req.body);
-        console.log(req.body);
         req.body.email = newUser.email;
         yield newUser.save();
         res.json(newUser);
@@ -55,7 +54,7 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         if (!user) {
             res.status(404).send();
         }
-        res.json(`${user.name} was deleted from DB`);
+        res.json(`${user.firstName} ${user.lastName} was deleted from DB`);
     }
     catch (error) {
         console.log(error);
