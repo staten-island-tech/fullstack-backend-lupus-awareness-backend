@@ -5,9 +5,10 @@ import { createUser, getUsers, updateUsers, deleteUser, test } from '../controll
 import { createEvent } from '../controllers/eventController'
 const router = express.Router()
 
-router.get('/', getUsers)
+
+router.get('/',requiresAuth(), getUsers)
 router.get('/user', createUser)
-router.post('/login', createUser)
+router.post('/login', test)
 router.patch('/user/:id', updateUsers)
 router.delete('/user/:id', deleteUser)
 router.get("/get", test)//test

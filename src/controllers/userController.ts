@@ -57,15 +57,13 @@ export const deleteUser = async (req: Request, res: Response) => {
     }
 }
 
-
 export const test = async (req: Request, res: Response) => {
     try {
         const authResponse = req.oidc.user
-        res.json(authResponse)
+        console.log('hi')
+        
     } catch (error) {
-        res.json(error)
+        console.log(error)
     }
 }
-
-
 

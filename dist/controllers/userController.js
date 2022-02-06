@@ -64,10 +64,10 @@ exports.deleteUser = deleteUser;
 const test = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const authResponse = req.oidc.user;
-        res.json(authResponse);
+        console.log('hi');
     }
     catch (error) {
-        res.json(error);
+        console.log(error);
     }
 });
 exports.test = test;
