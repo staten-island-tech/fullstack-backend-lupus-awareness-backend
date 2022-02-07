@@ -19,6 +19,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         req.body.email = newUser.email;
         yield newUser.save();
         res.json(newUser);
+        console.log(newUser);
     }
     catch (error) {
         res.json(error);
