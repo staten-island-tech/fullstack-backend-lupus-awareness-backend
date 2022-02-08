@@ -1,4 +1,5 @@
 import express from "express"
+import { Request, Response, NextFunction } from 'express'
 import { router } from './routes/index'
 import jwt from 'express-jwt'
 import jwksRsa from 'jwks-rsa'
@@ -46,11 +47,13 @@ app.listen(port, ()=> {
 })
 
   // req.isAuthenticated is provided from the auth router
-  app.get('/', (req, res) => {
-    res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-  });
   
   app.get('/profile', requiresAuth(), (req, res) => {
     res.send(JSON.stringify(req.oidc.user));
   });
 
+app.get('/', (req: Request, res: Response) => {
+  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+  res.setHeader("Access-Control-Allow_-Origin", 'http://localhost:8080')
+  res.send(app)
+})

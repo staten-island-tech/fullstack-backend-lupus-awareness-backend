@@ -6,7 +6,7 @@ import { createEvent } from '../controllers/eventController'
 const router = express.Router()
 
 
-router.get('/',requiresAuth(), getUsers)
+router.get('/', getUsers)
 router.post('/user', createUser)
 router.post('/login', test)
 router.patch('/user/:id', updateUsers)
