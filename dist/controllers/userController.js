@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.test = exports.deleteUser = exports.updateUsers = exports.getUsers = exports.createUser = void 0;
+exports.deleteUser = exports.updateUsers = exports.getUsers = exports.createUser = void 0;
 const User_1 = require("../models/User");
 const User = User_1.userModel;
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -60,13 +60,3 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.deleteUser = deleteUser;
-const test = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const authResponse = req.oidc.user;
-        console.log('hi');
-    }
-    catch (error) {
-        console.log(error);
-    }
-});
-exports.test = test;
