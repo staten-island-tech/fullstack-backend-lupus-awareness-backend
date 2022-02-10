@@ -10,7 +10,7 @@ const userSchema = new mongoose_1.Schema({
     firstName: { type: String, trim: true, required: true },
     lastName: { type: String, trim: true, required: true },
     email: { type: String, required: true },
-    role: { type: String, required: true },
+    role: { type: String, default: "user", required: true },
     subscribers: { type: [], default: [], required: true },
     interestedEvents: { type: [], default: [], required: true },
     events: { type: [], default: [], required: true },

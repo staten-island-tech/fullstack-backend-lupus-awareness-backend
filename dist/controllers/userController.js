@@ -65,7 +65,7 @@ exports.deleteUser = deleteUser;
 const test = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const authResponse = req.oidc.user;
-        console.log('hi');
+        console.log(authResponse);
     }
     catch (error) {
         console.log(error);

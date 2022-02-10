@@ -9,7 +9,7 @@ interface UserComment {
     replies: UserComment[]
 }
 
-interface Event {
+export interface Event {
     user: User,
     date: Date,
     hours?: number,
