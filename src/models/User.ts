@@ -11,8 +11,11 @@ export interface User {
     interestedEvents: User[]
     events: Event[],
     avatar?: string,
-    slug?: string
+    slug?: string,
+    comparePassword: comparePasswordFunction;
 }
+
+type comparePasswordFunction = (candidatePassword: string, cb: (err: any, isMatch: any) => void) => void;
 
 const userSchema = new Schema<User>({
     firstName: {type: String, trim: true, required: true},

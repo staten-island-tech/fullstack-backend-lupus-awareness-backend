@@ -7,6 +7,7 @@ import { isShorthandPropertyAssignment } from 'typescript'
 import  { auth } from 'express-openid-connect'
 import { requiresAuth } from 'express-openid-connect'
 import { userModel } from '../models/User'
+import passport from 'passport'
 const User = userModel
 
 
@@ -62,6 +63,14 @@ export const test = async (req: Request, res: Response) => {
     try {
         const authResponse = req.oidc.user
         console.log(authResponse)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const login = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        console.log('')
     } catch (error) {
         console.log(error)
     }
