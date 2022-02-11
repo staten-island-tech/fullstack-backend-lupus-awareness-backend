@@ -7,6 +7,7 @@ import bodyParser from 'body-parser'
 import './DB/mongoose' //ensures mongoose connects
 import  { auth } from 'express-openid-connect'
 import { requiresAuth } from 'express-openid-connect'
+import { userModel } from "./models/User"
 
 const port = process.env.PORT || 3000
 const app = express();
@@ -50,7 +51,8 @@ app.listen(port, ()=> {
     res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
   });
   
-  app.get('/profile', requiresAuth(), (req, res) => {
-    res.send(JSON.stringify(req.oidc.user));
-  });
 
+  
+
+
+  

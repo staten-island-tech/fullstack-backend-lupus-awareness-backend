@@ -9,7 +9,6 @@ const cors_1 = __importDefault(require("cors"));
 const body_parser_1 = __importDefault(require("body-parser"));
 require("./DB/mongoose"); //ensures mongoose connects
 const express_openid_connect_1 = require("express-openid-connect");
-const express_openid_connect_2 = require("express-openid-connect");
 const port = process.env.PORT || 3000;
 const app = (0, express_1.default)();
 const config = {
@@ -41,7 +40,4 @@ app.listen(port, () => {
 // req.isAuthenticated is provided from the auth router
 app.get('/', (req, res) => {
     res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-});
-app.get('/profile', (0, express_openid_connect_2.requiresAuth)(), (req, res) => {
-    res.send(JSON.stringify(req.oidc.user));
 });

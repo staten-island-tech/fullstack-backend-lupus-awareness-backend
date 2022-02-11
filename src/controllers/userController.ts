@@ -33,7 +33,7 @@ export const getUsers = async (req: Request, res: Response) => {
 
 export const updateUsers = async (req: Request, res: Response) => {
     try {
-        const user: any = await User.findById(req.params.id)
+        const user : any = await User.findOne({ email: req.oidc.user.email}).exec();
         const updates: string[] = Object.keys(req.body)
         updates.forEach((e: string) => ( user![e] = req.body[e]))
         await user.save()
@@ -55,4 +55,17 @@ export const deleteUser = async (req: Request, res: Response) => {
         console.log(error)
     }
 }
+
+
+export const getProfile = async (req: Request, res: Response) => {
+    try {
+       const user = await User.findOne({ email: req.oidc.user.email}).exec();
+        // const user = await User.findById(id)
+        res.send(user)
+        // res.send(user)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 

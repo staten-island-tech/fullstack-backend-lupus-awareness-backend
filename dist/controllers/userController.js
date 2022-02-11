@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.updateUsers = exports.getUsers = exports.createUser = void 0;
+exports.getProfile = exports.deleteUser = exports.updateUsers = exports.getUsers = exports.createUser = void 0;
 const User_1 = require("../models/User");
 const User = User_1.userModel;
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -36,7 +36,7 @@ const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.getUsers = getUsers;
 const updateUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield User.findById(req.params.id);
+        const user = yield User.findOne({ email: req.oidc.user.email }).exec();
         const updates = Object.keys(req.body);
         updates.forEach((e) => (user[e] = req.body[e]));
         yield user.save();
@@ -60,3 +60,15 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.deleteUser = deleteUser;
+const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const user = yield User.findOne({ email: req.oidc.user.email }).exec();
+        // const user = await User.findById(id)
+        res.send(user);
+        // res.send(user)
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+exports.getProfile = getProfile;
