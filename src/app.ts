@@ -52,8 +52,8 @@ app.listen(port, ()=> {
     res.send(JSON.stringify(req.oidc.user));
   });
 
-app.get('/', (req: Request, res: Response) => {
-  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-  res.setHeader("Access-Control-Allow_-Origin", 'http://localhost:8080')
-  res.send(app)
-})
+// app.get('/', (req: Request, res: Response) => {
+//   res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+//   res.setHeader("Access-Control-Allow_-Origin", 'http://localhost:8080')
+//   res.send(app)
+// })

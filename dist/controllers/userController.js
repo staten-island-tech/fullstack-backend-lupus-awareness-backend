@@ -8,18 +8,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.login = exports.test = exports.deleteUser = exports.updateUsers = exports.getUsers = exports.createUser = void 0;
 const User_1 = require("../models/User");
+const passport_1 = __importDefault(require("passport"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const User = User_1.userModel;
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const authResponse = req.oidc.user;
         const newUser = new User(req.body);
-        req.body.email = newUser.email;
-        yield newUser.save();
-        res.json(newUser);
-        console.log(newUser);
+        bcryptjs_1.default.genSalt(10, (err, salt) => bcryptjs_1.default.hash(newUser.password, salt, (err, hash) => {
+            if (err)
+                throw err;
+            newUser.password = hash;
+            newUser.save();
+        }));
     }
     catch (error) {
         res.json(error);
@@ -74,7 +80,10 @@ const test = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.test = test;
 const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log('');
+        passport_1.default.authenticate('local', {
+            successRedirect: '/dashboard',
+            failureRedirect: '/login'
+        });
     }
     catch (error) {
         console.log(error);

@@ -8,18 +8,21 @@ import  { auth } from 'express-openid-connect'
 import { requiresAuth } from 'express-openid-connect'
 import { userModel } from '../models/User'
 import passport from 'passport'
+import bcrypt from 'bcryptjs'
 const User = userModel
 
 
 
 export const createUser = async (req: Request, res: Response) => {
     try {
-        const authResponse = req.oidc.user 
         const newUser = new User(req.body)
-        req.body.email = newUser.email
-        await newUser.save()
-         res.json(newUser)
-         console.log(newUser)
+        bcrypt.genSalt(10, (err, salt) =>
+         bcrypt.hash(newUser.password, salt, (err, hash) => {
+              if (err) throw err
+              newUser.password = hash
+              newUser.save()
+        }))
+        
     } catch (error) {
         res.json(error)
     }
@@ -70,7 +73,10 @@ export const test = async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        console.log('')
+        passport.authenticate('local', {
+            successRedirect: '/dashboard',
+            failureRedirect: '/login'
+        })
     } catch (error) {
         console.log(error)
     }

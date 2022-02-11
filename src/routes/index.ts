@@ -1,7 +1,7 @@
 import express from 'express'
 import  { auth } from 'express-openid-connect'
 import { requiresAuth } from 'express-openid-connect'
-import { createUser, getUsers, updateUsers, deleteUser, test } from '../controllers/userController'
+import { createUser, getUsers, updateUsers, deleteUser, login, test } from '../controllers/userController'
 import { createEvent } from '../controllers/eventController'
 const router = express.Router()
 
