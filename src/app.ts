@@ -5,6 +5,10 @@ import jwt from 'express-jwt'
 import jwksRsa from 'jwks-rsa'
 import cors from 'cors'
 import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
+import session from 'express-session'
+import passport from 'passport'
+import ('./config/passport')
 import './DB/mongoose' //ensures mongoose connects
 import  { auth } from 'express-openid-connect'
 import { requiresAuth } from 'express-openid-connect'
@@ -40,6 +44,9 @@ app.use(express.urlencoded({
     extended: true
 }))
 
+app.use(cookieParser('secretcode'))
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use('/', router)
 app.listen(port, ()=> {
