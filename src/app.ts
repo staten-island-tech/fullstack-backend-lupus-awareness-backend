@@ -8,6 +8,7 @@ import bodyParser from 'body-parser'
 import './DB/mongoose' //ensures mongoose connects
 import  { auth } from 'express-openid-connect'
 import { requiresAuth } from 'express-openid-connect'
+import { userModel } from "./models/User"
 
 const port = process.env.PORT || 3000
 const app = express();
@@ -48,12 +49,8 @@ app.listen(port, ()=> {
 
   // req.isAuthenticated is provided from the auth router
   
-  app.get('/profile', requiresAuth(), (req, res) => {
-    res.send(JSON.stringify(req.oidc.user));
-  });
 
-app.get('/', (req: Request, res: Response) => {
-  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-  res.setHeader("Access-Control-Allow_-Origin", 'http://localhost:8080')
-  res.send(app)
-})
+  
+
+
+  

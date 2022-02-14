@@ -7,13 +7,11 @@ exports.router = void 0;
 const express_1 = __importDefault(require("express"));
 const express_openid_connect_1 = require("express-openid-connect");
 const userController_1 = require("../controllers/userController");
-const eventController_1 = require("../controllers/eventController");
 const router = express_1.default.Router();
 exports.router = router;
-router.get('/', userController_1.getUsers);
-router.post('/user', userController_1.createUser);
-router.post('/login', userController_1.test);
+router.get('/', (0, express_openid_connect_1.requiresAuth)(), userController_1.getUsers);
 router.patch('/user/:id', userController_1.updateUsers);
 router.delete('/user/:id', userController_1.deleteUser);
-router.get("/get", userController_1.test); //test
-router.post('/event', (0, express_openid_connect_1.requiresAuth)(), eventController_1.createEvent);
+router.get('/profile', (0, express_openid_connect_1.requiresAuth)(), userController_1.getProfile);
+router.get('/dashboard', (0, express_openid_connect_1.requiresAuth)(), userController_1.getProfile);
+router.patch('/dashboard', (0, express_openid_connect_1.requiresAuth)(), userController_1.updateUsers);
