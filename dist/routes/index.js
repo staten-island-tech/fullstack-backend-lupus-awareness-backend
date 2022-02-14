@@ -10,7 +10,6 @@ const userController_1 = require("../controllers/userController");
 const router = express_1.default.Router();
 exports.router = router;
 router.get('/', (0, express_openid_connect_1.requiresAuth)(), userController_1.getUsers);
-router.get('/user', userController_1.createUser);
 router.patch('/user/:id', userController_1.updateUsers);
 router.delete('/user/:id', userController_1.deleteUser);
 router.get('/profile', (0, express_openid_connect_1.requiresAuth)(), userController_1.getProfile);

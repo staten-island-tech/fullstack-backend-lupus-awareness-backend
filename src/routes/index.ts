@@ -6,7 +6,6 @@ const router = express.Router()
 
 
 router.get('/',requiresAuth(), getUsers)
-router.get('/user', createUser)
 router.patch('/user/:id', updateUsers)
 router.delete('/user/:id', deleteUser)
 router.get('/profile', requiresAuth(), getProfile)
