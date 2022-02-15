@@ -9,6 +9,7 @@ import './DB/mongoose' //ensures mongoose connects
 import  { auth } from 'express-openid-connect'
 import { requiresAuth } from 'express-openid-connect'
 import { userModel } from "./models/User"
+import { getUsers } from "./controllers/userController"
 
 const port = process.env.PORT || 3000
 const app = express();
@@ -17,10 +18,10 @@ const app = express();
 const config = {
   authRequired: false,
   auth0Logout: true,
-  secret: 'a long, randomly-generated string stored in env',
-  baseURL: 'http://localhost:3000',
-  clientID: 'W27qMzcn1MeFLgZFreqtfjYLppDKeUcK',
-  issuerBaseURL: 'https://lupusawareness.us.auth0.com'
+  secret: process.env.SECRET,
+  baseURL: process.env.BASE_URL,
+  clientID: process.env.CLIENT_ID,
+  issuerBaseURL: process.env.ISSUER_BASE_URL
 };
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
@@ -28,6 +29,15 @@ app.use(auth(config));
 
 //enable cors
 app.use(cors())
+
+// app.get('/', function (req, res, next) {
+
+//   res.send(data)
+// })
+ 
+app.listen(8080, function () {
+  console.log('CORS-enabled web server listening on port 8080')
+})
 
 // Enable the use of request body parsing middleware
 app.use(bodyParser.json());

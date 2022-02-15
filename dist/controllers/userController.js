@@ -28,6 +28,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.createUser = createUser;
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        res.setHeader('Access-Control-Allow-Origin', "http://localhost:8080");
         const Users = yield User.find();
         res.json(Users);
     }
