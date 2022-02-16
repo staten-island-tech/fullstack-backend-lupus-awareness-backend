@@ -26,7 +26,7 @@ export const createUser = async (req: Request, res: Response) => {
 
 export const getUsers = async (req: Request, res: Response) => {
     try {
-        res.setHeader('Access-Control-Allow-Origin', "http://localhost:8080")
+        res.setHeader('Access-Control-Allow-Origin', "http://localhost:8081")
         const Users = await User.find()
         res.json(Users)
     } catch (error) {
