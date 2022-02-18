@@ -28,7 +28,9 @@ export const getUsers = async (req: Request, res: Response) => {
     try {
         res.setHeader('Access-Control-Allow-Origin', "http://localhost:8080")
         const Users = await User.find()
+        // let { token_type, access_token } = req.oidc.accessToken;
         res.json(Users)
+        console.log(req.oidc.accessToken)
     } catch (error) {
         res.json(error)
     }
@@ -64,7 +66,7 @@ export const getProfile = async (req: Request, res: Response) => {
     try {
        const user = await User.findOne({ email: req.oidc.user.email}).exec();
         // const user = await User.findById(id)
-        res.send(user)
+        res.send(req.oidc.accessToken)
         // res.send(user)
     } catch (error) {
         console.log(error)
