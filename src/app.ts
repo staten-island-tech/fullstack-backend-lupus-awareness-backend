@@ -18,17 +18,19 @@ const app = express();
 const config = {
   authRequired: false,
   auth0Logout: true,
-  secret: process.env.SECRET,
-  baseURL: process.env.BASE_URL,
-  clientID: process.env.CLIENT_ID,
-  issuerBaseURL: process.env.ISSUER_BASE_URL
+  secret:' a long, randomly-generated string stored in env',
+  baseURL:'http://localhost:3000',
+  clientID: 'W27qMzcn1MeFLgZFreqtfjYLppDKeUcK',
+  issuerBaseURL:'https://lupusawareness.us.auth0.com'
 };
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
 
 //enable cors
-app.use(cors())
+app.use(cors({
+  origin:"*"
+}))
 
 // app.get('/', function (req, res, next) {
 
