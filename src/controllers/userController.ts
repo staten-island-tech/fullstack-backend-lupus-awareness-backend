@@ -26,11 +26,11 @@ export const createUser = async (req: Request, res: Response) => {
 
 export const getUsers = async (req: Request, res: Response) => {
     try {
-        res.setHeader('Access-Control-Allow-Origin', "http://localhost:8080")
+        // res.setHeader('Access-Control-Allow-Origin', "http://localhost:8081")
         const Users = await User.find()
         // let { token_type, access_token } = req.oidc.accessToken;
         res.json(Users)
-        console.log(req.oidc.accessToken)
+        console.log(req.oidc.idToken)
     } catch (error) {
         res.json(error)
     }
@@ -66,8 +66,10 @@ export const getProfile = async (req: Request, res: Response) => {
     try {
        const user = await User.findOne({ email: req.oidc.user.email}).exec();
         // const user = await User.findById(id)
-        res.send(req.oidc.accessToken)
-        // res.send(user)
+        // res.send(req.oidc.idToken)
+        res.send(user)
+
+ 
     } catch (error) {
         console.log(error)
     }

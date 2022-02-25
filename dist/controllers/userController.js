@@ -28,11 +28,11 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.createUser = createUser;
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.setHeader('Access-Control-Allow-Origin', "http://localhost:8080");
+        // res.setHeader('Access-Control-Allow-Origin', "http://localhost:8081")
         const Users = yield User.find();
         // let { token_type, access_token } = req.oidc.accessToken;
         res.json(Users);
-        console.log(req.oidc.accessToken);
+        console.log(req.oidc.idToken);
     }
     catch (error) {
         res.json(error);
@@ -69,8 +69,8 @@ const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         const user = yield User.findOne({ email: req.oidc.user.email }).exec();
         // const user = await User.findById(id)
-        res.send(req.oidc.accessToken);
-        // res.send(user)
+        // res.send(req.oidc.idToken)
+        res.send(user);
     }
     catch (error) {
         console.log(error);
