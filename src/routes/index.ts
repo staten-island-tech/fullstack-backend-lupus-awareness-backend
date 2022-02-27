@@ -7,13 +7,13 @@ import { createUser, getUsers, updateUsers, deleteUser, getProfile} from '../con
 const router = express.Router()
 
 
-router.get('/', requiresAuth(),  getUsers)
+router.get('/',  getUsers)
 router.patch('/user/:id', requiresAuth(), updateUsers)
 router.delete('/user/:id', deleteUser)
 router.get('/profile', requiresAuth(), getProfile)
 router.get('/dashboard', requiresAuth(), getProfile)
 router.patch('/dashboard', requiresAuth(), updateUsers)
-router.post('/event', createEvent)
+router.post('/event', requiresAuth(), createEvent)
 
 
 
