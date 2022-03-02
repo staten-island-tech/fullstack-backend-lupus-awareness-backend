@@ -9,6 +9,8 @@ const cors_1 = __importDefault(require("cors"));
 const body_parser_1 = __importDefault(require("body-parser"));
 require("./DB/mongoose"); //ensures mongoose connects
 const express_openid_connect_1 = require("express-openid-connect");
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const port = process.env.PORT || 3000;
 const app = (0, express_1.default)();
 const config = {

@@ -7,6 +7,7 @@ import { isShorthandPropertyAssignment } from 'typescript'
 import  { auth } from 'express-openid-connect'
 import { requiresAuth } from 'express-openid-connect'
 import { userModel } from '../models/User'
+
 const User = userModel
 
 

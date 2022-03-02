@@ -9,7 +9,9 @@ import './DB/mongoose' //ensures mongoose connects
 import  { auth } from 'express-openid-connect'
 import { requiresAuth } from 'express-openid-connect'
 import { userModel } from "./models/User"
-import { getUsers } from "./controllers/userController"
+import dotenv from 'dotenv'
+dotenv.config()
+
 
 const port = process.env.PORT || 3000
 const app = express();
