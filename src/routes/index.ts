@@ -7,7 +7,7 @@ import { createUser, getUsers, updateUsers, deleteUser, getProfile} from '../con
 const router = express.Router()
 
 
-router.get('/', requiresAuth(),  getUsers)
+router.get('/', getUsers)
 router.patch('/user/:id', requiresAuth(), updateUsers)
 router.delete('/user/:id', deleteUser)
 router.get('/profile', requiresAuth(), getProfile)
