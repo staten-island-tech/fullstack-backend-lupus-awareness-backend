@@ -13,7 +13,7 @@ router.delete('/user/:id', deleteUser)
 router.get('/profile', requiresAuth(), getProfile)
 router.get('/dashboard', requiresAuth(), getProfile)
 router.patch('/dashboard', requiresAuth(), updateUsers)
-router.post('/event', createEvent)
+router.post('/event', requiresAuth(), createEvent)
 
 
 

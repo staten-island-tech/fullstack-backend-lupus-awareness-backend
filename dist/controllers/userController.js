@@ -28,7 +28,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.createUser = createUser;
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // res.setHeader('Access-Control-Allow-Origin', "http://localhost:8081")
+        res.setHeader('Access-Control-Allow-Origin', "http://localhost:8080");
         const Users = yield User.find();
         // let { token_type, access_token } = req.oidc.accessToken;
         res.json(Users);

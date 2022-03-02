@@ -16,4 +16,4 @@ router.delete('/user/:id', userController_1.deleteUser);
 router.get('/profile', (0, express_openid_connect_1.requiresAuth)(), userController_1.getProfile);
 router.get('/dashboard', (0, express_openid_connect_1.requiresAuth)(), userController_1.getProfile);
 router.patch('/dashboard', (0, express_openid_connect_1.requiresAuth)(), userController_1.updateUsers);
-router.post('/event', eventController_1.createEvent);
+router.post('/event', (0, express_openid_connect_1.requiresAuth)(), eventController_1.createEvent);

@@ -26,7 +26,7 @@ const userSchema = new Schema<User>({
     slug: String
 })
 
-const userModel = model<User>('User', userSchema)
+const userModel =  model<User>('User', userSchema)
 
 userSchema.pre('save', function (next) {
     if (!this.isModified('name')) {
