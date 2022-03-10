@@ -4,13 +4,6 @@ import { User } from '../models/User'
 import bcrypt from 'bcryptjs'
 import {joiSchema} from '../middleware/validation_schema'
 
-// const joiSchema= {
-//     firstName: Joi.string().required(),
-//     lastName: Joi.string().required(),
-//     email: Joi.string().required().email(),
-//     password: Joi.string().min(6).required()
-// }
-
 export const getUsers = async (req: Request, res: Response) => {
     try {
         const Users = await User.find()
@@ -24,26 +17,24 @@ export const createUser = async (req: Request, res: Response) => {
     try {
 
         // //validate user
-        // const validUser = joiSchema.validate(req.body)
+       const result = await joiSchema.validateAsync(req.body)
+       console.log(result)
 
     //find an existing user
-     let user = await User.findOne({ email: req.body.email });
-    if (user) return res.status(400).send("User already registered.");
+        let doesExist = await User.findOne({ email: result.email });
+        if (doesExist) return res.status(400).send("User already registered.");
     
-       const result = await joiSchema.validateAsync(req.body)
-    console.log(result)
 
-
-    user = new User({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    password: req.body.password,
-    });
-    
-    user.password = await bcrypt.hash(user.password, 10);
+    // user = new User({
+    // firstName: req.body.firstName,
+    // lastName: req.body.lastName,
+    // email: req.body.email,
+    // password: req.body.password,
+    // });
+        const user = new User(result)
+        result.password = await bcrypt.hash(result.password, 10);
         await user.save();
-        res.json(user)
+    res.json(user)
     } catch (error) {
         console.log(error)
     }
