@@ -1,26 +1,27 @@
 import mongoose, { Schema, model, connect } from 'mongoose'
-import slugify from "slugify"
-import {User, userModel, userSchema} from './User'
+import {UserInterface, userSchema} from './User'
+import jwt from 'jsonwebtoken'
+const privateKey = process.env.PRIVATEKEY
 
-interface UserComment {
-    user: User,
+interface UserCommentInterface {
+    user: UserInterface,
     date: Date,
     content: string,
-    replies: UserComment[]
+    replies: UserCommentInterface[]
 }
 
-export interface Event {
-    user: User,
+interface eventInterface {
+    user: UserInterface,
     date: Date,
     hours?: number,
     location: string,
     description: string,
-    interestedUsers: User[],
-    comments: UserComment[],
+    interestedUsers: UserInterface[],
+    comments: UserCommentInterface[],
     slug?: string
 }
 
-const eventSchema = new Schema<Event>({
+const eventSchema = new Schema({
     user: {type: userSchema, required: true},
     date: {type: Date, required: true},
     hours: {type: Number},
@@ -31,6 +32,6 @@ const eventSchema = new Schema<Event>({
     slug: String
 })
 
-const eventModel = model<Event>('Event', eventSchema)
+const Event = mongoose.model<eventInterface>('Event', eventSchema)
 
-export {eventModel}
+export {Event}
