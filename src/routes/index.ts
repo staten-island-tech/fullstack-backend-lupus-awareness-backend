@@ -1,22 +1,15 @@
 import express from 'express'
-import cors from 'cors'
-import  { auth } from 'express-openid-connect'
-import { requiresAuth } from 'express-openid-connect'
-import { createEvent } from '../controllers/eventController'
-import { createUser, getUsers, updateUsers, deleteUser, getProfile} from '../controllers/userController'
+import {getUsers, createUser, login, updateUsers, deleteUser} from '../middleware/userMiddleware'
+import { createEvent } from '../middleware/eventMiddleware'
+import {requiresAuth} from '../middleware/token'
 const router = express.Router()
 
-
 router.get('/', getUsers)
-router.patch('/user/:id', requiresAuth(), updateUsers)
+router.post('/register', createUser)
+router.post('/login', login)
+router.patch('/user/:id', updateUsers)
 router.delete('/user/:id', deleteUser)
-router.get('/profile', requiresAuth(), getProfile)
-router.get('/dashboard', requiresAuth(), getProfile)
-router.patch('/dashboard', requiresAuth(), updateUsers)
-router.post('/event', requiresAuth(), createEvent)
-
-
-
-
+router.post('/event', requiresAuth, createEvent)
+// router.get('/profile', getProfile)
 
 export {router}

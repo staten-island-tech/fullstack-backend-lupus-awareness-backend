@@ -1,24 +1,34 @@
 import mongoose, { Schema, model, connect } from 'mongoose'
-import {Event} from './Event'
-import slugify from "slugify"
+import jwt from 'jsonwebtoken'
+const privateKey = process.env.PRIVATEKEY
 
-export interface User {
+// enum Role {
+//     Viewer = 'viewer',
+//     Uploader = 'uploader',
+//     Admin = 'admin'
+// }
+
+export interface UserInterface {
     firstName: string,
     lastName: string,
     email: string,
-    role: string,
-    subscribers: User[],
-    interestedEvents: User[]
-    events: Event[],
+    password: string,
+    // role: Role,
+    role: String,
+    subscribers: UserInterface[],
+    interestedEvents: UserInterface[]
+    // events: Event[],
     avatar?: string,
     slug?: string
 }
 
-const userSchema = new Schema<User>({
+const userSchema = new Schema({
     firstName: {type: String, trim: true, required: true},
     lastName: {type: String, trim: true, required: true},
-    email: {type: String, required: true},
-    role: {type: String, default: "user", required: true},
+    email: { type: String, required: true },
+    password: { type: String, required: true},
+    // role: {type: Role, default: Role.Viewer, required: true},
+    role: {type: String, default: 'viewer'},
     subscribers: {type:[], default: [], required: true},
     interestedEvents: {type:[], default: [], required: true},
     events: {type:[], default: [], required: true},
@@ -26,15 +36,6 @@ const userSchema = new Schema<User>({
     slug: String
 })
 
-const userModel =  model<User>('User', userSchema)
+const User = mongoose.model<UserInterface>('User', userSchema)
 
-userSchema.pre('save', function (next) {
-    if (!this.isModified('name')) {
-        next()
-        return
-    }
-    this.slug = slugify(this.name)
-    next()
-})
-
-export {userModel, userSchema}
+export {User, userSchema}
