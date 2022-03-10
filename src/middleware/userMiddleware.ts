@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
 import { User } from '../models/User'
 import bcrypt from 'bcryptjs'
-// import Joi from 'joi'
+import {joiSchema} from '../middleware/validation_schema'
 
 // const joiSchema= {
 //     firstName: Joi.string().required(),
@@ -30,6 +30,10 @@ export const createUser = async (req: Request, res: Response) => {
      let user = await User.findOne({ email: req.body.email });
     if (user) return res.status(400).send("User already registered.");
     
+       const result = await joiSchema.validateAsync(req.body)
+    console.log(result)
+
+
     user = new User({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
