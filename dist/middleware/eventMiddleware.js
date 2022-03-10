@@ -10,21 +10,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createEvent = void 0;
+const User_1 = require("../models/User");
 const Event_1 = require("../models/Event");
-const Event = Event_1.eventModel;
-// import { stringify } from 'querystring'
-// import jwksRsa from 'jwks-rsa'
-// import jwt from 'express-jwt'
-// import jwtAuthz from 'express-jwt-authz'
-// import { isShorthandPropertyAssignment } from 'typescript'
-const createEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        req.body.user = req.oidc.user;
-        req.body.date = new Date();
-        const newEvent = new Event(req.body);
         console.log(req.body);
-        yield newEvent.save();
-        res.json(newEvent);
+        let user = yield User_1.User.findOne({ email: req.body.email });
+        const event = new Event_1.Event({
+            user: user,
+            date: new Date(),
+            location: req.body.location,
+            description: req.body.description
+        });
+        yield event.save();
+        res.json(event);
     }
     catch (error) {
         res.json(error);
