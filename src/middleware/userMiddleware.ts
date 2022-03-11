@@ -18,21 +18,13 @@ export const createUser = async (req: Request, res: Response) => {
 
         // //validate user
        const result = await joiSchema.validateAsync(req.body)
-       console.log(result)
 
     //find an existing user
         let doesExist = await User.findOne({ email: result.email });
         if (doesExist) return res.status(400).send("User already registered.");
     
-
-    // user = new User({
-    // firstName: req.body.firstName,
-    // lastName: req.body.lastName,
-    // email: req.body.email,
-    // password: req.body.password,
-    // });
         const user = new User(result)
-        result.password = await bcrypt.hash(result.password, 10);
+        user.password = await bcrypt.hash(result.password, 10);
         await user.save();
     res.json(user)
     } catch (error) {
@@ -43,11 +35,12 @@ export const createUser = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
-        const existingUser = await User.findOne({ email })
+        const existingUser = await User.findOne({ email: email })
         if (!existingUser) {
             res.json('email not registered')
         }
-        const validPassword = await bcrypt.compareSync(password, existingUser.password)
+        const validPassword = await bcrypt.compareSync(password, existingUser!.password)
+        console.log(validPassword)
         if (!validPassword) {
             res.json('not valid')
             return

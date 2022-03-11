@@ -8,4 +8,3 @@ export const joiSchema = Joi.object(
         password: Joi.string().min(6).required()
     }
 )
-

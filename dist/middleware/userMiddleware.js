@@ -31,19 +31,12 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         // //validate user
         const result = yield validation_schema_1.joiSchema.validateAsync(req.body);
-        console.log(result);
         //find an existing user
         let doesExist = yield User_1.User.findOne({ email: result.email });
         if (doesExist)
             return res.status(400).send("User already registered.");
-        // user = new User({
-        // firstName: req.body.firstName,
-        // lastName: req.body.lastName,
-        // email: req.body.email,
-        // password: req.body.password,
-        // });
         const user = new User_1.User(result);
-        result.password = yield bcryptjs_1.default.hash(result.password, 10);
+        user.password = yield bcryptjs_1.default.hash(result.password, 10);
         yield user.save();
         res.json(user);
     }
@@ -55,11 +48,12 @@ exports.createUser = createUser;
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, password } = req.body;
-        const existingUser = yield User_1.User.findOne({ email });
+        const existingUser = yield User_1.User.findOne({ email: email });
         if (!existingUser) {
             res.json('email not registered');
         }
         const validPassword = yield bcryptjs_1.default.compareSync(password, existingUser.password);
+        console.log(validPassword);
         if (!validPassword) {
             res.json('not valid');
             return;

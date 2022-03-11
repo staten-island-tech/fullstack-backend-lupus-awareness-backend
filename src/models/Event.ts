@@ -1,22 +1,22 @@
 import mongoose, { Schema, model, connect } from 'mongoose'
-import {UserInterface, userSchema} from './User'
+import {UserAttributes, UserInterface, userSchema} from './User'
 import jwt from 'jsonwebtoken'
 const privateKey = process.env.PRIVATEKEY
 
 interface UserCommentInterface {
-    user: UserInterface,
+    user: UserAttributes,
     date: Date,
     content: string,
     replies: UserCommentInterface[]
 }
 
 interface eventInterface {
-    user: UserInterface,
+    user: UserAttributes,
     date: Date,
     hours?: number,
     location: string,
     description: string,
-    interestedUsers: UserInterface[],
+    interestedUsers: UserAttributes[],
     comments: UserCommentInterface[],
     slug?: string
 }
