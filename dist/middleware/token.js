@@ -19,8 +19,8 @@ const requiresAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     if (!token)
         return res.json('access denied');
     try {
-        console.log(jsonwebtoken_1.default.verify(token, process.env.PRIVATEKEY));
-        res.json(jsonwebtoken_1.default.verify(token, process.env.PRIVATEKEY));
+        jsonwebtoken_1.default.verify(token, process.env.PRIVATEKEY);
+        next();
     }
     catch (error) {
         res.json(error);
