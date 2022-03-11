@@ -16,7 +16,7 @@ exports.deleteUser = exports.updateUsers = exports.login = exports.createUser = 
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = require("../models/User");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
-// import Joi from 'joi'
+const validation_schema_1 = require("../middleware/validation_schema");
 // const joiSchema= {
 //     firstName: Joi.string().required(),
 //     lastName: Joi.string().required(),
@@ -41,6 +41,8 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         let user = yield User_1.User.findOne({ email: req.body.email });
         if (user)
             return res.status(400).send("User already registered.");
+        const result = yield validation_schema_1.joiSchema.validateAsync(req.body);
+        console.log(result);
         user = new User_1.User({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
