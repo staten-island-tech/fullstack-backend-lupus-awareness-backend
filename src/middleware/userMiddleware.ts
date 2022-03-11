@@ -32,7 +32,7 @@ export const createUser = async (req: Request, res: Response) => {
     // password: req.body.password,
     // });
         const user = new User(result)
-        result.password = await bcrypt.hash(result.password, 10);
+        user.password = await bcrypt.hash(result.password, 10);
         await user.save();
     res.json(user)
     } catch (error) {
@@ -47,7 +47,7 @@ export const login = async (req: Request, res: Response) => {
         if (!existingUser) {
             res.json('email not registered')
         }
-        const validPassword = await bcrypt.compareSync(password, existingUser.password)
+        const validPassword = await bcrypt.compareSync(password, existingUser!.password)
         if (!validPassword) {
             res.json('not valid')
             return
@@ -104,3 +104,13 @@ export const deleteUser = async (req: Request, res: Response) => {
 //         console.log(error)
 //     }
 // }
+ 
+export const deleteAllUser = async (req: Request, res: Response) => {
+    try {
+   
+        const user = await User.deleteMany({role: 'viewer'})
+        res.json(`${user} deleted`)
+    } catch (error) {
+        console.log(error)
+    }
+}

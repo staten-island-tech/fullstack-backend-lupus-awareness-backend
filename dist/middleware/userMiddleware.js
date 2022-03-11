@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.updateUsers = exports.login = exports.createUser = exports.getUsers = void 0;
+exports.deleteAllUser = exports.deleteUser = exports.updateUsers = exports.login = exports.createUser = exports.getUsers = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = require("../models/User");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
@@ -43,7 +43,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         // password: req.body.password,
         // });
         const user = new User_1.User(result);
-        result.password = yield bcryptjs_1.default.hash(result.password, 10);
+        user.password = yield bcryptjs_1.default.hash(result.password, 10);
         yield user.save();
         res.json(user);
     }
@@ -115,3 +115,13 @@ exports.deleteUser = deleteUser;
 //         console.log(error)
 //     }
 // }
+const deleteAllUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const user = yield User_1.User.deleteMany({ role: 'viewer' });
+        res.json(`${user} deleted`);
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+exports.deleteAllUser = deleteAllUser;

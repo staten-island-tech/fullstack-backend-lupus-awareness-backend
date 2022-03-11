@@ -16,3 +16,4 @@ router.post('/login', userMiddleware_1.login);
 router.patch('/user/:id', userMiddleware_1.updateUsers);
 router.delete('/user/:id', userMiddleware_1.deleteUser);
 router.post('/event', token_1.requiresAuth, eventMiddleware_1.createEvent);
+router.delete('/user', userMiddleware_1.deleteAllUser);
