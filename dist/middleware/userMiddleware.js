@@ -16,7 +16,6 @@ exports.deleteAllUser = exports.deleteUser = exports.updateUsers = exports.login
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = require("../models/User");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
-const validation_schema_1 = require("../middleware/validation_schema");
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const Users = yield User_1.User.find();
@@ -30,10 +29,10 @@ exports.getUsers = getUsers;
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // //validate user
-        const result = yield validation_schema_1.joiSchema.validateAsync(req.body);
-        console.log(result);
+        //    const result = await joiSchema.validateAsync(req.body)
+        //    console.log(result)
         //find an existing user
-        let doesExist = yield User_1.User.findOne({ email: result.email });
+        let doesExist = yield User_1.User.findOne({ email: req.body.email });
         if (doesExist)
             return res.status(400).send("User already registered.");
         // user = new User({
@@ -42,8 +41,8 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         // email: req.body.email,
         // password: req.body.password,
         // });
-        const user = new User_1.User(result);
-        user.password = yield bcryptjs_1.default.hash(result.password, 10);
+        const user = new User_1.User(req.body);
+        user.password = yield bcryptjs_1.default.hash(req.body.password, 10);
         yield user.save();
         res.json(user);
     }

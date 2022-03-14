@@ -17,11 +17,11 @@ export const createUser = async (req: Request, res: Response) => {
     try {
 
         // //validate user
-       const result = await joiSchema.validateAsync(req.body)
-       console.log(result)
+    //    const result = await joiSchema.validateAsync(req.body)
+    //    console.log(result)
 
-    //find an existing user
-        let doesExist = await User.findOne({ email: result.email });
+        //find an existing user
+        let doesExist = await User.findOne({ email: req.body.email });
         if (doesExist) return res.status(400).send("User already registered.");
     
 
@@ -31,8 +31,8 @@ export const createUser = async (req: Request, res: Response) => {
     // email: req.body.email,
     // password: req.body.password,
     // });
-        const user = new User(result)
-        user.password = await bcrypt.hash(result.password, 10);
+        const user = new User(req.body)
+        user.password = await bcrypt.hash(req.body.password, 10);
         await user.save();
     res.json(user)
     } catch (error) {

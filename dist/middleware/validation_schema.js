@@ -21,13 +21,15 @@ exports.joiSchema = joi_1.default.object({
     password: joi_1.default.string().min(6).required()
 });
 const userJoi = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const joiSchema = joi_1.default.object({
-        firstName: joi_1.default.string().required(),
-        lastName: joi_1.default.string().required(),
-        email: joi_1.default.string().required().email(),
-        password: joi_1.default.string().min(6).required()
-    });
     try {
+        const joiSchema = joi_1.default.object({
+            firstName: joi_1.default.string().required(),
+            lastName: joi_1.default.string().required(),
+            email: joi_1.default.string().required().email(),
+            password: joi_1.default.string().min(6).required()
+        });
+        const result = yield joiSchema.validateAsync(req.body);
+        console.log(result);
         next();
     }
     catch (error) {
