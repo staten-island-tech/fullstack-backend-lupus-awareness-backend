@@ -1,13 +1,14 @@
 import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
-import { User } from '../models/User'
+import { User, UserAttributes, UserInterface } from '../models/User'
+import {Event} from '../models/Event'
 import bcrypt from 'bcryptjs'
 import {joiSchema} from '../middleware/validation_schema'
 
 export const getUsers = async (req: Request, res: Response) => {
     try {
-        const Users = await User.find()
-        res.json(Users)
+        const Events = await Event.find()
+        res.json(Events)
     } catch (error) {
         res.json(error)
     }
@@ -39,18 +40,17 @@ export const login = async (req: Request, res: Response) => {
         if (!existingUser) {
             res.json('email not registered')
         }
-        const validPassword = await bcrypt.compareSync(password, existingUser!.password)
+        const validPassword = bcrypt.compareSync(password, existingUser!.password)
         console.log(validPassword)
         if (!validPassword) {
             res.json('not valid')
             return
         }
         console.log('valid')
-        const payload = {
-            id: existingUser?._id,
-            firstName: existingUser?.firstName,
-            email: existingUser?.email,
-            role: existingUser?.role
+        const payload: UserAttributes = {
+            firstName: existingUser!.firstName,
+            email: existingUser!.email,
+            role: existingUser!.role
         }
         const userToken = jwt.sign(payload, process.env.PRIVATEKEY as string)
         res.header('auth-token', userToken).send(userToken)

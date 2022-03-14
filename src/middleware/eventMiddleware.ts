@@ -6,8 +6,7 @@ import bcrypt from 'bcryptjs'
 
 export const createEvent = async(req: Request, res: Response, next: NextFunction) => {
     try {
-        console.log(req.body)
-        let user = await User.findOne({ email: req.body.email });
+        let user = await User.findOne({ _id: req.body.payload.id });
         const event = new Event({
             user: user,
             date: new Date(),
