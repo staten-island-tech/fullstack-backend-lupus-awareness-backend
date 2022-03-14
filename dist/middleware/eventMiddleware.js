@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createEvent = void 0;
+exports.getEvents = exports.createEvent = void 0;
 const User_1 = require("../models/User");
 const Event_1 = require("../models/Event");
 const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -31,3 +31,13 @@ const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.createEvent = createEvent;
+const getEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const Events = yield Event_1.Event.find();
+        res.json(Events);
+    }
+    catch (error) {
+        res.json(error);
+    }
+});
+exports.getEvents = getEvents;
