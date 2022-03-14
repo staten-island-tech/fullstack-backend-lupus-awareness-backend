@@ -28,19 +28,10 @@ const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.getUsers = getUsers;
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // //validate user
-        //    const result = await joiSchema.validateAsync(req.body)
-        //    console.log(result)
         //find an existing user
         let doesExist = yield User_1.User.findOne({ email: req.body.email });
         if (doesExist)
             return res.status(400).send("User already registered.");
-        // user = new User({
-        // firstName: req.body.firstName,
-        // lastName: req.body.lastName,
-        // email: req.body.email,
-        // password: req.body.password,
-        // });
         const user = new User_1.User(req.body);
         user.password = yield bcryptjs_1.default.hash(req.body.password, 10);
         yield user.save();

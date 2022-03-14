@@ -15,22 +15,10 @@ export const getUsers = async (req: Request, res: Response) => {
 
 export const createUser = async (req: Request, res: Response) => {
     try {
-
-        // //validate user
-    //    const result = await joiSchema.validateAsync(req.body)
-    //    console.log(result)
-
         //find an existing user
         let doesExist = await User.findOne({ email: req.body.email });
         if (doesExist) return res.status(400).send("User already registered.");
-    
 
-    // user = new User({
-    // firstName: req.body.firstName,
-    // lastName: req.body.lastName,
-    // email: req.body.email,
-    // password: req.body.password,
-    // });
         const user = new User(req.body)
         user.password = await bcrypt.hash(req.body.password, 10);
         await user.save();
