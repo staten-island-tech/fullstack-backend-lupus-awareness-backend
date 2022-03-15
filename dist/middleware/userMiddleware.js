@@ -15,11 +15,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteAllUser = exports.deleteUser = exports.updateUsers = exports.login = exports.createUser = exports.getUsers = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = require("../models/User");
+const Event_1 = require("../models/Event");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const Users = yield User_1.User.find();
-        res.json(Users);
+        const Events = yield Event_1.Event.find();
+        res.json(Events);
     }
     catch (error) {
         res.json(error);
@@ -49,17 +50,17 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!existingUser) {
             res.json('email not registered');
         }
-        const validPassword = yield bcryptjs_1.default.compareSync(password, existingUser.password);
+        const validPassword = bcryptjs_1.default.compareSync(password, existingUser.password);
+        console.log(validPassword);
         if (!validPassword) {
             res.json('not valid');
             return;
         }
         console.log('valid');
         const payload = {
-            id: existingUser === null || existingUser === void 0 ? void 0 : existingUser._id,
-            firstName: existingUser === null || existingUser === void 0 ? void 0 : existingUser.firstName,
-            email: existingUser === null || existingUser === void 0 ? void 0 : existingUser.email,
-            role: existingUser === null || existingUser === void 0 ? void 0 : existingUser.role
+            firstName: existingUser.firstName,
+            email: existingUser.email,
+            role: existingUser.role
         };
         const userToken = jsonwebtoken_1.default.sign(payload, process.env.PRIVATEKEY);
         res.header('auth-token', userToken).send(userToken);
