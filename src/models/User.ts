@@ -9,13 +9,14 @@ const privateKey = process.env.PRIVATEKEY
 //     Admin = 'admin'
 // }
 export interface UserAttributes {
+    _id: string,
     firstName: string,
     lastName: string,
     email: string,
     // role: Role,
     role: String,
     subscribers: UserInterface[],
-    interestedEvents: UserInterface[]
+    interestedEvents: Event[]
     events: Event[],
     avatar?: string,
     slug?: string

@@ -58,9 +58,14 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         console.log('valid');
         const payload = {
+            _id: existingUser._id,
             firstName: existingUser.firstName,
+            lastName: existingUser.lastName,
             email: existingUser.email,
-            role: existingUser.role
+            role: existingUser.role,
+            subscribers: existingUser.subscribers,
+            interestedEvents: existingUser.interestedEvents,
+            events: existingUser.events
         };
         const userToken = jsonwebtoken_1.default.sign(payload, process.env.PRIVATEKEY);
         res.header('auth-token', userToken).send(userToken);
