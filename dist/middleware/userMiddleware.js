@@ -104,8 +104,7 @@ const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.deleteUser = deleteUser;
 const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        let user = yield User_1.User.findOne({ email: req.body.payload.email });
-        console.log(req.body.payload.id);
+        let user = yield User_1.User.findOne({ _id: req.body.payload._id });
         res.json(user);
     }
     catch (error) {
