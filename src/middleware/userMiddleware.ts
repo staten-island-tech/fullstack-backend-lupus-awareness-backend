@@ -90,8 +90,8 @@ export const deleteUser = async (req: Request, res: Response) => {
 
 export const getProfile = async (req: Request, res: Response) => {
     try {
-        let user = await User.findOne({ _id: req.body.payload.id });
-        console.log(user)
+        let user = await User.findOne({ email: req.body.payload.email });
+        console.log(req.body.payload.id)
         res.json(user)
     } catch (error) {
         console.log(error)
