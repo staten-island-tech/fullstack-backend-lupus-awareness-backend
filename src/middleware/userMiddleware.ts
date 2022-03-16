@@ -46,10 +46,8 @@ export const login = async (req: Request, res: Response) => {
         }
         console.log('valid')
         const payload: UserAttributes = {
-            _id: existingUser!._id,
             firstName: existingUser!.firstName,
             lastName: existingUser!.lastName,
-            email: existingUser!.email,
             role: existingUser!.role,
             subscribers: existingUser!.subscribers,
             interestedEvents: existingUser!.interestedEvents,
@@ -90,7 +88,7 @@ export const deleteUser = async (req: Request, res: Response) => {
 
 export const getProfile = async (req: Request, res: Response) => {
     try {
-        let user = await User.findOne({ _id: req.body.payload.id });
+        let user = await User.findOne({ _id: req.body.payload._id });
         console.log(user)
         res.json(user)
     } catch (error) {

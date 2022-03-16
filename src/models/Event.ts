@@ -16,17 +16,19 @@ interface eventInterface {
     hours?: number,
     location: string,
     description: string,
+    media: string[],
     interestedUsers: UserAttributes[],
     comments: UserCommentInterface[],
     slug?: string
 }
 
 const eventSchema = new Schema({
-    user: {type: userSchema, required: true},
+    user: {type: {}, required: true},
     date: {type: Date, required: true},
     hours: {type: Number},
     location: {type: String, required: true},
     description: {type: String, required: true},
+    media: {type: [], required: true},
     interestedUsers: {type: [], default: [], required: true},
     comments: {type: [], default: [], required: true},
     slug: String
