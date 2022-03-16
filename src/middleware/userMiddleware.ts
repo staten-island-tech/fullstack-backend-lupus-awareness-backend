@@ -4,6 +4,8 @@ import { User, UserAttributes, UserInterface } from '../models/User'
 import {Event} from '../models/Event'
 import bcrypt from 'bcryptjs'
 import {joiSchema} from '../middleware/validation_schema'
+import dotenv from 'dotenv'
+dotenv.config()
 
 export const getUsers = async (req: Request, res: Response) => {
     try {
@@ -53,7 +55,7 @@ export const login = async (req: Request, res: Response) => {
             interestedEvents: existingUser!.interestedEvents,
             events: existingUser!.events
         }
-        const userToken = jwt.sign(payload, process.env.PRIVATEKEY as string)
+        const userToken = jwt.sign(payload, `${process.env.PRIVATEKEY}` as string)
         res.header('auth-token', userToken).send(userToken)
     } catch (error) {
         console.log(error)
@@ -86,18 +88,15 @@ export const deleteUser = async (req: Request, res: Response) => {
     }
 }
 
-// export const getProfile = async (req: Request, res: Response) => {
-//     try {
-//        const user = await User.findOne({ email: req.oidc.user.email}).exec();
-//         // const user = await User.findById(id)
-//         // res.send(req.oidc.idToken)
-//         res.send(user)
-
- 
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }
+export const getProfile = async (req: Request, res: Response) => {
+    try {
+        let user = await User.findOne({ _id: req.body.payload.id });
+        console.log(user)
+        res.json(user)
+    } catch (error) {
+        console.log(error)
+    }
+}
  
 export const deleteAllUser = async (req: Request, res: Response) => {
     try {
