@@ -10,13 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getEvents = exports.createEvent = void 0;
-const User_1 = require("../models/User");
 const Event_1 = require("../models/Event");
 const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        let user = yield User_1.User.findOne({ _id: req.body.payload.id });
         const event = new Event_1.Event({
-            user: user,
+            user: req.body.payload,
             date: new Date(),
             location: req.body.location,
             description: req.body.description

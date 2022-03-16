@@ -46,9 +46,14 @@ export const login = async (req: Request, res: Response) => {
         }
         console.log('valid')
         const payload: UserAttributes = {
+            _id: existingUser!._id,
             firstName: existingUser!.firstName,
+            lastName: existingUser!.lastName,
             email: existingUser!.email,
-            role: existingUser!.role
+            role: existingUser!.role,
+            subscribers: existingUser!.subscribers,
+            interestedEvents: existingUser!.interestedEvents,
+            events: existingUser!.events
         }
         const userToken = jwt.sign(payload, `${process.env.PRIVATEKEY}` as string)
         res.header('auth-token', userToken).send(userToken)
