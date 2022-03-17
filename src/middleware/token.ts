@@ -5,8 +5,10 @@ export const requiresAuth = async(req: Request, res: Response, next: NextFunctio
     const token = req.header('auth-token')
     if(!token) return res.json('access denied')
     try {
-       jwt.verify(token, process.env.PRIVATEKEY as string)  
-        next()     
+       const payload: Object = jwt.verify(token, process.env.PRIVATEKEY as string)
+       req.body.payload = payload
+       console.log(payload)
+       next()
     } catch (error) {
         res.json(error)
     }

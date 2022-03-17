@@ -6,17 +6,25 @@ import bcrypt from 'bcryptjs'
 
 export const createEvent = async(req: Request, res: Response, next: NextFunction) => {
     try {
-        let user = await User.findOne({ email: req.body.email });
-        console.log(user)
         const event = new Event({
-            user: user,
+            user: req.body.payload,
             date: new Date(),
             location: req.body.location,
-            description: req.body.description
+            description: req.body.description,
+            media: req.body.media
             });
         console.log(event)
         await event.save();
         res.json(event)
+    } catch (error) {
+        res.json(error)
+    }
+}
+
+export const getEvents = async (req: Request, res: Response) => {
+    try {
+        const Events = await Event.find()
+        res.json(Events)
     } catch (error) {
         res.json(error)
     }

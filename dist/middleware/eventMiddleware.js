@@ -9,18 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createEvent = void 0;
-const User_1 = require("../models/User");
+exports.getEvents = exports.createEvent = void 0;
 const Event_1 = require("../models/Event");
 const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        let user = yield User_1.User.findOne({ email: req.body.email });
-        console.log(user);
         const event = new Event_1.Event({
-            user: user,
+            user: req.body.payload,
             date: new Date(),
             location: req.body.location,
-            description: req.body.description
+            description: req.body.description,
+            media: req.body.media
         });
         console.log(event);
         yield event.save();
@@ -31,3 +29,13 @@ const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.createEvent = createEvent;
+const getEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const Events = yield Event_1.Event.find();
+        res.json(Events);
+    }
+    catch (error) {
+        res.json(error);
+    }
+});
+exports.getEvents = getEvents;
