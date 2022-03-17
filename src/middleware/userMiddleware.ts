@@ -9,8 +9,8 @@ dotenv.config()
 
 export const getUsers = async (req: Request, res: Response) => {
     try {
-        const Events = await Event.find()
-        res.json(Events)
+        const Users = await User.find()
+        res.json(Users)
     } catch (error) {
         res.json(error)
     }
@@ -89,7 +89,6 @@ export const deleteUser = async (req: Request, res: Response) => {
 export const getProfile = async (req: Request, res: Response) => {
     try {
         let user = await User.findOne({ _id: req.body.payload._id });
-        console.log(user)
         res.json(user)
     } catch (error) {
         console.log(error)

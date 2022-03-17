@@ -15,14 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteAllUser = exports.getProfile = exports.deleteUser = exports.updateUsers = exports.login = exports.createUser = exports.getUsers = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = require("../models/User");
-const Event_1 = require("../models/Event");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const Events = yield Event_1.Event.find();
-        res.json(Events);
+        const Users = yield User_1.User.find();
+        res.json(Users);
     }
     catch (error) {
         res.json(error);
@@ -104,7 +103,6 @@ exports.deleteUser = deleteUser;
 const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let user = yield User_1.User.findOne({ _id: req.body.payload._id });
-        console.log(user);
         res.json(user);
     }
     catch (error) {
