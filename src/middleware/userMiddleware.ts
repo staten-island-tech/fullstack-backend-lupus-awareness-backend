@@ -38,6 +38,7 @@ export const login = async (req: Request, res: Response) => {
         if (!existingUser) {
             res.json('email not registered')
         }
+        console.log(existingUser)
         const validPassword = bcrypt.compareSync(password, existingUser!.password)
         console.log(validPassword)
         if (!validPassword) {
@@ -51,7 +52,8 @@ export const login = async (req: Request, res: Response) => {
             role: existingUser!.role,
             subscribers: existingUser!.subscribers,
             interestedEvents: existingUser!.interestedEvents,
-            events: existingUser!.events
+            events: existingUser!.events,
+            avatar: existingUser!.avatar
         }
         const userToken = jwt.sign(payload, `${process.env.PRIVATEKEY}` as string)
         res.header('auth-token', userToken).send(userToken)

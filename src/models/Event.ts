@@ -7,6 +7,7 @@ interface UserCommentInterface {
     user: UserAttributes,
     date: Date,
     content: string,
+    likes: UserAttributes[]
     replies: UserCommentInterface[]
 }
 
