@@ -10,7 +10,8 @@ export const createEvent = async(req: Request, res: Response, next: NextFunction
             user: req.body.payload,
             date: new Date(),
             location: req.body.location,
-            description: req.body.description
+            description: req.body.description,
+            media: req.body.media
             });
         console.log(event)
         await event.save();

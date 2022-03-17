@@ -59,10 +59,8 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         console.log('valid');
         const payload = {
-            _id: existingUser._id,
             firstName: existingUser.firstName,
             lastName: existingUser.lastName,
-            email: existingUser.email,
             role: existingUser.role,
             subscribers: existingUser.subscribers,
             interestedEvents: existingUser.interestedEvents,
@@ -105,6 +103,7 @@ exports.deleteUser = deleteUser;
 const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let user = yield User_1.User.findOne({ _id: req.body.payload._id });
+        console.log(user);
         res.json(user);
     }
     catch (error) {

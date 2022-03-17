@@ -17,7 +17,8 @@ const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
             user: req.body.payload,
             date: new Date(),
             location: req.body.location,
-            description: req.body.description
+            description: req.body.description,
+            media: req.body.media
         });
         console.log(event);
         yield event.save();

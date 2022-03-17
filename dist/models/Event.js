@@ -21,14 +21,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Event = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const User_1 = require("./User");
 const privateKey = process.env.PRIVATEKEY;
 const eventSchema = new mongoose_1.Schema({
-    user: { type: User_1.userSchema, required: true },
+    user: { type: {}, required: true },
     date: { type: Date, required: true },
     hours: { type: Number },
     location: { type: String, required: true },
     description: { type: String, required: true },
+    media: { type: [], required: true },
     interestedUsers: { type: [], default: [], required: true },
     comments: { type: [], default: [], required: true },
     slug: String
