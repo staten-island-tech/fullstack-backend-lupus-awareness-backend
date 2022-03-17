@@ -16,16 +16,18 @@ export interface UserAttributes {
     subscribers: UserInterface[],
     interestedEvents: Event[]
     events: Event[],
-    avatar?: string,
+    avatar: string,
     slug?: string
 }
 export interface UserInterface extends UserAttributes {
+    email: string,
     password: string
 }
 
 const userSchema = new Schema({
     firstName: {type: String, trim: true, required: true},
     lastName: {type: String, trim: true, required: true},
+    email: { type: String, required: true},
     password: { type: String, required: true},
     // role: {type: Role, default: Role.Viewer, required: true},
     role: {type: String, default: 'viewer'},
