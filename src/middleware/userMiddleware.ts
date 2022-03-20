@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import { User, UserAttributes, UserInterface } from '../models/User'
 import {Event} from '../models/Event'
 import bcrypt from 'bcryptjs'
-import {joiSchema} from '../middleware/validation_schema'
+import {userJoi} from '../middleware/validation_schema'
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -90,7 +90,7 @@ export const deleteUser = async (req: Request, res: Response) => {
 
 export const getProfile = async (req: Request, res: Response) => {
     try {
-        let user = await User.findOne({ _id: req.body.payload._id });
+        let user = await User.findOne({ email: req.body.payload.email });
         res.json(user)
         console.log(user)
     } catch (error) {

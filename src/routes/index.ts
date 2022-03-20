@@ -6,7 +6,7 @@ import {userJoi} from '../middleware/validation_schema'
 const router = express.Router()
 
 router.get('/', getUsers)
-router.post('/register',userJoi, createUser)
+router.post('/register', userJoi, createUser)
 router.post('/login', login)
 router.patch('/user/:id', updateUsers)
 router.delete('/user/:id', deleteUser)
