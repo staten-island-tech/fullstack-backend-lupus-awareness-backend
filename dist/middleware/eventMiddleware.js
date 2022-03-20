@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getEvents = exports.createEvent = void 0;
+exports.createComment = exports.getEvents = exports.createEvent = void 0;
 const Event_1 = require("../models/Event");
 const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -39,3 +39,21 @@ const getEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getEvents = getEvents;
+const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const event = yield Event_1.Event.findOne({ _id: req.params.id });
+        // res.json(event)
+        const comment = new Event_1.Comment({
+            content: req.body.content
+        });
+        res.json(comment);
+        let commentInfo = yield comment.save();
+        console.log(commentInfo);
+        yield Event_1.Event.updateOne({ _id: req.params.id }, { $push: { comments: commentInfo } });
+        console.log(event);
+    }
+    catch (error) {
+        res.json(error);
+    }
+});
+exports.createComment = createComment;
