@@ -51,6 +51,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!existingUser) {
             res.json('email not registered');
         }
+        console.log(existingUser);
         const validPassword = bcryptjs_1.default.compareSync(password, existingUser.password);
         console.log(validPassword);
         if (!validPassword) {
@@ -64,7 +65,8 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             role: existingUser.role,
             subscribers: existingUser.subscribers,
             interestedEvents: existingUser.interestedEvents,
-            events: existingUser.events
+            events: existingUser.events,
+            avatar: existingUser.avatar
         };
         const userToken = jsonwebtoken_1.default.sign(payload, `${process.env.PRIVATEKEY}`);
         res.header('auth-token', userToken).send(userToken);
@@ -104,6 +106,7 @@ const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         let user = yield User_1.User.findOne({ _id: req.body.payload._id });
         res.json(user);
+        console.log(req.body.payload.email);
     }
     catch (error) {
         console.log(error);

@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import { User, UserAttributes, UserInterface } from '../models/User'
 import {Event} from '../models/Event'
 import bcrypt from 'bcryptjs'
-import {joiSchema} from '../middleware/validation_schema'
+import {userJoi} from '../middleware/validation_schema'
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -38,6 +38,7 @@ export const login = async (req: Request, res: Response) => {
         if (!existingUser) {
             res.json('email not registered')
         }
+        console.log(existingUser)
         const validPassword = bcrypt.compareSync(password, existingUser!.password)
         console.log(validPassword)
         if (!validPassword) {
@@ -51,7 +52,8 @@ export const login = async (req: Request, res: Response) => {
             role: existingUser!.role,
             subscribers: existingUser!.subscribers,
             interestedEvents: existingUser!.interestedEvents,
-            events: existingUser!.events
+            events: existingUser!.events,
+            avatar: existingUser!.avatar
         }
         const userToken = jwt.sign(payload, `${process.env.PRIVATEKEY}` as string)
         res.header('auth-token', userToken).send(userToken)
@@ -90,6 +92,7 @@ export const getProfile = async (req: Request, res: Response) => {
     try {
         let user = await User.findOne({ _id: req.body.payload._id });
         res.json(user)
+        console.log(req.body.payload.email)
     } catch (error) {
         console.log(error)
     }

@@ -20,3 +20,4 @@ router.post('/event', token_1.requiresAuth, eventMiddleware_1.createEvent);
 router.get('/events', eventMiddleware_1.getEvents);
 router.delete('/user', userMiddleware_1.deleteAllUser);
 router.get('/profile', token_1.requiresAuth, userMiddleware_1.getProfile);
+router.post('/event/:id/createComment', token_1.requiresAuth, eventMiddleware_1.createComment);

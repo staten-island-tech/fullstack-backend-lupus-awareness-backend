@@ -29,6 +29,7 @@ const privateKey = process.env.PRIVATEKEY;
 const userSchema = new mongoose_1.Schema({
     firstName: { type: String, trim: true, required: true },
     lastName: { type: String, trim: true, required: true },
+    email: { type: String, required: true },
     password: { type: String, required: true },
     // role: {type: Role, default: Role.Viewer, required: true},
     role: { type: String, default: 'viewer' },
