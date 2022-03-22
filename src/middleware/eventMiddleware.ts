@@ -30,6 +30,17 @@ export const getEvents = async (req: Request, res: Response) => {
     }
 }
 
+export const event = async (req: Request, res: Response) => {
+    try {
+        const event = await Event.findOne({ _id: req.params.id })
+        res.json(event)
+    } catch (error) {
+        res.json(error)
+    }
+}
+
+
+
 
 export const createComment = async (req: Request, res: Response) => {
     try {
@@ -56,23 +67,23 @@ export const createComment = async (req: Request, res: Response) => {
 
 export const reply = async (req: Request, res: Response) => {
     try {
-        const event = await Event.findOne({ event_id: req.params.id })
-        const selectedComment = await Comment.findOne({ _id:req.params.id })
-        // res.json(event)
-        // if(event!){
-        //     res.json("This event doesn't exist")
-        // }
-        res.json(selectedComment)
+        const event = await Event.findOne({ event_id: req.params.event_id })
+        const commentId = req.params.id
+
+        console.log(req.params)
+        
         const comment = new replyComment({
-            content: req.body.content
+            content: req.body.content,
+            replies: []
         })
-        console.log(comment)
+
         let commentInfo = await comment.save()
-        await Comment.updateOne(
-            {_id: req.params.id},
-            { $push: { replies: commentInfo }}
+        console.log(commentInfo)
+
+        await Event.updateOne(
+            {event_id: req.params.event_id, id: req.params.id },
+            { $push: { comments: commentInfo }}
         )
-        console.log(event)
     } catch (error) {
         res.json(error)
     }

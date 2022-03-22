@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.reply = exports.createComment = exports.getEvents = exports.createEvent = void 0;
+exports.reply = exports.createComment = exports.event = exports.getEvents = exports.createEvent = void 0;
 const Event_1 = require("../models/Event");
 const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -39,6 +39,16 @@ const getEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getEvents = getEvents;
+const event = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const event = yield Event_1.Event.findOne({ _id: req.params.id });
+        res.json(event);
+    }
+    catch (error) {
+        res.json(error);
+    }
+});
+exports.event = event;
 const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const event = yield Event_1.Event.findOne({ _id: req.params.id });
@@ -62,20 +72,16 @@ const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 exports.createComment = createComment;
 const reply = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const event = yield Event_1.Event.findOne({ event_id: req.params.id });
-        const selectedComment = yield Event_1.Comment.findOne({ _id: req.params.id });
-        // res.json(event)
-        // if(event!){
-        //     res.json("This event doesn't exist")
-        // }
-        res.json(selectedComment);
+        const event = yield Event_1.Event.findOne({ event_id: req.params.event_id });
+        const commentId = req.params.id;
+        console.log(req.params);
         const comment = new Event_1.replyComment({
-            content: req.body.content
+            content: req.body.content,
+            replies: []
         });
-        console.log(comment);
         let commentInfo = yield comment.save();
-        yield Event_1.Comment.updateOne({ _id: req.params.id }, { $push: { replies: commentInfo } });
-        console.log(event);
+        console.log(commentInfo);
+        yield Event_1.Event.updateOne({ event_id: req.params.event_id, id: req.params.id }, { $push: { comments: commentInfo } });
     }
     catch (error) {
         res.json(error);
