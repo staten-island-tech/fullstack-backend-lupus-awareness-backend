@@ -23,7 +23,6 @@ interface replyCommentInterface {
     date?: Date,
     content: string,
     likes?: UserAttributes[]
-    replies?: UserCommentInterface[]
 }
 
 const replySchema = new Schema({
@@ -31,7 +30,6 @@ const replySchema = new Schema({
     date: {type: Date, required: false},
     content: {type: String, required: true},
     likes: {type: Number, required:false},
-    replies: {type: [], required: false},
 })
 
 interface eventInterface {

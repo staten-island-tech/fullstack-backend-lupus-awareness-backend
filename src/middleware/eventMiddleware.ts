@@ -74,16 +74,19 @@ export const reply = async (req: Request, res: Response) => {
         
         const comment = new replyComment({
             content: req.body.content,
-            replies: []
         })
 
         let commentInfo = await comment.save()
-        console.log(commentInfo)
+        console.log(req.params.id)
 
-        await Event.updateOne(
-            {event_id: req.params.event_id, id: req.params.id },
-            { $push: { comments: commentInfo }}
+        await Comment.updateOne(
+            { id: req.params.id },
+            { $push: { replies: commentInfo }}
         )
+
+        const selectedcomment = await Comment.findById(commentId)
+        res.json(selectedcomment)
+        
     } catch (error) {
         res.json(error)
     }

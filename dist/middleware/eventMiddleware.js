@@ -77,11 +77,12 @@ const reply = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         console.log(req.params);
         const comment = new Event_1.replyComment({
             content: req.body.content,
-            replies: []
         });
         let commentInfo = yield comment.save();
-        console.log(commentInfo);
-        yield Event_1.Event.updateOne({ event_id: req.params.event_id, id: req.params.id }, { $push: { comments: commentInfo } });
+        console.log(req.params.id);
+        yield Event_1.Comment.updateOne({ id: req.params.id }, { $push: { replies: commentInfo } });
+        const selectedcomment = yield Event_1.Comment.findById(commentId);
+        res.json(selectedcomment);
     }
     catch (error) {
         res.json(error);

@@ -34,7 +34,6 @@ const replySchema = new mongoose_1.Schema({
     date: { type: Date, required: false },
     content: { type: String, required: true },
     likes: { type: Number, required: false },
-    replies: { type: [], required: false },
 });
 const eventSchema = new mongoose_1.Schema({
     user: { type: {}, required: true },
