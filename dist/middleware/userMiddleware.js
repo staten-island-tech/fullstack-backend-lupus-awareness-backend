@@ -72,7 +72,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.header('auth-token', userToken).send(userToken);
     }
     catch (error) {
-        console.log(error);
+        res.json(error);
     }
 });
 exports.login = login;

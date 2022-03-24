@@ -58,7 +58,7 @@ export const login = async (req: Request, res: Response) => {
         const userToken = jwt.sign(payload, `${process.env.PRIVATEKEY}` as string)
         res.header('auth-token', userToken).send(userToken)
     } catch (error) {
-        console.log(error)
+        res.json(error)
     }
 }
 
