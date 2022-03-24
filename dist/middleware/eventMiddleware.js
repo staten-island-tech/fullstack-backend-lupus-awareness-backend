@@ -74,15 +74,18 @@ const reply = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const event = yield Event_1.Event.findOne({ event_id: req.params.event_id });
         const commentId = req.params.id;
+        const eventId = req.params.event_id;
         console.log(req.params);
         const comment = new Event_1.replyComment({
             content: req.body.content,
         });
         let commentInfo = yield comment.save();
-        console.log(req.params.id);
-        yield Event_1.Comment.updateOne({ id: req.params.id }, { $push: { replies: commentInfo } });
-        const selectedcomment = yield Event_1.Comment.findById(commentId);
-        res.json(selectedcomment);
+        console.log(commentId);
+        yield Event_1.Comment.updateOne({ _id: commentId }, { $push: { replies: commentInfo } });
+        const selectedComment = yield Event_1.Comment.findById(commentId);
+        res.json(selectedComment);
+        yield Event_1.Event.updateOne({ _id: eventId }, { $set: { comments: selectedComment } });
+        console.log(event);
     }
     catch (error) {
         res.json(error);

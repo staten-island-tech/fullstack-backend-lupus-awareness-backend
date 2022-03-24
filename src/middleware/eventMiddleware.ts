@@ -69,6 +69,7 @@ export const reply = async (req: Request, res: Response) => {
     try {
         const event = await Event.findOne({ event_id: req.params.event_id })
         const commentId = req.params.id
+        const eventId = req.params.event_id
 
         console.log(req.params)
         
@@ -77,15 +78,23 @@ export const reply = async (req: Request, res: Response) => {
         })
 
         let commentInfo = await comment.save()
-        console.log(req.params.id)
+        console.log(commentId)
 
         await Comment.updateOne(
-            { id: req.params.id },
+            { _id: commentId },
             { $push: { replies: commentInfo }}
         )
+            
+        const selectedComment = await Comment.findById(commentId)
+        res.json(selectedComment)
+        
+        await Event.updateOne(
+            { _id: eventId},
+            { $set: { comments: selectedComment}}
+        )
 
-        const selectedcomment = await Comment.findById(commentId)
-        res.json(selectedcomment)
+        console.log(event)
+
         
     } catch (error) {
         res.json(error)
