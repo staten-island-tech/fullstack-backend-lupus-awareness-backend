@@ -62,7 +62,7 @@ const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.json(comment);
         let commentInfo = yield comment.save();
         console.log(commentInfo);
-        yield Event_1.Event.updateOne({ _id: req.params.id }, { $push: { comments: commentInfo } });
+        yield Event_1.Event.updateOne({ '_id': req.params.id }, { $push: { comments: commentInfo } });
         console.log(event);
     }
     catch (error) {
@@ -72,20 +72,34 @@ const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 exports.createComment = createComment;
 const reply = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const event = yield Event_1.Event.findOne({ event_id: req.params.event_id });
+        console.log(req.params);
         const commentId = req.params.id;
         const eventId = req.params.event_id;
-        console.log(req.params);
+        console.log(eventId);
+        const event = yield Event_1.Event.findOne({ _id: eventId });
+        // console.log(req.params)
         const comment = new Event_1.replyComment({
             content: req.body.content,
         });
         let commentInfo = yield comment.save();
-        console.log(commentId);
-        yield Event_1.Comment.updateOne({ _id: commentId }, { $push: { replies: commentInfo } });
-        const selectedComment = yield Event_1.Comment.findById(commentId);
-        res.json(selectedComment);
-        yield Event_1.Event.updateOne({ _id: eventId }, { $set: { comments: selectedComment } });
-        console.log(event);
+        // console.log(commentInfo)
+        yield Event_1.Event.updateOne({ '_id': req.params.event_id, "comments": {
+                "$elemMatch": {
+                    "_id": commentId
+                }
+            }
+        }, { $push: { "comments.replies": commentInfo } });
+        res.json(event);
+        // await Comment.updateOne(
+        //     { _id: commentId },
+        //     { $push: { replies: commentInfo }}
+        // )
+        // const selectedComment = await Comment.findById(commentId)
+        // res.json(selectedComment)
+        // await Event.updateOne(
+        //     { _id: eventId},
+        //     { $set: { comments: selectedComment}}
+        // )
     }
     catch (error) {
         res.json(error);
