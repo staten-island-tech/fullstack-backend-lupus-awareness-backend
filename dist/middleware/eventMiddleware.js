@@ -72,34 +72,26 @@ const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 exports.createComment = createComment;
 const reply = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log(req.params);
-        const commentId = req.params.id;
+        const commentId = req.params.comment_id;
         const eventId = req.params.event_id;
-        console.log(eventId);
-        const event = yield Event_1.Event.findOne({ _id: eventId });
+        console.log(commentId);
+        const event = yield Event_1.Event.findOne({
+            // 'comments.content': "home",
+            // 'comments._id': '623c9512b05b082ee54369d0'
+            // 'comments.replies': []
+            "comments._id": "6240ccaea107f4ad9fc79e08"
+        });
+        //    if(!event){
+        //        res.json('event not found')
+        //    }
         // console.log(req.params)
-        const comment = new Event_1.replyComment({
+        const comment = new Event_1.Comment({
             content: req.body.content,
         });
         let commentInfo = yield comment.save();
-        // console.log(commentInfo)
-        yield Event_1.Event.updateOne({ '_id': req.params.event_id, "comments": {
-                "$elemMatch": {
-                    "_id": commentId
-                }
-            }
-        }, { $push: { "comments.replies": commentInfo } });
+        console.log(commentInfo);
+        yield Event_1.Event.findOneAndUpdate({ '_id': eventId, 'comments._id': req.params.comment_id }, { $push: { "comments.$.replies": commentInfo } });
         res.json(event);
-        // await Comment.updateOne(
-        //     { _id: commentId },
-        //     { $push: { replies: commentInfo }}
-        // )
-        // const selectedComment = await Comment.findById(commentId)
-        // res.json(selectedComment)
-        // await Event.updateOne(
-        //     { _id: eventId},
-        //     { $set: { comments: selectedComment}}
-        // )
     }
     catch (error) {
         res.json(error);

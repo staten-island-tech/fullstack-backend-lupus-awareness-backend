@@ -8,29 +8,16 @@ interface UserCommentInterface {
     date?: Date,
     content: string,
     likes?: UserAttributes[]
-    replies: UserCommentInterface[]
+    replies?: UserCommentInterface[]
 }
 const commentSchema = new Schema({
     user: {type: {}, required: false},
     date: {type: Date, required: false},
     content: {type: String, required: true},
     likes: {type: Number, required:false},
-    replies: {type: [], required: true},
+    replies: {type: [], required: false},
 })
 
-interface replyCommentInterface {
-    user?: UserAttributes,
-    date?: Date,
-    content: string,
-    likes?: UserAttributes[]
-}
-
-const replySchema = new Schema({
-    user: {type: {}, required: false},
-    date: {type: Date, required: false},
-    content: {type: String, required: true},
-    likes: {type: Number, required:false},
-})
 
 interface eventInterface {
     user: UserAttributes,
@@ -56,8 +43,8 @@ const eventSchema = new Schema({
     slug: String
 })
 
-const replyComment = mongoose.model<replyCommentInterface>('replyComment', replySchema)
+
 const Comment = mongoose.model<UserCommentInterface>('Comment', commentSchema)
 const Event = mongoose.model<eventInterface>('Event', eventSchema)
 
-export {Event, Comment, replyComment}
+export {Event, Comment}

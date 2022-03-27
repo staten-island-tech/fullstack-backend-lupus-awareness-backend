@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
 import { User, UserAttributes } from '../models/User'
-import { Event, Comment, replyComment } from '../models/Event'
+import { Event, Comment } from '../models/Event'
 import bcrypt from 'bcryptjs'
 
 export const createEvent = async(req: Request, res: Response, next: NextFunction) => {
@@ -67,53 +67,38 @@ export const createComment = async (req: Request, res: Response) => {
 
 export const reply = async (req: Request, res: Response) => {
     try {
-        console.log(req.params)
-        const commentId = req.params.id
+        const commentId = req.params.comment_id
         const eventId = req.params.event_id
-        console.log(eventId)
+        console.log(commentId)
 
-        const event = await Event.findOne({ _id: eventId })
-       
+        const event = await Event.findOne({ 
+            // 'comments.content': "home",
+            // 'comments._id': '623c9512b05b082ee54369d0'
+            // 'comments.replies': []
+            "comments._id": "6240ccaea107f4ad9fc79e08"
+        })
 
+    //    if(!event){
+    //        res.json('event not found')
+    //    }
 
         // console.log(req.params)
         
-        const comment = new replyComment({
+        const comment = new Comment({
             content: req.body.content,
         })
 
         let commentInfo = await comment.save()
-        // console.log(commentInfo)
+        console.log(commentInfo)
     
 
         
-        await Event.updateOne(
-            {'_id': req.params.event_id,   "comments": {
-                "$elemMatch": {
-                  "_id": commentId
-                }
-              }
-            },
-            { $push: { "comments.replies": commentInfo }}
+        await Event.findOneAndUpdate(
+            {'_id': eventId,'comments._id': req.params.comment_id},
+            { $push: { "comments.$.replies": commentInfo }}
         )
 
         res.json(event)
-        
-        
-        // await Comment.updateOne(
-        //     { _id: commentId },
-        //     { $push: { replies: commentInfo }}
-        // )
-            
-        // const selectedComment = await Comment.findById(commentId)
-        // res.json(selectedComment)
-        
-        // await Event.updateOne(
-        //     { _id: eventId},
-        //     { $set: { comments: selectedComment}}
-        // )
-
-        
     } catch (error) {
         res.json(error)
     }

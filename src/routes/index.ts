@@ -15,7 +15,7 @@ router.get('/events', getEvents)
 router.delete('/user', deleteAllUser)
 router.get('/profile', requiresAuth, getProfile)
 router.post('/event/:id/createComment',requiresAuth, createComment)
-router.post("/event/:event_id/comment/:id/replyComment", requiresAuth, reply)
+router.post("/event/:event_id/comment/:comment_id/replyComment", requiresAuth, reply)
 router.get("/eventProfile/:id", event)
 
 export {router}
