@@ -53,17 +53,18 @@ const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     try {
         const event = yield Event_1.Event.findOne({ _id: req.params.id });
         // res.json(event)
-        // if(event!){
+        // if(!event){
         //     res.json("This event doesn't exist")
         // }
-        const comment = new Event_1.Comment({
-            content: req.body.content
-        });
-        res.json(comment);
-        let commentInfo = yield comment.save();
-        console.log(commentInfo);
-        yield Event_1.Event.updateOne({ '_id': req.params.id }, { $push: { comments: commentInfo } });
-        console.log(event);
+        const comment = {
+            user: event.user,
+            date: new Date,
+            content: req.body.content,
+            likes: [],
+            replies: []
+        };
+        yield Event_1.Event.updateOne({ '_id': req.params.id }, { $push: { comments: comment } });
+        res.json(event);
     }
     catch (error) {
         res.json(error);
@@ -85,7 +86,7 @@ const reply = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         //        res.json('event not found')
         //    }
         // console.log(req.params)
-        const comment = new Event_1.Comment({
+        const comment = new Comment({
             content: req.body.content,
         });
         let commentInfo = yield comment.save();

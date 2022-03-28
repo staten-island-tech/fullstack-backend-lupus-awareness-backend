@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
 import { User, UserAttributes } from '../models/User'
-import { Event, Comment } from '../models/Event'
+import { Event, CommentInterface } from '../models/Event'
 import bcrypt from 'bcryptjs'
 
 export const createEvent = async(req: Request, res: Response, next: NextFunction) => {
@@ -40,26 +40,25 @@ export const event = async (req: Request, res: Response) => {
 }
 
 
-
-
 export const createComment = async (req: Request, res: Response) => {
     try {
         const event = await Event.findOne({ _id: req.params.id })
         // res.json(event)
-        // if(event!){
+        // if(!event){
         //     res.json("This event doesn't exist")
         // }
-        const comment = new Comment({
-            content: req.body.content
-        })
-        res.json(comment)
-        let commentInfo = await comment.save()
-        console.log(commentInfo)
+        const comment: CommentInterface = {
+            user: event!.user,
+            date: new Date,
+            content: req.body.content,
+            likes: [],
+            replies: []
+        }
         await Event.updateOne(
             {'_id': req.params.id},
-            { $push: { comments: commentInfo }}
+            { $push: { comments: comment }}
         )
-        console.log(event)
+        res.json(event)
     } catch (error) {
         res.json(error)
     }

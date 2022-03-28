@@ -3,20 +3,13 @@ import {UserAttributes, UserInterface, userSchema} from './User'
 import jwt from 'jsonwebtoken'
 const privateKey = process.env.PRIVATEKEY
 
-interface UserCommentInterface {
-    user?: UserAttributes,
-    date?: Date,
+interface CommentInterface {
+    user: UserAttributes,
+    date: Date,
     content: string,
-    likes?: UserAttributes[]
-    replies?: UserCommentInterface[]
+    likes: UserAttributes[]
+    replies: CommentInterface[]
 }
-const commentSchema = new Schema({
-    user: {type: {}, required: false},
-    date: {type: Date, required: false},
-    content: {type: String, required: true},
-    likes: {type: Number, required:false},
-    replies: {type: [], required: false},
-})
 
 
 interface eventInterface {
@@ -27,7 +20,7 @@ interface eventInterface {
     description: string,
     media: string[],
     interestedUsers: UserAttributes[],
-    comments: UserCommentInterface[],
+    comments: CommentInterface[],
     slug?: string
 }
 
@@ -43,8 +36,6 @@ const eventSchema = new Schema({
     slug: String
 })
 
-
-const Comment = mongoose.model<UserCommentInterface>('Comment', commentSchema)
 const Event = mongoose.model<eventInterface>('Event', eventSchema)
 
-export {Event, Comment}
+export {Event, CommentInterface}
