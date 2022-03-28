@@ -40,13 +40,14 @@ export const event = async (req: Request, res: Response) => {
 }
 
 
+
+
 export const createComment = async (req: Request, res: Response) => {
     try {
         const event = await Event.findOne({ _id: req.params.id })
         // res.json(event)
         // if(!event){
         //     res.json("This event doesn't exist")
-        // }
         const comment: CommentInterface = {
             user: event!.user,
             date: new Date,
@@ -70,12 +71,7 @@ export const reply = async (req: Request, res: Response) => {
         const eventId = req.params.event_id
         console.log(commentId)
 
-        const event = await Event.findOne({ 
-            // 'comments.content': "home",
-            // 'comments._id': '623c9512b05b082ee54369d0'
-            // 'comments.replies': []
-            "comments._id": "6240ccaea107f4ad9fc79e08"
-        })
+        const event = await Event.findOne({ _id: eventId})
 
     //    if(!event){
     //        res.json('event not found')
@@ -83,20 +79,14 @@ export const reply = async (req: Request, res: Response) => {
 
         // console.log(req.params)
         
-        const comment = new Comment({
-            content: req.body.content,
-        })
-
-        let commentInfo = await comment.save()
-        console.log(commentInfo)
     
 
         
-        await Event.findOneAndUpdate(
-            {'_id': eventId,'comments._id': req.params.comment_id},
-            { $push: { "comments.$.replies": commentInfo }}
-        )
-
+        // await Event.findOneAndUpdate(
+        //     {'_id': eventId,'comments._id': req.params.comment_id},
+        //     { $push: { "comments.$.replies": commentInfo }}
+        // )
+        res.json(event)
         res.json(event)
     } catch (error) {
         res.json(error)
