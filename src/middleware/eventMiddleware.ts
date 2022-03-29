@@ -86,7 +86,7 @@ export const reply = async (req: Request, res: Response) => {
             replies: []
         }
 
-                await Event.findOneAndUpdate(
+        await Event.findOneAndUpdate(
             {'_id': eventId,"comments.comment_id": commentId},
             { $push: { "comments.$.replies": reply }}
         )
@@ -100,7 +100,6 @@ export const reply = async (req: Request, res: Response) => {
 
         
 
-        res.json(event)
         res.json(event)
     } catch (error) {
         res.json(error)
