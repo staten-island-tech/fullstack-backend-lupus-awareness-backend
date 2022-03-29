@@ -97,7 +97,6 @@ const reply = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         //    }
         // console.log(req.params)
         res.json(event);
-        res.json(event);
     }
     catch (error) {
         res.json(error);
