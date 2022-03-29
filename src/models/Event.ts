@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 const privateKey = process.env.PRIVATEKEY
 
 interface CommentInterface {
+    comment_id: string,
     user: UserAttributes,
     date: Date,
     content: string,

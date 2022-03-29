@@ -8,9 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.reply = exports.createComment = exports.event = exports.getEvents = exports.createEvent = void 0;
 const Event_1 = require("../models/Event");
+const crypto_1 = __importDefault(require("crypto"));
 const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const event = new Event_1.Event({
@@ -55,7 +59,9 @@ const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         // res.json(event)
         // if(!event){
         //     res.json("This event doesn't exist")
+        const commentId = crypto_1.default.randomBytes(16).toString('hex');
         const comment = {
+            comment_id: commentId,
             user: event.user,
             date: new Date,
             content: req.body.content,
@@ -76,14 +82,20 @@ const reply = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const eventId = req.params.event_id;
         console.log(commentId);
         const event = yield Event_1.Event.findOne({ _id: eventId });
+        const replyId = crypto_1.default.randomBytes(16).toString('hex');
+        const reply = {
+            comment_id: replyId,
+            user: event.user,
+            date: new Date,
+            content: req.body.content,
+            likes: [],
+            replies: []
+        };
+        yield Event_1.Event.findOneAndUpdate({ '_id': eventId, "comments.comment_id": commentId }, { $push: { "comments.$.replies": reply } });
         //    if(!event){
         //        res.json('event not found')
         //    }
         // console.log(req.params)
-        // await Event.findOneAndUpdate(
-        //     {'_id': eventId,'comments._id': req.params.comment_id},
-        //     { $push: { "comments.$.replies": commentInfo }}
-        // )
         res.json(event);
         res.json(event);
     }

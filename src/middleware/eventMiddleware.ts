@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 import { User, UserAttributes } from '../models/User'
 import { Event, CommentInterface } from '../models/Event'
 import bcrypt from 'bcryptjs'
+import crypto from 'crypto'
 
 export const createEvent = async(req: Request, res: Response, next: NextFunction) => {
     try {
@@ -48,7 +49,9 @@ export const createComment = async (req: Request, res: Response) => {
         // res.json(event)
         // if(!event){
         //     res.json("This event doesn't exist")
+        const commentId = crypto.randomBytes(16).toString('hex')
         const comment: CommentInterface = {
+            comment_id: commentId,
             user: event!.user,
             date: new Date,
             content: req.body.content,
@@ -73,6 +76,20 @@ export const reply = async (req: Request, res: Response) => {
 
         const event = await Event.findOne({ _id: eventId})
 
+        const replyId = crypto.randomBytes(16).toString('hex')
+        const reply: CommentInterface = {
+            comment_id: replyId,
+            user: event!.user,
+            date: new Date,
+            content: req.body.content,
+            likes: [],
+            replies: []
+        }
+
+                await Event.findOneAndUpdate(
+            {'_id': eventId,"comments.comment_id": commentId},
+            { $push: { "comments.$.replies": reply }}
+        )
     //    if(!event){
     //        res.json('event not found')
     //    }
@@ -82,10 +99,7 @@ export const reply = async (req: Request, res: Response) => {
     
 
         
-        // await Event.findOneAndUpdate(
-        //     {'_id': eventId,'comments._id': req.params.comment_id},
-        //     { $push: { "comments.$.replies": commentInfo }}
-        // )
+
         res.json(event)
         res.json(event)
     } catch (error) {
