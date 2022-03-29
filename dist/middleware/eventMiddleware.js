@@ -8,9 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createComment = exports.getEvents = exports.createEvent = void 0;
+exports.reply = exports.createComment = exports.event = exports.getEvents = exports.createEvent = void 0;
 const Event_1 = require("../models/Event");
+const crypto_1 = __importDefault(require("crypto"));
 const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const event = new Event_1.Event({
@@ -39,21 +43,64 @@ const getEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getEvents = getEvents;
+const event = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const event = yield Event_1.Event.findOne({ _id: req.params.id });
+        res.json(event);
+    }
+    catch (error) {
+        res.json(error);
+    }
+});
+exports.event = event;
 const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const event = yield Event_1.Event.findOne({ _id: req.params.id });
         // res.json(event)
-        const comment = new Event_1.Comment({
-            content: req.body.content
-        });
-        res.json(comment);
-        let commentInfo = yield comment.save();
-        console.log(commentInfo);
-        yield Event_1.Event.updateOne({ _id: req.params.id }, { $push: { comments: commentInfo } });
-        console.log(event);
+        // if(!event){
+        //     res.json("This event doesn't exist")
+        const commentId = crypto_1.default.randomBytes(16).toString('hex');
+        const comment = {
+            comment_id: commentId,
+            user: event.user,
+            date: new Date,
+            content: req.body.content,
+            likes: [],
+            replies: []
+        };
+        yield Event_1.Event.updateOne({ '_id': req.params.id }, { $push: { comments: comment } });
+        res.json(event);
     }
     catch (error) {
         res.json(error);
     }
 });
 exports.createComment = createComment;
+const reply = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const commentId = req.params.comment_id;
+        const eventId = req.params.event_id;
+        console.log(commentId);
+        const event = yield Event_1.Event.findOne({ _id: eventId });
+        const replyId = crypto_1.default.randomBytes(16).toString('hex');
+        const reply = {
+            comment_id: replyId,
+            user: event.user,
+            date: new Date,
+            content: req.body.content,
+            likes: [],
+            replies: []
+        };
+        yield Event_1.Event.findOneAndUpdate({ '_id': eventId, "comments.comment_id": commentId }, { $push: { "comments.$.replies": reply } });
+        //    if(!event){
+        //        res.json('event not found')
+        //    }
+        // console.log(req.params)
+        res.json(event);
+        res.json(event);
+    }
+    catch (error) {
+        res.json(error);
+    }
+});
+exports.reply = reply;

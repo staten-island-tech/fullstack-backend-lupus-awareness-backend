@@ -19,16 +19,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Comment = exports.Event = void 0;
+exports.Event = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const privateKey = process.env.PRIVATEKEY;
-const commentSchema = new mongoose_1.Schema({
-    user: { type: {}, required: false },
-    date: { type: Date, required: false },
-    content: { type: String, required: true },
-    likes: { type: Number, required: false },
-    replies: { type: String, required: false },
-});
 const eventSchema = new mongoose_1.Schema({
     user: { type: {}, required: true },
     date: { type: Date, required: true },
@@ -40,7 +33,5 @@ const eventSchema = new mongoose_1.Schema({
     comments: { type: [], default: [], required: true },
     slug: String
 });
-const Comment = mongoose_1.default.model('Comment', commentSchema);
-exports.Comment = Comment;
 const Event = mongoose_1.default.model('Event', eventSchema);
 exports.Event = Event;
