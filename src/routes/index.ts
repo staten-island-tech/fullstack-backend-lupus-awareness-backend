@@ -7,23 +7,20 @@ const router = express.Router()
 
 router.get('/', getUsers)
 router.get('/events', getEvents)
+router.get('/profile', requiresAuth, getProfile)
+router.get("/eventProfile/:id", event)
 
 router.post('/register', userJoi, createUser)
 router.post('/login', login)
 router.post('/event', requiresAuth, createEvent)
+router.post('/event/:id/createComment',requiresAuth, createComment)
+router.post("/event/:event_id/comment/:comment_id/replyComment", requiresAuth, reply)
 
 router.patch('/user/:id', requiresAuth, updateUsers)
 
 
 router.delete('/user/:id', deleteUser)
 router.delete('/user', deleteAllUser)
-
-
-
-router.get('/profile', requiresAuth, getProfile)
-router.post('/event/:id/createComment',requiresAuth, createComment)
-router.post("/event/:event_id/comment/:comment_id/replyComment", requiresAuth, reply)
-router.get("/eventProfile/:id", event)
 router.delete('/event/:id', requiresAuth, deleteEvent)
 
 export {router}
