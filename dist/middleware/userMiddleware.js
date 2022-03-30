@@ -69,6 +69,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             avatar: existingUser.avatar
         };
         const userToken = jsonwebtoken_1.default.sign(payload, `${process.env.PRIVATEKEY}`);
+        // res.cookie('auth-token', userToken, {httpOnly: true})
         res.header('auth-token', userToken).send(userToken);
     }
     catch (error) {
