@@ -4,6 +4,12 @@ import { Request, Response, NextFunction } from 'express'
 import bodyParser from 'body-parser'
 import { router } from './routes/index'
 import './DB/mongoose'
+import dotenv from 'dotenv'
+dotenv.config()
+
+
+const cloudinary = require("cloudinary").v2
+
 const app = express();
 const port = process.env.PORT || 3000
 
@@ -25,3 +31,9 @@ app.use('/', router)
 app.listen(port, ()=> {
     console.log(`server is up on port ${port}`)
 })
+
+cloudinary.config({ 
+  cloud_name: 'lupusawareness', 
+  api_key: '134957693676947', 
+  api_secret: 'huc9zI1E2pJs3vJ1vzkoWEncx7s' 
+});
