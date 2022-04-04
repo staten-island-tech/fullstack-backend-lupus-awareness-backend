@@ -5,6 +5,7 @@ import bodyParser from 'body-parser'
 import { router } from './routes/index'
 import './DB/mongoose'
 import dotenv from 'dotenv'
+import fileupload from 'express-fileupload'
 dotenv.config()
 
 
@@ -38,3 +39,6 @@ cloudinary.config({
   api_secret: 'huc9zI1E2pJs3vJ1vzkoWEncx7s' 
 });
 console.log(cloudinary.config().cloud_name)
+
+// const fileupload = require("express-fileupload");
+app.use(fileupload());

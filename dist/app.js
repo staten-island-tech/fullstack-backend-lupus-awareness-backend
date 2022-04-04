@@ -9,6 +9,7 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const index_1 = require("./routes/index");
 require("./DB/mongoose");
 const dotenv_1 = __importDefault(require("dotenv"));
+const express_fileupload_1 = __importDefault(require("express-fileupload"));
 dotenv_1.default.config();
 const cloudinary = require("cloudinary").v2;
 const app = (0, express_1.default)();
@@ -34,3 +35,5 @@ cloudinary.config({
     api_secret: 'huc9zI1E2pJs3vJ1vzkoWEncx7s'
 });
 console.log(cloudinary.config().cloud_name);
+// const fileupload = require("express-fileupload");
+app.use((0, express_fileupload_1.default)());

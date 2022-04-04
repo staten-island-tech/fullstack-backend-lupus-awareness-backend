@@ -1,6 +1,7 @@
 import express from 'express'
 import {getUsers, createUser, login, updateUsers, deleteUser, deleteAllUser, getProfile} from '../middleware/userMiddleware'
 import { createEvent, getEvents, createComment, reply, event, deleteEvent} from '../middleware/eventMiddleware'
+import { uploadMedia } from '../middleware/cloudinary'
 import {requiresAuth} from '../middleware/token'
 import {userJoi} from '../middleware/validation_schema'
 const router = express.Router()
@@ -15,6 +16,7 @@ router.post('/login', login)
 router.post('/event', requiresAuth, createEvent)
 router.post('/event/:id/createComment',requiresAuth, createComment)
 router.post("/event/:event_id/comment/:comment_id/replyComment", requiresAuth, reply)
+router.post('/avatar', uploadMedia)
 
 router.patch('/user/:id', requiresAuth, updateUsers)
 

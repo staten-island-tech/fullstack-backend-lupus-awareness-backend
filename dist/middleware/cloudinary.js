@@ -16,18 +16,23 @@ exports.uploadMedia = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const cloudinary = require("cloudinary").v2;
-cloudinary.api.create_upload_preset({
-    name: 'demo_preset',
-    tags: 'baby, winter, snow',
-    folder: 'babies',
-    allowed_formats: 'jpg, png'
-})
-    .then((uploadResult) => console.log(uploadResult))
-    .catch((error) => console.error(error));
+// cloudinary.api.create_upload_preset({
+//     name: 'demo_preset',
+//     tags: 'baby, winter, snow',
+//     folder: 'babies',
+//     allowed_formats: 'jpg, png'
+//   })
+//   .then((uploadResult: any) => console.log(uploadResult))
+//   .catch((error:any) => console.error(error));
 const uploadMedia = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        cloudinary.uploader
-            .upload("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg", { public_id: "olympic_flag" }, function (error, result) { console.log(result, error); });
+        // cloudinary.uploader
+        // .upload("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg", 
+        // { public_id: "olympic_flag" }, 
+        // function (error:any, result: any) { console.log(result, error); });
+        const imageFile = req.files;
+        const file = req.files.file;
+        res.json(file);
     }
     catch (error) {
         res.json(error);
