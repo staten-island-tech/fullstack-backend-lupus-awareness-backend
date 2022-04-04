@@ -56,9 +56,10 @@ export const login = async (req: Request, res: Response) => {
             avatar: existingUser!.avatar
         }
         const userToken = jwt.sign(payload, `${process.env.PRIVATEKEY}` as string)
+        // res.cookie('auth-token', userToken, {httpOnly: true})
         res.header('auth-token', userToken).send(userToken)
     } catch (error) {
-        console.log(error)
+        res.json(error)
     }
 }
 
