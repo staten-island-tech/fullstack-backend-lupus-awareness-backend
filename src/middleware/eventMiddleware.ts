@@ -34,21 +34,25 @@ export const getEvents = async (req: Request, res: Response) => {
 export const event = async (req: Request, res: Response) => {
     try {
         const event = await Event.findOne({ _id: req.params.id })
+
+        if(!event){
+            res.json("This event doesn't exist")
+        }
+
         res.json(event)
     } catch (error) {
         res.json(error)
     }
 }
 
-
-
-
 export const createComment = async (req: Request, res: Response) => {
     try {
         const event = await Event.findOne({ _id: req.params.id })
-        // res.json(event)
-        // if(!event){
-        //     res.json("This event doesn't exist")
+        
+        if(!event){
+            res.json("This event doesn't exist")
+        }
+        
         const commentId = crypto.randomBytes(16).toString('hex')
         const comment: CommentInterface = {
             comment_id: commentId,
@@ -76,6 +80,10 @@ export const reply = async (req: Request, res: Response) => {
 
         const event = await Event.findOne({ _id: eventId})
 
+        if(!event){
+            res.json("This event doesn't exist")
+        }
+
         const replyId = crypto.randomBytes(16).toString('hex')
         const reply: CommentInterface = {
             comment_id: replyId,
@@ -90,22 +98,21 @@ export const reply = async (req: Request, res: Response) => {
             {'_id': eventId,"comments.comment_id": commentId},
             { $push: { "comments.$.replies": reply }}
         )
-    //    if(!event){
-    //        res.json('event not found')
-    //    }
-
-        // console.log(req.params)
-        
-    
-
-        
-
         res.json(event)
     } catch (error) {
         res.json(error)
     }
 }
 
-
-
-
+export const deleteEvent = async (req: Request, res: Response) => {
+    try {
+   
+        const event = await User.findByIdAndDelete(req.params.id)
+        if(!event){
+            res.status(404).send()
+        }
+        res.json(`${event!.firstName} ${event!.lastName} was deleted from DB`)
+    } catch (error) {
+        console.log(error)
+    }
+}

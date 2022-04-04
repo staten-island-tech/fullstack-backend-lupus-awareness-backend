@@ -12,7 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.reply = exports.createComment = exports.event = exports.getEvents = exports.createEvent = void 0;
+exports.deleteEvent = exports.reply = exports.createComment = exports.event = exports.getEvents = exports.createEvent = void 0;
+const User_1 = require("../models/User");
 const Event_1 = require("../models/Event");
 const crypto_1 = __importDefault(require("crypto"));
 const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -46,6 +47,9 @@ exports.getEvents = getEvents;
 const event = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const event = yield Event_1.Event.findOne({ _id: req.params.id });
+        if (!event) {
+            res.json("This event doesn't exist");
+        }
         res.json(event);
     }
     catch (error) {
@@ -56,9 +60,9 @@ exports.event = event;
 const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const event = yield Event_1.Event.findOne({ _id: req.params.id });
-        // res.json(event)
-        // if(!event){
-        //     res.json("This event doesn't exist")
+        if (!event) {
+            res.json("This event doesn't exist");
+        }
         const commentId = crypto_1.default.randomBytes(16).toString('hex');
         const comment = {
             comment_id: commentId,
@@ -82,6 +86,9 @@ const reply = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const eventId = req.params.event_id;
         console.log(commentId);
         const event = yield Event_1.Event.findOne({ _id: eventId });
+        if (!event) {
+            res.json("This event doesn't exist");
+        }
         const replyId = crypto_1.default.randomBytes(16).toString('hex');
         const reply = {
             comment_id: replyId,
@@ -92,10 +99,6 @@ const reply = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             replies: []
         };
         yield Event_1.Event.findOneAndUpdate({ '_id': eventId, "comments.comment_id": commentId }, { $push: { "comments.$.replies": reply } });
-        //    if(!event){
-        //        res.json('event not found')
-        //    }
-        // console.log(req.params)
         res.json(event);
     }
     catch (error) {
@@ -103,3 +106,16 @@ const reply = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.reply = reply;
+const deleteEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const event = yield User_1.User.findByIdAndDelete(req.params.id);
+        if (!event) {
+            res.status(404).send();
+        }
+        res.json(`${event.firstName} ${event.lastName} was deleted from DB`);
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+exports.deleteEvent = deleteEvent;
