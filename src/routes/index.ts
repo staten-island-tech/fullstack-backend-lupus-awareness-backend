@@ -1,7 +1,15 @@
 import express from 'express'
-import {getUsers, createUser, login, updateUsers, deleteUser, deleteAllUser, getProfile} from '../middleware/userMiddleware'
-import { createEvent, getEvents, createComment, reply, event, deleteEvent} from '../middleware/eventMiddleware'
-import {requiresAuth} from '../middleware/token'
+//user middleware
+import {getUsers, updateUsers, deleteUser, deleteAllUser, getProfile} from '../middleware/userMiddleware'
+import {login} from '../middleware/auth/login'
+import {register} from '../middleware/auth/register'
+import {requiresAuth} from '../middleware/auth/token'
+
+//event middleware
+import { getEvents, event, deleteEvent} from '../middleware/eventMiddleware'
+import {reply, createComment} from '../middleware/events/comments'
+import { createEvent } from '../middleware/events/createEvent'
+
 import {userJoi} from '../middleware/validation_schema'
 const router = express.Router()
 
@@ -10,7 +18,7 @@ router.get('/events', getEvents)
 router.get('/profile', requiresAuth, getProfile)
 router.get("/eventProfile/:id", event)
 
-router.post('/register', userJoi, createUser)
+router.post('/register', userJoi, register)
 router.post('/login', login)
 router.post('/event', requiresAuth, createEvent)
 router.post('/event/:id/createComment',requiresAuth, createComment)

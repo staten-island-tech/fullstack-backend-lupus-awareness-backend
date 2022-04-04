@@ -12,10 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteAllUser = exports.getProfile = exports.deleteUser = exports.updateUsers = exports.login = exports.createUser = exports.getUsers = void 0;
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+exports.deleteAllUser = exports.getProfile = exports.deleteUser = exports.updateUsers = exports.getUsers = void 0;
 const User_1 = require("../models/User");
-const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -28,55 +26,6 @@ const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getUsers = getUsers;
-const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        //find an existing user
-        let doesExist = yield User_1.User.findOne({ email: req.body.email });
-        if (doesExist)
-            return res.status(400).send("User already registered.");
-        const user = new User_1.User(req.body);
-        user.password = yield bcryptjs_1.default.hash(req.body.password, 10);
-        yield user.save();
-        res.json(user);
-    }
-    catch (error) {
-        console.log(error);
-    }
-});
-exports.createUser = createUser;
-const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { email, password } = req.body;
-        const existingUser = yield User_1.User.findOne({ email });
-        if (!existingUser) {
-            res.json('email not registered');
-        }
-        console.log(existingUser);
-        const validPassword = bcryptjs_1.default.compareSync(password, existingUser.password);
-        console.log(validPassword);
-        if (!validPassword) {
-            res.json('not valid');
-            return;
-        }
-        console.log('valid');
-        const payload = {
-            firstName: existingUser.firstName,
-            lastName: existingUser.lastName,
-            role: existingUser.role,
-            subscribers: existingUser.subscribers,
-            interestedEvents: existingUser.interestedEvents,
-            events: existingUser.events,
-            avatar: existingUser.avatar
-        };
-        const userToken = jsonwebtoken_1.default.sign(payload, `${process.env.PRIVATEKEY}`);
-        // res.cookie('auth-token', userToken, {httpOnly: true})
-        res.header('auth-token', userToken).send(userToken);
-    }
-    catch (error) {
-        res.json(error);
-    }
-});
-exports.login = login;
 const updateUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield User_1.User.findById(req.params.id);

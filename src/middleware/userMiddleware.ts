@@ -16,54 +16,6 @@ export const getUsers = async (req: Request, res: Response) => {
     }
 }
 
-export const createUser = async (req: Request, res: Response) => {
-    try {
-        //find an existing user
-        let doesExist = await User.findOne({ email: req.body.email });
-        if (doesExist) return res.status(400).send("User already registered.");
-
-        const user = new User(req.body)
-        user.password = await bcrypt.hash(req.body.password, 10);
-        await user.save();
-    res.json(user)
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-export const login = async (req: Request, res: Response) => {
-    try {
-        const { email, password } = req.body;
-        const existingUser = await User.findOne({ email })
-        if (!existingUser) {
-            res.json('email not registered')
-        }
-        console.log(existingUser)
-        const validPassword = bcrypt.compareSync(password, existingUser!.password)
-        console.log(validPassword)
-        if (!validPassword) {
-            res.json('not valid')
-            return
-        }
-        console.log('valid')
-        const payload: UserAttributes = {
-            firstName: existingUser!.firstName,
-            lastName: existingUser!.lastName,
-            role: existingUser!.role,
-            subscribers: existingUser!.subscribers,
-            interestedEvents: existingUser!.interestedEvents,
-            events: existingUser!.events,
-            avatar: existingUser!.avatar
-        }
-        const userToken = jwt.sign(payload, `${process.env.PRIVATEKEY}` as string)
-        // res.cookie('auth-token', userToken, {httpOnly: true})
-        res.header('auth-token', userToken).send(userToken)
-    } catch (error) {
-        res.json(error)
-    }
-}
-
-
 export const updateUsers = async (req: Request, res: Response) => {
     try {
         const user : any = await User.findById(req.params.id)
