@@ -20,9 +20,9 @@ const cloudinary = require("cloudinary").v2
         // .upload("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg", 
         // { public_id: "olympic_flag" }, 
         // function (error:any, result: any) { console.log(result, error); });
-        const imageFile = req.files
-        const file = req.files!.file
-        res.json(file)
+        // const imageFile = req.files
+        // const file = req.files!.file
+        res.json(req)
     } catch (error) {
         res.json(error)
     }

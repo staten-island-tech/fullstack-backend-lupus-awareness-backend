@@ -10,6 +10,7 @@ const index_1 = require("./routes/index");
 require("./DB/mongoose");
 const dotenv_1 = __importDefault(require("dotenv"));
 const express_fileupload_1 = __importDefault(require("express-fileupload"));
+const connect_busboy_1 = __importDefault(require("connect-busboy"));
 dotenv_1.default.config();
 const cloudinary = require("cloudinary").v2;
 const app = (0, express_1.default)();
@@ -37,3 +38,4 @@ cloudinary.config({
 console.log(cloudinary.config().cloud_name);
 // const fileupload = require("express-fileupload");
 app.use((0, express_fileupload_1.default)());
+app.use((0, connect_busboy_1.default)());

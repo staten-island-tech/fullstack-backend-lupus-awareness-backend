@@ -5,7 +5,8 @@ import bodyParser from 'body-parser'
 import { router } from './routes/index'
 import './DB/mongoose'
 import dotenv from 'dotenv'
-import fileupload from 'express-fileupload'
+import fileUpload from 'express-fileupload'
+import busboy from 'connect-busboy'
 dotenv.config()
 
 
@@ -41,4 +42,6 @@ cloudinary.config({
 console.log(cloudinary.config().cloud_name)
 
 // const fileupload = require("express-fileupload");
-app.use(fileupload());
+app.use(fileUpload());
+
+app.use(busboy())
