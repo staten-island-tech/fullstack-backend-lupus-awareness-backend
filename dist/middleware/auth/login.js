@@ -34,6 +34,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         console.log('valid');
         const payload = {
+            _id: existingUser._id,
             firstName: existingUser.firstName,
             lastName: existingUser.lastName,
             role: existingUser.role,

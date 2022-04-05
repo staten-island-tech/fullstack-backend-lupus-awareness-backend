@@ -23,6 +23,7 @@ export const login = async (req: Request, res: Response) => {
         }
         console.log('valid')
         const payload: UserAttributes = {
+            _id: existingUser!._id as string,
             firstName: existingUser!.firstName,
             lastName: existingUser!.lastName,
             role: existingUser!.role,
