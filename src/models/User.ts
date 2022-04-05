@@ -3,23 +3,27 @@ import { Event } from './Event'
 import jwt from 'jsonwebtoken'
 const privateKey = process.env.PRIVATEKEY
 
-// enum Role {
-//     Viewer = 'viewer',
-//     Uploader = 'uploader',
-//     Admin = 'admin'
-// }
-export interface UserAttributes {
+enum Role {
+    Viewer = 'viewer',
+    Uploader = 'uploader',
+    Admin = 'admin'
+}
+export interface UserData {
     firstName: string,
     lastName: string,
-        // role: Role,
-    role: String,
+    role: Role,
     subscribers: UserInterface[],
     interestedEvents: Event[]
     events: Event[],
     avatar: string,
     slug?: string
 }
-export interface UserInterface extends UserAttributes {
+
+export interface UserAttributes extends UserData{
+    _id: String
+}
+
+export interface UserInterface extends UserData {
     email: string,
     password: string
 }
@@ -30,7 +34,7 @@ const userSchema = new Schema({
     email: { type: String, required: true},
     password: { type: String, required: true},
     // role: {type: Role, default: Role.Viewer, required: true},
-    role: {type: String, default: 'viewer'},
+    role: {type: String, default: Role.Viewer, required: true},
     subscribers: {type:[], default: [], required: true},
     interestedEvents: {type:[], default: [], required: true},
     events: {type:[], default: [], required: true},
