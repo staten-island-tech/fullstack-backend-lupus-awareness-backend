@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploadMedia = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
-const User_1 = require("../models/User");
 dotenv_1.default.config();
 const cloudinary = require("cloudinary").v2;
 // cloudinary.api.create_upload_preset({
@@ -27,18 +26,16 @@ const cloudinary = require("cloudinary").v2;
 //   .catch((error:any) => console.error(error));
 const uploadMedia = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const imageFile = req.files;
         // cloudinary.uploader
-        // .upload("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg", 
-        // { public_id: "olympic_flag" }, 
+        // .upload(imageFile, 
+        // { public_id: 'fileName' }, 
         // function (error:any, result: any) { console.log(result, error); });
-        // const imageFile = req.files
-        // const file = req.files!.file
-        let user = yield User_1.User.findOne({ _id: req.body.payload._id });
-        res.json(req.files);
-        console.log(req.files);
+        console.log(imageFile);
     }
     catch (error) {
         res.json(error);
+        console.log(error);
     }
 });
 exports.uploadMedia = uploadMedia;

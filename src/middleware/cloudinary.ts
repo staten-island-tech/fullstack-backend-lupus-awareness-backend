@@ -1,9 +1,7 @@
 import dotenv from 'dotenv'
 import { Request, Response, NextFunction } from 'express'
-import { User } from '../models/User'
-import express from 'express';
-import fileUpload from 'express-fileupload'
 dotenv.config()
+
 
 const cloudinary = require("cloudinary").v2
 
@@ -18,16 +16,14 @@ const cloudinary = require("cloudinary").v2
 
   export const uploadMedia = async(req: Request, res: Response, next: NextFunction) => {
     try {
+        const imageFile = req.files
         // cloudinary.uploader
-        // .upload("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg", 
-        // { public_id: "olympic_flag" }, 
+        // .upload(imageFile, 
+        // { public_id: 'fileName' }, 
         // function (error:any, result: any) { console.log(result, error); });
-        // const imageFile = req.files
-        // const file = req.files!.file
-        let user = await User.findOne({ _id: req.body.payload._id });
-        res.json(req.files)
-        console.log(req.files)
+        console.log(imageFile)
     } catch (error) {
         res.json(error)
+        console.log(error)
     }
 }

@@ -27,7 +27,7 @@ router.post('/login', login_1.login);
 router.post('/event', token_1.requiresAuth, createEvent_1.createEvent);
 router.post('/event/:id/createComment', token_1.requiresAuth, comments_1.createComment);
 router.post("/event/:event_id/comment/:comment_id/replyComment", token_1.requiresAuth, comments_1.reply);
-router.post('/avatar', token_1.requiresAuth, cloudinary_1.uploadMedia);
+router.post('/avatar', cloudinary_1.uploadMedia);
 router.patch('/user/:id', token_1.requiresAuth, userMiddleware_1.updateUsers);
 router.delete('/user/:id', userMiddleware_1.deleteUser);
 router.delete('/user', userMiddleware_1.deleteAllUser);

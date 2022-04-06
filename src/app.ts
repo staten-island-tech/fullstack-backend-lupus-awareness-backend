@@ -28,19 +28,17 @@ app.use(express.urlencoded({
     extended: true
 }))
 
-app.use('/', router)
-app.listen(port, ()=> {
-    console.log(`server is up on port ${port}`)
-})
-
 cloudinary.config({ 
   cloud_name: 'lupusawareness', 
   api_key: '134957693676947', 
   api_secret: 'huc9zI1E2pJs3vJ1vzkoWEncx7s' 
 });
 
-// const fileupload = require("express-fileupload");
+//Enable File Upload
 app.use(fileUpload());
-
 app.use(busboy())
 
+app.use('/', router)
+app.listen(port, ()=> {
+    console.log(`server is up on port ${port}`)
+})
