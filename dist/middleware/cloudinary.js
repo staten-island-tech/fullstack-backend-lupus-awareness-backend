@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploadMedia = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
+const User_1 = require("../models/User");
 dotenv_1.default.config();
 const cloudinary = require("cloudinary").v2;
 // cloudinary.api.create_upload_preset({
@@ -32,7 +33,9 @@ const uploadMedia = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         // function (error:any, result: any) { console.log(result, error); });
         // const imageFile = req.files
         // const file = req.files!.file
-        res.json(req);
+        let user = yield User_1.User.findOne({ _id: req.body.payload._id });
+        res.json(req.files);
+        console.log(req.files);
     }
     catch (error) {
         res.json(error);

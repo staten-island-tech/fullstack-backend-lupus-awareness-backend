@@ -9,7 +9,6 @@ import fileUpload from 'express-fileupload'
 import busboy from 'connect-busboy'
 dotenv.config()
 
-
 const cloudinary = require("cloudinary").v2
 
 const app = express();
@@ -39,9 +38,9 @@ cloudinary.config({
   api_key: '134957693676947', 
   api_secret: 'huc9zI1E2pJs3vJ1vzkoWEncx7s' 
 });
-console.log(cloudinary.config().cloud_name)
 
 // const fileupload = require("express-fileupload");
 app.use(fileUpload());
 
 app.use(busboy())
+

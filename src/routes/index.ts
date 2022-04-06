@@ -4,6 +4,7 @@ import {getUsers, updateUsers, deleteUser, deleteAllUser, getProfile} from '../m
 import {login} from '../middleware/auth/login'
 import {register} from '../middleware/auth/register'
 import {requiresAuth} from '../middleware/auth/token'
+import { uploadMedia } from '../middleware/cloudinary'
 
 //event middleware
 import { getEvents, event, deleteEvent} from '../middleware/eventMiddleware'
@@ -23,7 +24,7 @@ router.post('/login', login)
 router.post('/event', requiresAuth, createEvent)
 router.post('/event/:id/createComment',requiresAuth, createComment)
 router.post("/event/:event_id/comment/:comment_id/replyComment", requiresAuth, reply)
-router.post('/avatar', uploadMedia)
+router.post('/avatar', requiresAuth, uploadMedia)
 
 router.patch('/user/:id', requiresAuth, updateUsers)
 
@@ -31,5 +32,9 @@ router.patch('/user/:id', requiresAuth, updateUsers)
 router.delete('/user/:id', deleteUser)
 router.delete('/user', deleteAllUser)
 router.delete('/event/:id', requiresAuth, deleteEvent)
+
+router.post('/upload',  function(req, res) {
+    res.json(req.files!)
+  })
 
 export {router}

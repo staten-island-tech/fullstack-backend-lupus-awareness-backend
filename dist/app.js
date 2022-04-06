@@ -35,7 +35,6 @@ cloudinary.config({
     api_key: '134957693676947',
     api_secret: 'huc9zI1E2pJs3vJ1vzkoWEncx7s'
 });
-console.log(cloudinary.config().cloud_name);
 // const fileupload = require("express-fileupload");
 app.use((0, express_fileupload_1.default)());
 app.use((0, connect_busboy_1.default)());
