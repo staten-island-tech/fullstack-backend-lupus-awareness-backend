@@ -12,8 +12,9 @@ export const createEvent = async(req: Request, res: Response, next: NextFunction
             media: req.body.media
             });
         await event.save();
-        let user = await User.findOne({ _id: req.body.payload._id });
-        user!.events.push(event._id)
+        await User.findOneAndUpdate({ _id: req.body.payload._id },
+        {$push: {events: event._id}}
+        );
         res.json(event)
     } catch (error) {
         res.json(error)

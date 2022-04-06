@@ -22,8 +22,7 @@ const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
             media: req.body.media
         });
         yield event.save();
-        let user = yield User_1.User.findOne({ _id: req.body.payload._id });
-        user.events.push(event._id);
+        yield User_1.User.findOneAndUpdate({ _id: req.body.payload._id }, { $push: { events: event._id } });
         res.json(event);
     }
     catch (error) {
