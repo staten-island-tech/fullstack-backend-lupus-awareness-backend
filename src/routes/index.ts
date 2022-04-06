@@ -33,8 +33,4 @@ router.delete('/user/:id', deleteUser)
 router.delete('/user', deleteAllUser)
 router.delete('/event/:id', requiresAuth, deleteEvent)
 
-router.post('/upload',  function(req, res) {
-    res.json(req.files!)
-  })
-
 export {router}

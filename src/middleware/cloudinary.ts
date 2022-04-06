@@ -1,6 +1,8 @@
 import dotenv from 'dotenv'
 import { Request, Response, NextFunction } from 'express'
 import { User } from '../models/User'
+import express from 'express';
+import fileUpload from 'express-fileupload'
 dotenv.config()
 
 const cloudinary = require("cloudinary").v2

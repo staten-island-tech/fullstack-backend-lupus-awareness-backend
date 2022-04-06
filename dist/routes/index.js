@@ -32,6 +32,3 @@ router.patch('/user/:id', token_1.requiresAuth, userMiddleware_1.updateUsers);
 router.delete('/user/:id', userMiddleware_1.deleteUser);
 router.delete('/user', userMiddleware_1.deleteAllUser);
 router.delete('/event/:id', token_1.requiresAuth, eventMiddleware_1.deleteEvent);
-router.post('/upload', function (req, res) {
-    res.json(req.files);
-});
