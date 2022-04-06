@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
 import { User, UserAttributes, UserInterface } from '../../models/User'
 import bcrypt from 'bcryptjs'
-import {userJoi} from '../../middleware/validation_schema'
+import {userJoi} from '../validation_schema'
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -23,7 +23,7 @@ export const login = async (req: Request, res: Response) => {
         }
         console.log('valid')
         const payload: UserAttributes = {
-            _id: existingUser!._id as string,
+            _id: existingUser!._id,
             firstName: existingUser!.firstName,
             lastName: existingUser!.lastName,
             role: existingUser!.role,

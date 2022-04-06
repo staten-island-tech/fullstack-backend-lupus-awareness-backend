@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import { User, UserAttributes, UserInterface } from '../../models/User'
 import bcrypt from 'bcryptjs'
-import {userJoi} from '../../middleware/validation_schema'
+import {userJoi} from '../validation_schema'
 import dotenv from 'dotenv'
 dotenv.config()
 

@@ -8,26 +8,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createEvent = void 0;
+exports.register = void 0;
 const User_1 = require("../../models/User");
-const Event_1 = require("../../models/Event");
-const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const event = new Event_1.Event({
-            user: req.body.payload,
-            date: new Date(),
-            location: req.body.location,
-            description: req.body.description,
-            media: req.body.media
-        });
-        yield event.save();
-        let user = yield User_1.User.findOne({ _id: req.body.payload._id });
-        user.events.push(event._id);
-        res.json(event);
+        //find an existing user
+        let doesExist = yield User_1.User.findOne({ email: req.body.email });
+        if (doesExist)
+            return res.status(400).send("User already registered.");
+        const user = new User_1.User(req.body);
+        user.password = yield bcryptjs_1.default.hash(req.body.password, 10);
+        yield user.save();
+        res.json(user);
     }
     catch (error) {
-        res.json(error);
+        console.log(error);
     }
 });
-exports.createEvent = createEvent;
+exports.register = register;

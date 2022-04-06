@@ -1,9 +1,9 @@
 import express from 'express'
 //user middleware
 import {getUsers, updateUsers, deleteUser, deleteAllUser, getProfile} from '../middleware/userMiddleware'
-import {login} from '../middleware/auth/login'
-import {register} from '../middleware/auth/register'
-import {requiresAuth} from '../middleware/auth/token'
+import {login} from '../middleware/user/login'
+import {register} from '../middleware/user/register'
+import {requiresAuth} from '../middleware/user/token'
 
 //event middleware
 import { getEvents, event, deleteEvent} from '../middleware/eventMiddleware'
