@@ -1,7 +1,9 @@
 import dotenv from 'dotenv'
 import { Request, Response, NextFunction } from 'express'
+import multer from 'multer'
 dotenv.config()
 
+const upload = multer()
 
 const cloudinary = require("cloudinary").v2
 

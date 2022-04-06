@@ -14,7 +14,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploadMedia = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
+const multer_1 = __importDefault(require("multer"));
 dotenv_1.default.config();
+const upload = (0, multer_1.default)();
 const cloudinary = require("cloudinary").v2;
 // cloudinary.api.create_upload_preset({
 //     name: 'demo_preset',
