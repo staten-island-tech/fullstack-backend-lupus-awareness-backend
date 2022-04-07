@@ -14,26 +14,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploadMedia = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
-const multer_1 = __importDefault(require("multer"));
+const datauri_1 = __importDefault(require("datauri"));
 dotenv_1.default.config();
-const upload = (0, multer_1.default)();
 const cloudinary = require("cloudinary").v2;
-// cloudinary.api.create_upload_preset({
-//     name: 'demo_preset',
-//     tags: 'baby, winter, snow',
-//     folder: 'babies',
-//     allowed_formats: 'jpg, png'
-//   })
-//   .then((uploadResult: any) => console.log(uploadResult))
-//   .catch((error:any) => console.error(error));
 const uploadMedia = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const imageFile = req.files;
-        // cloudinary.uploader
-        // .upload(imageFile, 
-        // { public_id: 'fileName' }, 
-        // function (error:any, result: any) { console.log(result, error); });
-        console.log(imageFile);
+        const dUri = yield (0, datauri_1.default)(req.files);
+        console.log(dUri);
+        // console.log('req.body:', req.files)
+        // const dataUri = (req: Request) => dUri.format(path.extname(req.file!.originalname).toString(), req.file!.buffer)
+        // const file = dataUri(req).content
+        // res.json(file)
+        // return cloudinary.uploader.upload(file).then((result: any) => {
+        //     const image = result.url
+        //     res.json(image)
+        // }).catch((err: any) =>{
+        //     res.json(err)
+        // })
+        //   res.json(imageFile!.name)
     }
     catch (error) {
         res.json(error);

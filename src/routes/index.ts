@@ -1,4 +1,6 @@
 import express from 'express'
+// import { multerUploads } from'../middleware/multer'
+
 //user middleware
 import {getUsers, updateUsers, deleteUser, deleteAllUser, getProfile} from '../middleware/userMiddleware'
 import {login} from '../middleware/auth/login'
