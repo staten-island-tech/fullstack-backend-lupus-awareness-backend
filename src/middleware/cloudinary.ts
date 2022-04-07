@@ -12,7 +12,7 @@ const cloudinary = require("cloudinary").v2
         const dUri = await datauri(req.files)
         console.log(dUri)
         // console.log('req.body:', req.files)
-        // const dataUri = (req: Request) => dUri.format(path.extname(req.file!.originalname).toString(), req.file!.buffer)
+        const dataUri = (req: Request) => dUri!.format(path.extname(req.file!.originalname).toString(), req.file!.buffer)
         // const file = dataUri(req).content
         // res.json(file)
         // return cloudinary.uploader.upload(file).then((result: any) => {
