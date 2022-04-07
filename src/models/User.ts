@@ -11,9 +11,7 @@ export interface UserData {
     firstName: string,
     lastName: string,
     role: Role,
-    subscribers: UserInterface[],
-    interestedEvents: mongoose.Types.ObjectId[]
-    events: mongoose.Types.ObjectId[],
+    
     avatar: string,
     slug?: string
 }
@@ -24,7 +22,10 @@ export interface UserAttributes extends UserData{
 
 export interface UserInterface extends UserData {
     email: string,
-    password: string
+    password: string,
+    subscribers: UserInterface[],
+    interestedEvents: mongoose.Types.ObjectId[]
+    events: mongoose.Types.ObjectId[],
 }
 
 const userSchema = new Schema({

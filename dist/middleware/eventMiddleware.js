@@ -9,19 +9,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteEvent = exports.event = exports.getEvents = void 0;
+exports.deleteEvent = exports.event = void 0;
 const User_1 = require("../models/User");
 const Event_1 = require("../models/Event");
-const getEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const Events = yield Event_1.Event.find();
-        res.json(Events);
-    }
-    catch (error) {
-        res.json(error);
-    }
-});
-exports.getEvents = getEvents;
+// export const getEvents = async (req: Request, res: Response) => {
+//     try {
+//         const Events = await Event.find()
+//         res.json(Events)
+//     } catch (error) {
+//         res.json(error)
+//     }
+// }
 const event = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const event = yield Event_1.Event.findOne({ _id: req.params.id });

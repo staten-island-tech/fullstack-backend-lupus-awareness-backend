@@ -27,9 +27,6 @@ export const login = async (req: Request, res: Response) => {
             firstName: existingUser!.firstName,
             lastName: existingUser!.lastName,
             role: existingUser!.role,
-            subscribers: existingUser!.subscribers,
-            interestedEvents: existingUser!.interestedEvents,
-            events: existingUser!.events,
             avatar: existingUser!.avatar
         }
         const userToken = jwt.sign(payload, process.env.PRIVATEKEY as string)

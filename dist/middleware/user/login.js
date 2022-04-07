@@ -38,9 +38,6 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             firstName: existingUser.firstName,
             lastName: existingUser.lastName,
             role: existingUser.role,
-            subscribers: existingUser.subscribers,
-            interestedEvents: existingUser.interestedEvents,
-            events: existingUser.events,
             avatar: existingUser.avatar
         };
         const userToken = jsonwebtoken_1.default.sign(payload, process.env.PRIVATEKEY);
