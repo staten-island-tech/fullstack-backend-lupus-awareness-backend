@@ -18,7 +18,7 @@ router.get('/', getUsers)
 router.get('/events', getEvents)
 router.get('/profile', requiresAuth, getProfile)
 router.get("/eventProfile/:id", event)
-router.get('/getEvents', getEvents)
+router.get('/getEvents', requiresAuth, getEvents)
 
 router.post('/register', userJoi, register)
 router.post('/login', login)

@@ -22,7 +22,7 @@ router.get('/', userMiddleware_1.getUsers);
 router.get('/events', getEvents_1.getEvents);
 router.get('/profile', token_1.requiresAuth, userMiddleware_1.getProfile);
 router.get("/eventProfile/:id", eventMiddleware_1.event);
-router.get('/getEvents', getEvents_1.getEvents);
+router.get('/getEvents', token_1.requiresAuth, getEvents_1.getEvents);
 router.post('/register', validation_schema_1.userJoi, register_1.register);
 router.post('/login', login_1.login);
 router.post('/event', token_1.requiresAuth, createEvent_1.createEvent);
