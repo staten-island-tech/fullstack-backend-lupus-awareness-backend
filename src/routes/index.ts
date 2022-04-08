@@ -1,5 +1,5 @@
 import express from 'express'
-// import { multerUploads } from'../middleware/multer'
+import { upload } from '../middleware/events/multer'
 
 //user middleware
 import {getUsers, updateUsers, deleteUser, deleteAllUser, getProfile} from '../middleware/userMiddleware'
@@ -14,6 +14,7 @@ import {reply, createComment} from '../middleware/events/comments'
 import { createEvent } from '../middleware/events/createEvent'
 
 import {userJoi} from '../middleware/validation_schema'
+import multer from 'multer'
 const router = express.Router()
 
 router.get('/', getUsers)
@@ -26,7 +27,7 @@ router.post('/login', login)
 router.post('/event', requiresAuth, createEvent)
 router.post('/event/:id/createComment',requiresAuth, createComment)
 router.post("/event/:event_id/comment/:comment_id/replyComment", requiresAuth, reply)
-router.post('/avatar', uploadMedia)
+router.post('/upload', upload, uploadMedia)
 
 router.patch('/user/:id', requiresAuth, updateUsers)
 

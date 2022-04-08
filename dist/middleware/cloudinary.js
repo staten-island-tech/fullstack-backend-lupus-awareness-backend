@@ -14,16 +14,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploadMedia = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
-const datauri_1 = __importDefault(require("datauri"));
-const path_1 = __importDefault(require("path"));
 dotenv_1.default.config();
 const cloudinary = require("cloudinary").v2;
 const uploadMedia = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const dUri = yield (0, datauri_1.default)(req.files);
-        console.log(dUri);
+        // const dUri = await datauri(req.files)
+        // console.log(dUri)
         // console.log('req.body:', req.files)
-        const dataUri = (req) => dUri.format(path_1.default.extname(req.file.originalname).toString(), req.file.buffer);
+        // const dataUri = (req: Request) => dUri!.format(path.extname(req.file!.originalname).toString(), req.file!.buffer)
         // const file = dataUri(req).content
         // res.json(file)
         // return cloudinary.uploader.upload(file).then((result: any) => {
@@ -33,6 +31,8 @@ const uploadMedia = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         //     res.json(err)
         // })
         //   res.json(imageFile!.name)
+        res.json(req.files.image.data);
+        console.log(req.file.image.data);
     }
     catch (error) {
         res.json(error);
