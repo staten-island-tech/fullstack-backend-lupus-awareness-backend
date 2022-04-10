@@ -1,29 +1,29 @@
 import dotenv from 'dotenv'
 import { Request, Response, NextFunction } from 'express'
-import multer from 'multer'
-import datauri from 'datauri'
+import Datauri from 'datauri'
 import path from 'path'
 dotenv.config()
 
 const cloudinary = require("cloudinary").v2
 
+
+
+
   export const uploadMedia = async(req: Request, res: Response, next: NextFunction) => {
     try {
-        // const dUri = await datauri(req.files)
-        // console.log(dUri)
-        // console.log('req.body:', req.files)
-        // const dataUri = (req: Request) => dUri!.format(path.extname(req.file!.originalname).toString(), req.file!.buffer)
+        // const dUri = new Datauri(req)
+        const fileBuffer = req.files!.image.data
+        console.log(fileBuffer)
+        res.json(fileBuffer.toString('base64url'))
+
+
+        // const dataUri = (req: Request) => 
+        // dUri.format(path.extname(req.files!.image.name).toString(), req.files!.image.data)
         // const file = dataUri(req).content
-        // res.json(file)
-        // return cloudinary.uploader.upload(file).then((result: any) => {
-        //     const image = result.url
-        //     res.json(image)
-        // }).catch((err: any) =>{
-        //     res.json(err)
-        // })
-    //   res.json(imageFile!.name)
-    res.json(req.files!.image.data)
-    console.log(req.file!.image.data)
+        // console.log(file)
+
+        
+        // cloudinary.uploader.upload(fileBuffer.toString('base64'), function(error: TypeError, result: any) {console.log(result, error)});
     } catch (error) {
         res.json(error)
         console.log(error)
