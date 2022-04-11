@@ -57,6 +57,7 @@ const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         let user = yield User_1.User.findOne({ _id: req.body.payload._id });
         // res.json(user)
         res.json(req.body.payload);
+        console.log(user);
         // console.log(req.body.payload.email)
     }
     catch (error) {
