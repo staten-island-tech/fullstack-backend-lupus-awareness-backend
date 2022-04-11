@@ -5,7 +5,7 @@ const upload = require('../middleware/events/multer')
 import {getUsers, updateUsers, deleteUser, deleteAllUser, getProfile} from '../middleware/userMiddleware'
 import {login} from '../middleware/user/login'
 import {register} from '../middleware/user/register'
-import {requiresAuth} from '../middleware/user/token'
+import { requiresAuth } from '../middleware/user/token'
 import { uploadMedia } from '../middleware/cloudinary'
 
 //event middleware

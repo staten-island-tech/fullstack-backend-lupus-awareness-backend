@@ -46,7 +46,6 @@ export const getProfile = async (req: Request, res: Response) => {
         let user = await User.findOne({ _id: req.body.payload._id });
         // res.json(user)
         res.json(req.body.payload)
-        console.log(user)
         // console.log(req.body.payload.email)
     } catch (error) {
         console.log(error)
