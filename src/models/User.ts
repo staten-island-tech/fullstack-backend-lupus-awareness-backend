@@ -1,5 +1,4 @@
 import mongoose, { Schema, model, connect } from 'mongoose'
-import { Event } from './Event'
 import jwt from 'jsonwebtoken'
 const privateKey = process.env.PRIVATEKEY
 
@@ -12,20 +11,21 @@ export interface UserData {
     firstName: string,
     lastName: string,
     role: Role,
-    subscribers: UserInterface[],
-    interestedEvents: Event[]
-    events: Event[],
+    
     avatar: string,
     slug?: string
 }
 
 export interface UserAttributes extends UserData{
-    _id: String
+    _id: mongoose.Types.ObjectId
 }
 
 export interface UserInterface extends UserData {
     email: string,
-    password: string
+    password: string,
+    subscribers: UserInterface[],
+    interestedEvents: mongoose.Types.ObjectId[]
+    events: mongoose.Types.ObjectId[],
 }
 
 const userSchema = new Schema({

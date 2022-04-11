@@ -5,14 +5,14 @@ import { Event, CommentInterface } from '../models/Event'
 import bcrypt from 'bcryptjs'
 import crypto from 'crypto'
 
-export const getEvents = async (req: Request, res: Response) => {
-    try {
-        const Events = await Event.find()
-        res.json(Events)
-    } catch (error) {
-        res.json(error)
-    }
-}
+// export const getEvents = async (req: Request, res: Response) => {
+//     try {
+//         const Events = await Event.find()
+//         res.json(Events)
+//     } catch (error) {
+//         res.json(error)
+//     }
+// }
 
 export const event = async (req: Request, res: Response) => {
     try {

@@ -3,15 +3,16 @@ const upload = require('../middleware/events/multer')
 
 //user middleware
 import {getUsers, updateUsers, deleteUser, deleteAllUser, getProfile} from '../middleware/userMiddleware'
-import {login} from '../middleware/auth/login'
-import {register} from '../middleware/auth/register'
-import {requiresAuth} from '../middleware/auth/token'
+import {login} from '../middleware/user/login'
+import {register} from '../middleware/user/register'
+import {requiresAuth} from '../middleware/user/token'
 import { uploadMedia } from '../middleware/cloudinary'
 
 //event middleware
-import { getEvents, event, deleteEvent} from '../middleware/eventMiddleware'
+import { event, deleteEvent} from '../middleware/eventMiddleware'
 import {reply, createComment} from '../middleware/events/comments'
 import { createEvent } from '../middleware/events/createEvent'
+import {getEvents} from '../middleware/events/getEvents'
 
 import {userJoi} from '../middleware/validation_schema'
 
@@ -21,6 +22,7 @@ router.get('/', getUsers)
 router.get('/events', getEvents)
 router.get('/profile', requiresAuth, getProfile)
 router.get("/eventProfile/:id", event)
+router.get('/getEvents', requiresAuth, getEvents)
 
 router.post('/register', userJoi, register)
 router.post('/login', login)
