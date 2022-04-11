@@ -5,8 +5,6 @@ import bodyParser from 'body-parser'
 import { router } from './routes/index'
 import './DB/mongoose'
 import dotenv from 'dotenv'
-import fileUpload from 'express-fileupload'
-import busboy from 'connect-busboy'
 dotenv.config()
 
 const cloudinary = require("cloudinary").v2
@@ -25,7 +23,7 @@ app.use(cors())
 //raw requests are now usable properties on req.body
 app.use(express.json())
 app.use(express.urlencoded({
-    extended: true
+    extended: false
 }))
 
 cloudinary.config({ 
@@ -33,10 +31,6 @@ cloudinary.config({
   api_key: '134957693676947', 
   api_secret: 'huc9zI1E2pJs3vJ1vzkoWEncx7s' 
 });
-
-//Enable File Upload
-app.use(fileUpload());
-app.use(busboy())
 
 app.use('/', router)
 app.listen(port, ()=> {

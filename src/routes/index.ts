@@ -1,5 +1,5 @@
 import express from 'express'
-import { upload } from '../middleware/events/multer'
+const upload = require('../middleware/events/multer')
 
 //user middleware
 import {getUsers, updateUsers, deleteUser, deleteAllUser, getProfile} from '../middleware/userMiddleware'
@@ -27,7 +27,7 @@ router.post('/login', login)
 router.post('/event', requiresAuth, createEvent)
 router.post('/event/:id/createComment',requiresAuth, createComment)
 router.post("/event/:event_id/comment/:comment_id/replyComment", requiresAuth, reply)
-router.post('/upload', requiresAuth,uploadMedia)
+router.post('/upload', upload.single('image'), uploadMedia)
 
 router.patch('/user/:id', requiresAuth, updateUsers)
 

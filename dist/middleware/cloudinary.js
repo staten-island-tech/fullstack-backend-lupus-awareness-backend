@@ -17,16 +17,22 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const cloudinary = require("cloudinary").v2;
 const uploadMedia = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
         // const dUri = new Datauri(req)
-        const fileBuffer = req.files.image.data;
-        console.log(fileBuffer);
-        res.json(fileBuffer.toString('base64url'));
+        // const fileBuffer = req.files!.image.data
+        // console.log(fileBuffer)
+        // res.json(fileBuffer.toString('base64url'))
         // const dataUri = (req: Request) => 
         // dUri.format(path.extname(req.files!.image.name).toString(), req.files!.image.data)
         // const file = dataUri(req).content
         // console.log(file)
-        // cloudinary.uploader.upload(fileBuffer.toString('base64'), function(error: TypeError, result: any) {console.log(result, error)});
+        const imageFile = (_a = req.file) === null || _a === void 0 ? void 0 : _a.path;
+        cloudinary.uploader.upload(imageFile, function (error, result) { console.log(result, error); })
+            .then((result) => {
+            const image = result.url;
+            res.json(image);
+        });
     }
     catch (error) {
         res.json(error);

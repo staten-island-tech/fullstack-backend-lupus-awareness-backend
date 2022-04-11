@@ -12,9 +12,9 @@ const cloudinary = require("cloudinary").v2
   export const uploadMedia = async(req: Request, res: Response, next: NextFunction) => {
     try {
         // const dUri = new Datauri(req)
-        const fileBuffer = req.files!.image.data
-        console.log(fileBuffer)
-        res.json(fileBuffer.toString('base64url'))
+        // const fileBuffer = req.files!.image.data
+        // console.log(fileBuffer)
+        // res.json(fileBuffer.toString('base64url'))
 
 
         // const dataUri = (req: Request) => 
@@ -22,8 +22,12 @@ const cloudinary = require("cloudinary").v2
         // const file = dataUri(req).content
         // console.log(file)
 
-        
-        // cloudinary.uploader.upload(fileBuffer.toString('base64'), function(error: TypeError, result: any) {console.log(result, error)});
+        const imageFile = req.file?.path
+        cloudinary.uploader.upload(imageFile, function(error: TypeError, result: any) {console.log(result, error)})
+        .then((result:any) =>{
+            const image = result.url
+            res.json(image)
+        });
     } catch (error) {
         res.json(error)
         console.log(error)
