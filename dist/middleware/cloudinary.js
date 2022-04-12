@@ -18,8 +18,8 @@ dotenv_1.default.config();
 const cloudinary = require("cloudinary").v2;
 const uploadMedia = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // res.json(req.body.payload)
-        // console.log(req.body.payload)
+        res.json(req.body.payload);
+        console.log();
         // let user = await User.findOne({ _id: req.body.payload._id });
         // const imageFile = req.file?.path
         // cloudinary.uploader.upload(imageFile, function(error: TypeError, result: any) {console.log(result, error)})

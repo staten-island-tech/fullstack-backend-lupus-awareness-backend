@@ -1,9 +1,7 @@
 import multer from 'multer'
 import { Request, Response, NextFunction } from 'express'
 
-  const upload = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      multer({
+  const upload = multer({
         limits: {
           fileSize: 2000000
         },
@@ -15,10 +13,5 @@ import { Request, Response, NextFunction } from 'express'
               cb(null, true);
             }
           });
-      next();
-    } catch (error) {
-      res.json(error)
-    }
-  };
-
+ 
   module.exports = upload
