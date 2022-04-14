@@ -16,17 +16,17 @@ exports.uploadMedia = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const cloudinary = require("cloudinary").v2;
+// import { cloudinary, uploader } from 'cloudinary'
 const uploadMedia = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
-        res.json(req.body.payload);
-        console.log();
-        // let user = await User.findOne({ _id: req.body.payload._id });
-        // const imageFile = req.file?.path
-        // cloudinary.uploader.upload(imageFile, function(error: TypeError, result: any) {console.log(result, error)})
-        // .then((result:any) =>{
-        //     const image = result.url
-        //     res.json(image)
-        // });
+        console.log(req.body.payload);
+        const imageFile = (_a = req.file) === null || _a === void 0 ? void 0 : _a.path;
+        cloudinary.uploader.upload(imageFile, function (error, result) { console.log(result, error); })
+            .then((result) => {
+            const image = result.url;
+            res.json(image);
+        });
     }
     catch (error) {
         res.json(error);

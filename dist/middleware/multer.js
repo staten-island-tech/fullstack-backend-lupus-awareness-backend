@@ -8,7 +8,7 @@ const upload = (0, multer_1.default)({
     limits: {
         fileSize: 2000000
     },
-    storage: multer_1.default.diskStorage({}),
+    //  storage: multer.diskStorage({}),
     fileFilter(req, file, cb) {
         if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
             return cb(new Error("Please upload a jpg, jpeg or png only"));

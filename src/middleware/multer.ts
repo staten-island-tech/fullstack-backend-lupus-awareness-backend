@@ -5,7 +5,7 @@ import { Request, Response, NextFunction } from 'express'
         limits: {
           fileSize: 2000000
         },
-           storage: multer.diskStorage({}),
+          //  storage: multer.diskStorage({}),
             fileFilter(req, file, cb) {
               if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
                 return cb(new Error("Please upload a jpg, jpeg or png only"));

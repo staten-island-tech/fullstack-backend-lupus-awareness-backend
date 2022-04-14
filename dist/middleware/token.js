@@ -12,9 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.requiresAuth = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const requiresAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.cookies);
     const token = req.header('auth-token');
     if (!token)
         return res.json('access denied');
@@ -28,4 +28,4 @@ const requiresAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
         res.json(error);
     }
 });
-exports.requiresAuth = requiresAuth;
+module.exports = requiresAuth;
