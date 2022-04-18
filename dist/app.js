@@ -27,9 +27,9 @@ app.use(express_1.default.urlencoded({
     extended: false
 }));
 cloudinary.config({
-    cloud_name: 'lupusawareness',
-    api_key: '134957693676947',
-    api_secret: 'huc9zI1E2pJs3vJ1vzkoWEncx7s'
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET,
 });
 app.use('/', index_1.router);
 app.listen(port, () => {

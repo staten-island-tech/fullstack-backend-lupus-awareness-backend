@@ -14,19 +14,42 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploadMedia = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
+const multer_1 = __importDefault(require("multer"));
+const upload = require('../middleware/multer');
 dotenv_1.default.config();
 const cloudinary = require("cloudinary").v2;
 // import { cloudinary, uploader } from 'cloudinary'
 const uploadMedia = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
     try {
-        console.log(req.body.payload);
-        const imageFile = (_a = req.file) === null || _a === void 0 ? void 0 : _a.path;
-        cloudinary.uploader.upload(imageFile, function (error, result) { console.log(result, error); })
-            .then((result) => {
-            const image = result.url;
-            res.json(image);
+        const upload = (0, multer_1.default)({
+            limits: {
+                fileSize: 2000000
+            },
+            //  storage: multer.diskStorage({}),
+            fileFilter(req, file, cb) {
+                if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+                    return cb(new Error("Please upload a jpg, jpeg or png only"));
+                }
+                cb(null, true);
+            }
+        }).single('image');
+        upload(req, res, function (err) {
+            var _a;
+            if (err) {
+                console.log(err);
+                return res.end("Error uploading file.");
+            }
+            else {
+                console.log(req.body.payload);
+                const imageFile = (_a = req.file) === null || _a === void 0 ? void 0 : _a.path;
+                console.log(imageFile);
+            }
         });
+        // cloudinary.uploader.upload(imageFile, function(error: TypeError, result: any) {console.log(result, error)})
+        // .then((result:any) =>{
+        //     const image = result.url
+        //     res.json(image)
+        // });
     }
     catch (error) {
         res.json(error);
