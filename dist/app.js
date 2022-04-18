@@ -24,7 +24,7 @@ app.use((0, cors_1.default)());
 //raw requests are now usable properties on req.body
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({
-    extended: false
+    extended: true
 }));
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,

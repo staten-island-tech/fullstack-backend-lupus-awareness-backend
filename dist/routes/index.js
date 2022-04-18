@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
 const express_1 = __importDefault(require("express"));
-const upload = require('../middleware/multer');
+const upload = require('../middleware/events/multer');
 //user middleware
 const userMiddleware_1 = require("../middleware/userMiddleware");
 const login_1 = require("../middleware/user/login");
@@ -31,7 +31,7 @@ router.post('/login', login_1.login);
 router.post('/event', requiresAuth, createEvent_1.createEvent);
 router.post('/event/:id/createComment', requiresAuth, comments_1.createComment);
 router.post("/event/:event_id/comment/:comment_id/replyComment", requiresAuth, comments_1.reply);
-router.post('/upload', requiresAuth, cloudinary_1.uploadMedia);
+router.post('/upload', upload.single('image'), requiresAuth, cloudinary_1.uploadMedia);
 router.patch('/user/:id', requiresAuth, userMiddleware_1.updateUsers);
 router.delete('/user/:id', userMiddleware_1.deleteUser);
 router.delete('/user', userMiddleware_1.deleteAllUser);

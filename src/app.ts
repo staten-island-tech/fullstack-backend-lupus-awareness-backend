@@ -25,7 +25,7 @@ app.use(cors())
 //raw requests are now usable properties on req.body
 app.use(express.json())
 app.use(express.urlencoded({
-    extended: false
+    extended: true
 }))
 
 cloudinary.config({ 

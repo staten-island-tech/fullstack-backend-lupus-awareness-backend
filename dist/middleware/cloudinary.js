@@ -14,42 +14,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploadMedia = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
-const multer_1 = __importDefault(require("multer"));
+const User_1 = require("../models/User");
 const upload = require('../middleware/multer');
 dotenv_1.default.config();
 const cloudinary = require("cloudinary").v2;
 // import { cloudinary, uploader } from 'cloudinary'
 const uploadMedia = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
-        const upload = (0, multer_1.default)({
-            limits: {
-                fileSize: 2000000
-            },
-            //  storage: multer.diskStorage({}),
-            fileFilter(req, file, cb) {
-                if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-                    return cb(new Error("Please upload a jpg, jpeg or png only"));
-                }
-                cb(null, true);
-            }
-        }).single('image');
-        upload(req, res, function (err) {
-            var _a;
-            if (err) {
-                console.log(err);
-                return res.end("Error uploading file.");
-            }
-            else {
-                console.log(req.body.payload);
-                const imageFile = (_a = req.file) === null || _a === void 0 ? void 0 : _a.path;
-                console.log(imageFile);
-            }
-        });
-        // cloudinary.uploader.upload(imageFile, function(error: TypeError, result: any) {console.log(result, error)})
-        // .then((result:any) =>{
-        //     const image = result.url
-        //     res.json(image)
-        // });
+        let user = yield User_1.User.findOne({ _id: req.body.payload._id });
+        console.log(user._id);
+        const imageFile = (_a = req.file) === null || _a === void 0 ? void 0 : _a.path;
+        console.log(imageFile);
+        cloudinary.uploader.upload(imageFile, function (error, result) { console.log(result, error); })
+            .then((result) => __awaiter(void 0, void 0, void 0, function* () {
+            const image = result.url;
+            console.log(image);
+            yield User_1.User.updateOne({ '_id': req.body.payload._id }, { $set: { avatar: image } });
+            res.json(user);
+        }));
     }
     catch (error) {
         res.json(error);

@@ -1,5 +1,6 @@
 import mongoose, { Schema, model, connect } from 'mongoose'
 import jwt from 'jsonwebtoken'
+import * as img from '../assets/profile.jpg'
 const privateKey = process.env.PRIVATEKEY
 
 enum Role {
