@@ -42,7 +42,7 @@ const userSchema = new mongoose_1.Schema({
     subscribers: { type: [], default: [], required: true },
     interestedEvents: { type: [], default: [], required: true },
     events: { type: [], default: [], required: true },
-    avatar: { type: String, default: null },
+    avatar: { type: String, default: 'https://res.cloudinary.com/lupusawareness/image/upload/v1650405593/wugaaghxaiqoiidbitdi.jpg' },
     slug: String
 });
 exports.userSchema = userSchema;

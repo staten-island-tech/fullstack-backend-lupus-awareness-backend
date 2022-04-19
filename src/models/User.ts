@@ -1,6 +1,5 @@
 import mongoose, { Schema, model, connect } from 'mongoose'
 import jwt from 'jsonwebtoken'
-import * as img from '../assets/profile.jpg'
 const privateKey = process.env.PRIVATEKEY
 
 enum Role {
@@ -39,7 +38,7 @@ const userSchema = new Schema({
     subscribers: {type:[], default: [], required: true},
     interestedEvents: {type:[], default: [], required: true},
     events: {type:[], default: [], required: true},
-    avatar: {type: String, default: null},
+    avatar: {type: String, default: 'https://res.cloudinary.com/lupusawareness/image/upload/v1650405593/wugaaghxaiqoiidbitdi.jpg'},
     slug: String
 })
 
