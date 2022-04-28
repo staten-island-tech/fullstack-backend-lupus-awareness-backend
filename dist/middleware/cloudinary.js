@@ -47,7 +47,7 @@ exports.uploadProf = uploadProf;
 //Upload event images
 const uploadEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const event = yield Event_1.Event.findOne({ _id: req.params._id });
+        const event = yield Event_1.Event.findOne({ _id: req.params.id });
         const imageFiles = req.files;
         imageFiles === null || imageFiles === void 0 ? void 0 : imageFiles.forEach((el) => {
             console.log(el.path);
@@ -58,9 +58,10 @@ const uploadEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
                 .then((result) => __awaiter(void 0, void 0, void 0, function* () {
                 const image = result.url;
                 console.log(image);
-                yield Event_1.Event.updateOne({ '_id': req.params._id }, { $push: { media: image } });
+                yield Event_1.Event.updateOne({ '_id': req.params.id }, { $push: { media: image } });
             }));
         });
+        res.json(event);
     }
     catch (error) {
         res.json(error);

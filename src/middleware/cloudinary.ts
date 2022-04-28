@@ -38,7 +38,7 @@ const cloudinary = require("cloudinary").v2
 //Upload event images
 export const uploadEvent = async(req: Request, res: Response, next: NextFunction) => {
   try {
-    const event = await Event.findOne({ _id: req.params._id })
+    const event = await Event.findOne({ _id: req.params.id })
     const imageFiles = req.files
     imageFiles?.forEach((el: any) => {
       console.log(el.path)
@@ -50,13 +50,13 @@ export const uploadEvent = async(req: Request, res: Response, next: NextFunction
           const image = result.url
          console.log(image)
           await Event.updateOne(
-            {'_id': req.params._id},
+            {'_id': req.params.id},
             { $push: { media: image }}
         )
          
       });
     })
-
+    res.json(event)
   } catch (error) {
       res.json(error)
       console.log(error)
