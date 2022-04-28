@@ -16,7 +16,6 @@ exports.uploadEvent = exports.uploadProf = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 const User_1 = require("../models/User");
 const Event_1 = require("../models/Event");
-const upload = require('../middleware/multer');
 dotenv_1.default.config();
 const cloudinary = require("cloudinary").v2;
 // import { cloudinary, uploader } from 'cloudinary'

@@ -3,7 +3,6 @@ import { Request, Response, NextFunction } from 'express'
 import multer from 'multer'
 import { User } from '../models/User'
 import { Event } from '../models/Event'
-const upload = require('../middleware/multer')
 dotenv.config()
 
 const cloudinary = require("cloudinary").v2

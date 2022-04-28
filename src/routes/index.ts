@@ -10,7 +10,7 @@ const requiresAuth = require('../middleware/user/token')
 import { uploadProf, uploadEvent } from '../middleware/cloudinary'
 
 //event middleware
-import { allEvents, event, deleteEvent} from '../middleware/eventMiddleware'
+import { allEvents, event, deleteEvent, interested} from '../middleware/eventMiddleware'
 import {reply, createComment} from '../middleware/events/comments'
 import { createEvent } from '../middleware/events/createEvent'
 import {getEvents} from '../middleware/events/getEvents'
@@ -32,6 +32,7 @@ router.post('/event/:id/createComment',requiresAuth, createComment)
 router.post("/event/:event_id/comment/:comment_id/replyComment", requiresAuth, reply)
 router.post('/upload',upload.single('image'), requiresAuth, uploadProf)
 router.post('/event/:id/uploadEvent', upload.array('image'), requiresAuth, uploadEvent)
+router.post('/event/:id/interested', requiresAuth, interested)
 
 router.patch('/user/:id', requiresAuth, updateUsers)
 

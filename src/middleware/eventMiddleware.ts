@@ -42,3 +42,24 @@ export const deleteEvent = async (req: Request, res: Response) => {
     }
 }
 
+export const updateEvents = async (req: Request, res: Response) => {
+    try {
+        const event : any = await Event.findById(req.params.id)
+        const updates: string[] = Object.keys(req.body)
+        updates.forEach((e: string) => ( event![e] = req.body[e]))
+        await event.save()
+        res.json(updates)
+    } catch (error) {
+        res.json(error)
+    }
+}
+
+export const interested = async (req: Request, res: Response) => {
+    try {
+        const payload = req.body.payload
+        res.json(payload)
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
