@@ -64,7 +64,21 @@ exports.updateEvents = updateEvents;
 const interested = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const payload = req.body.payload;
-        res.json(payload);
+        const event = yield Event_1.Event.findOne({ _id: req.params.id });
+        const user = yield User_1.User.findOne({ _id: payload._id });
+        // if(user?.interestedEvents._id = event._id){
+        //     res.json('You are already interested in this event')
+        //     return
+        // }
+        res.json(user === null || user === void 0 ? void 0 : user.interestedEvents);
+        // await Event.findOneAndUpdate(
+        //     {_id: req.params.id},
+        //     { $push: { interestedUsers: user}}
+        // )
+        // await User.findOneAndUpdate(
+        //     {_id: payload._id},
+        //     { $push: { interestedEvents: event}}
+        // )
     }
     catch (error) {
         console.log(error);

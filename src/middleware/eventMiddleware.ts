@@ -4,6 +4,7 @@ import { User, UserAttributes } from '../models/User'
 import { Event, CommentInterface } from '../models/Event'
 import bcrypt from 'bcryptjs'
 import crypto from 'crypto'
+import { userJoi } from './validation_schema'
 
 export const allEvents = async (req: Request, res: Response) => {
     try {
@@ -57,7 +58,26 @@ export const updateEvents = async (req: Request, res: Response) => {
 export const interested = async (req: Request, res: Response) => {
     try {
         const payload = req.body.payload
-        res.json(payload)
+        const event = await Event.findOne( {_id: req.params.id})
+        const user = await User.findOne({ _id: payload._id})
+
+        // if(user?.interestedEvents._id = event._id){
+        //     res.json('You are already interested in this event')
+        //     return
+        // }
+
+        res.json(user?.interestedEvents)
+
+        // await Event.findOneAndUpdate(
+        //     {_id: req.params.id},
+        //     { $push: { interestedUsers: user}}
+        // )
+
+        // await User.findOneAndUpdate(
+        //     {_id: payload._id},
+        //     { $push: { interestedEvents: event}}
+        // )
+        
         
     } catch (error) {
         console.log(error)
