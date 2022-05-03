@@ -70,7 +70,7 @@ const interested = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         //     res.json('You are already interested in this event')
         //     return
         // }
-        res.json(user === null || user === void 0 ? void 0 : user.interestedEvents);
+        res.json(user);
         // await Event.findOneAndUpdate(
         //     {_id: req.params.id},
         //     { $push: { interestedUsers: user}}

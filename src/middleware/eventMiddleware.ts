@@ -66,7 +66,7 @@ export const interested = async (req: Request, res: Response) => {
         //     return
         // }
 
-        res.json(user?.interestedEvents)
+        res.json(user)
 
         // await Event.findOneAndUpdate(
         //     {_id: req.params.id},

@@ -12,17 +12,20 @@ interface CommentInterface {
     replies: CommentInterface[]
 }
 
-
-interface eventInterface {
+export interface EventData {
     user: UserAttributes,
     date: Date,
     hours?: number,
     location: string,
     description: string,
     media: string[],
+    numberInterested: number,
+    slug?: string
+}
+
+interface eventInterface extends EventData {
     interestedUsers: UserAttributes[],
     comments: CommentInterface[],
-    slug?: string
 }
 
 const eventSchema = new Schema({
