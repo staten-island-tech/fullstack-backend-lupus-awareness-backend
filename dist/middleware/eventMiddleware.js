@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.interested = exports.updateEvents = exports.deleteEvent = exports.event = exports.allEvents = void 0;
+exports.deleteAllEvent = exports.interested = exports.updateEvents = exports.deleteEvent = exports.event = exports.allEvents = void 0;
 const User_1 = require("../models/User");
 const Event_1 = require("../models/Event");
 const allEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -85,3 +85,13 @@ const interested = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.interested = interested;
+const deleteAllEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const event = yield Event_1.Event.deleteMany({ role: 'viewer' });
+        res.json(`${event} deleted`);
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+exports.deleteAllEvent = deleteAllEvent;

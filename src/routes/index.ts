@@ -10,7 +10,7 @@ const requiresAuth = require('../middleware/user/token')
 import { uploadProf, uploadEvent } from '../middleware/cloudinary'
 
 //event middleware
-import { allEvents, event, deleteEvent, interested} from '../middleware/eventMiddleware'
+import { allEvents, event, deleteEvent, interested, deleteAllEvent} from '../middleware/eventMiddleware'
 import {reply, createComment} from '../middleware/events/comments'
 import { createEvent } from '../middleware/events/createEvent'
 import {getEvents} from '../middleware/events/getEvents'
@@ -39,6 +39,7 @@ router.patch('/user/:id', requiresAuth, updateUsers)
 
 router.delete('/user/:id', deleteUser)
 router.delete('/user', deleteAllUser)
+router.delete('/event', deleteAllEvent)
 router.delete('/event/:id', requiresAuth, deleteEvent)
 
 export {router}

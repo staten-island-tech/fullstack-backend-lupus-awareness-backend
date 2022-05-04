@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
 import { User, UserAttributes } from '../models/User'
-import { Event, CommentInterface } from '../models/Event'
+import { Event, CommentInterface, eventInterface } from '../models/Event'
 import bcrypt from 'bcryptjs'
 import crypto from 'crypto'
 import { userJoi } from './validation_schema'
@@ -79,6 +79,15 @@ export const interested = async (req: Request, res: Response) => {
         // )
         
         
+    } catch (error) {
+        console.log(error)
+    }
+}
+export const deleteAllEvent = async (req: Request, res: Response) => {
+    try {
+   
+        const event = await Event.deleteMany({role: 'viewer'})
+        res.json(`${event} deleted`)
     } catch (error) {
         console.log(error)
     }

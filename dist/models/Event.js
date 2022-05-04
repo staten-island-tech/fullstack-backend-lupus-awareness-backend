@@ -30,6 +30,8 @@ const eventSchema = new mongoose_1.Schema({
     description: { type: String, required: true },
     media: { type: [], required: true },
     interestedUsers: { type: [], default: [], required: true },
+    numberInterested: { type: Number, default: 0, required: true },
+    numberComments: { type: Number, default: 0, required: true },
     comments: { type: [], default: [], required: true },
     slug: String
 });
