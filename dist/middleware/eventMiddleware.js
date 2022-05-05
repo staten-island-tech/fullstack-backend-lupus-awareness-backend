@@ -14,8 +14,23 @@ const User_1 = require("../models/User");
 const Event_1 = require("../models/Event");
 const allEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const Events = yield Event_1.Event.find();
-        res.json(Events);
+        let events = yield Event_1.Event.find().limit(5);
+        // events.forEach((el) => {
+        //     let event: EventData = {
+        //       user: el!.user,
+        //       date: el!.date,
+        //       hours: el!.hours,
+        //       location: el!.location,
+        //       description: el!.description,
+        //       media: el!.media,
+        //       numberInterested: el!.numberInterested,
+        //       numberComments: el!.numberComments,
+        //       slug: el!.slug
+        //     } 
+        //     console.log(event)
+        //   //   res.json(event)
+        // })
+        res.json(events);
     }
     catch (error) {
         res.json(error);

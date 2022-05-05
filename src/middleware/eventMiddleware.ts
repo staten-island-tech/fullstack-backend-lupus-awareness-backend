@@ -1,15 +1,30 @@
 import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
 import { User, UserAttributes } from '../models/User'
-import { Event, CommentInterface, eventInterface } from '../models/Event'
+import { Event, CommentInterface, EventData } from '../models/Event'
 import bcrypt from 'bcryptjs'
 import crypto from 'crypto'
 import { userJoi } from './validation_schema'
 
 export const allEvents = async (req: Request, res: Response) => {
     try {
-        const Events = await Event.find()
-        res.json(Events)
+        let events = await Event.find().limit(5)
+        // events.forEach((el) => {
+        //     let event: EventData = {
+        //       user: el!.user,
+        //       date: el!.date,
+        //       hours: el!.hours,
+        //       location: el!.location,
+        //       description: el!.description,
+        //       media: el!.media,
+        //       numberInterested: el!.numberInterested,
+        //       numberComments: el!.numberComments,
+        //       slug: el!.slug
+        //     } 
+        //     console.log(event)
+        //   //   res.json(event)
+        // })
+        res.json(events)
     } catch (error) {
         res.json(error)
     }
