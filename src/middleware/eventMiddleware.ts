@@ -1,14 +1,14 @@
 import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
 import { User, UserAttributes } from '../models/User'
-import { Event, CommentInterface, EventData } from '../models/Event'
+import { Event } from '../models/Event'
 import bcrypt from 'bcryptjs'
 import crypto from 'crypto'
 import { userJoi } from './validation_schema'
 
 export const allEvents = async (req: Request, res: Response) => {
     try {
-        let events = await Event.find().limit(5)
+        let events = await Event.find()
         // events.forEach((el) => {
         //     let event: EventData = {
         //       user: el!.user,

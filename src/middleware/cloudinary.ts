@@ -45,7 +45,7 @@ export const uploadEvent = async(req: Request, res: Response, next: NextFunction
       cloudinary.uploader.upload(file,{
         folder:"Fullstack/Event"
       }, function(error: TypeError, result: any) {console.log(result, error)})
-      .then(async (result:any) =>{
+      .then(async (result: any) =>{
           const image = result.url
          console.log(image)
           await Event.updateOne(

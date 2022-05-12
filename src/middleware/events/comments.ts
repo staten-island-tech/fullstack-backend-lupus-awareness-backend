@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
-import { Event, CommentInterface } from '../../models/Event'
+import { Event } from '../../models/Event'
+import { CommentInterface, Comment } from '../../models/comments'
 import crypto from 'crypto'
 
 export const createComment = async (req: Request, res: Response) => {
@@ -10,20 +11,23 @@ export const createComment = async (req: Request, res: Response) => {
             res.json("This event doesn't exist")
         }
         
-        const commentId = crypto.randomBytes(16).toString('hex')
-        const comment: CommentInterface = {
-            comment_id: commentId,
-            user: event!.user,
-            date: new Date,
-            content: req.body.content,
-            likes: [],
-            replies: []
-        }
-        await Event.updateOne(
-            {'_id': req.params.id},
-            { $push: { comments: comment }}
-        )
-        res.json(event)
+        // const commentId = crypto.randomBytes(16).toString('hex')
+        // const comment: CommentInterface = {
+        //     comment_id: commentId,
+        //     user: event!.user,
+        //     date: new Date,
+        //     content: req.body.content,
+        //     likes: [],
+        //     replies: []
+        // }
+        const comment = new Comment({
+
+        })
+        // await Event.updateOne(
+        //     {'_id': req.params.id},
+        //     { $push: { comments: comment }}
+        // )
+        res.json(comment)
     } catch (error) {
         res.json(error)
     }

@@ -61,3 +61,12 @@ export const deleteAllUser = async (req: Request, res: Response) => {
         console.log(error)
     }
 }
+
+export const subscribe = async (req: Request, res: Response) => {
+    try {
+        let user = User.findOne({_id: req.body.payload.id})
+        console.log(user)
+    } catch (error) {
+        console.log(error)
+    }
+}

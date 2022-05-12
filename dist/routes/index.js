@@ -34,6 +34,7 @@ router.post("/event/:event_id/comment/:comment_id/replyComment", requiresAuth, c
 router.post('/upload', upload.single('image'), requiresAuth, cloudinary_1.uploadProf);
 router.post('/event/:id/uploadEvent', upload.array('image'), requiresAuth, cloudinary_1.uploadEvent);
 router.post('/event/:id/interested', requiresAuth, eventMiddleware_1.interested);
+router.post('user/subscribe', requiresAuth, userMiddleware_1.subscribe);
 router.patch('/user/:id', requiresAuth, userMiddleware_1.updateUsers);
 router.delete('/user/:id', userMiddleware_1.deleteUser);
 router.delete('/user', userMiddleware_1.deleteAllUser);

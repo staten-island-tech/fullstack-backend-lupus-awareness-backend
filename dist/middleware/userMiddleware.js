@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteAllUser = exports.getProfile = exports.deleteUser = exports.updateUsers = exports.getUsers = void 0;
+exports.subscribe = exports.deleteAllUser = exports.getProfile = exports.deleteUser = exports.updateUsers = exports.getUsers = void 0;
 const User_1 = require("../models/User");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
@@ -74,3 +74,13 @@ const deleteAllUser = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.deleteAllUser = deleteAllUser;
+const subscribe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        let user = User_1.User.findOne({ _id: req.body.payload.id });
+        console.log(user);
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+exports.subscribe = subscribe;

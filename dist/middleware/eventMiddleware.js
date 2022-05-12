@@ -14,7 +14,7 @@ const User_1 = require("../models/User");
 const Event_1 = require("../models/Event");
 const allEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        let events = yield Event_1.Event.find().limit(5);
+        let events = yield Event_1.Event.find();
         // events.forEach((el) => {
         //     let event: EventData = {
         //       user: el!.user,

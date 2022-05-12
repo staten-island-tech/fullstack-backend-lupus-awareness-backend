@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.reply = exports.createComment = void 0;
 const Event_1 = require("../../models/Event");
+const comments_1 = require("../../models/comments");
 const crypto_1 = __importDefault(require("crypto"));
 const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -21,17 +22,21 @@ const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         if (!event) {
             res.json("This event doesn't exist");
         }
-        const commentId = crypto_1.default.randomBytes(16).toString('hex');
-        const comment = {
-            comment_id: commentId,
-            user: event.user,
-            date: new Date,
-            content: req.body.content,
-            likes: [],
-            replies: []
-        };
-        yield Event_1.Event.updateOne({ '_id': req.params.id }, { $push: { comments: comment } });
-        res.json(event);
+        // const commentId = crypto.randomBytes(16).toString('hex')
+        // const comment: CommentInterface = {
+        //     comment_id: commentId,
+        //     user: event!.user,
+        //     date: new Date,
+        //     content: req.body.content,
+        //     likes: [],
+        //     replies: []
+        // }
+        const comment = new comments_1.Comment({});
+        // await Event.updateOne(
+        //     {'_id': req.params.id},
+        //     { $push: { comments: comment }}
+        // )
+        res.json(comment);
     }
     catch (error) {
         res.json(error);
