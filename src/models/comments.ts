@@ -3,7 +3,7 @@ import mongoose, { Schema, model, connect } from 'mongoose'
 import {UserAttributes, UserInterface, userSchema} from './User'
 
 interface CommentInterface {
-    comment_id: string,
+    event_id: string,
     user: UserAttributes,
     date: Date,
     content: string,

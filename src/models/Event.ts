@@ -36,4 +36,10 @@ const eventSchema = new Schema({
 
 const Event = mongoose.model<eventInterface>('Event', eventSchema)
 
+eventSchema.virtual("comments", {
+    ref: "Comment",
+    localField: "_id",
+    foreignField: "event"
+  });
+
 export {Event}

@@ -5,12 +5,22 @@ import crypto from 'crypto'
 
 export const createComment = async (req: Request, res: Response) => {
     try {
-        const event = await Event.findOne({ _id: req.params.id })
+        // const event = await Event.findOne({ _id: req.params.id })
         
-        if(!event){
-            res.json("This event doesn't exist")
-        }
+        // if(!event){
+        //     res.json("This event doesn't exist")
+        // }
+
         
+        const comment = new Comment({
+            event_id: req.params.id,
+            date: new Date(),
+            content: req.body.content,
+            likes: [],
+            replies: [],
+
+            
+        })
         // const commentId = crypto.randomBytes(16).toString('hex')
         // const comment: CommentInterface = {
         //     comment_id: commentId,
@@ -20,9 +30,6 @@ export const createComment = async (req: Request, res: Response) => {
         //     likes: [],
         //     replies: []
         // }
-        const comment = new Comment({
-
-        })
         // await Event.updateOne(
         //     {'_id': req.params.id},
         //     { $push: { comments: comment }}
@@ -46,14 +53,14 @@ export const reply = async (req: Request, res: Response) => {
         }
 
         const replyId = crypto.randomBytes(16).toString('hex')
-        const reply: CommentInterface = {
-            comment_id: replyId,
-            user: event!.user,
-            date: new Date,
-            content: req.body.content,
-            likes: [],
-            replies: []
-        }
+        // const reply: CommentInterface = {
+        //     comment_id: replyId,
+        //     user: event!.user,
+        //     date: new Date,
+        //     content: req.body.content,
+        //     likes: [],
+        //     replies: []
+        // }
 
         await Event.findOneAndUpdate(
             {'_id': eventId,"comments.comment_id": commentId},
@@ -64,3 +71,25 @@ export const reply = async (req: Request, res: Response) => {
         res.json(error)
     }
 }
+
+
+export const allComments = async (req: Request, res: Response) => {
+    try {
+        const comments = await Comment.find()
+        res.json(comments)
+    } catch (error) {
+        res.json(error)
+    }
+}
+
+
+export const deleteComment = async (req: Request, res: Response) => {
+    try {
+       const comments = await Comment.deleteMany({replies:[]})
+        res.json(`${comments} deleted`)
+    } catch (error) {
+        res.json(error)
+    }
+}
+
+

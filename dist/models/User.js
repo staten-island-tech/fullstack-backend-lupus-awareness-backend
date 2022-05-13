@@ -43,10 +43,5 @@ const userSchema = new mongoose_1.Schema({
     slug: String
 });
 exports.userSchema = userSchema;
-userSchema.virtual("comments", {
-    ref: "Comment",
-    localField: "_id",
-    foreignField: "event"
-});
 const User = mongoose_1.default.model('User', userSchema);
 exports.User = User;

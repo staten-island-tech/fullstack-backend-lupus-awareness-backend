@@ -45,12 +45,6 @@ const userSchema = new Schema({
 })
 
 
-userSchema.virtual("comments", {
-    ref: "Comment",
-    localField: "_id",
-    foreignField: "event"
-  });
-
 const User = mongoose.model<UserInterface>('User', userSchema)
 
 export {User, userSchema}

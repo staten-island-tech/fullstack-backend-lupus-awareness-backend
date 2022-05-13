@@ -36,3 +36,8 @@ const eventSchema = new mongoose_1.Schema({
 });
 const Event = mongoose_1.default.model('Event', eventSchema);
 exports.Event = Event;
+eventSchema.virtual("comments", {
+    ref: "Comment",
+    localField: "_id",
+    foreignField: "event"
+});
