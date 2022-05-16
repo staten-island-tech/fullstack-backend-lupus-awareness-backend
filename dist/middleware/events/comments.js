@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteComment = exports.allComments = exports.reply = exports.createComment = void 0;
+exports.findComment = exports.deleteComment = exports.allComments = exports.reply = exports.createComment = void 0;
 const Event_1 = require("../../models/Event");
 const comments_1 = require("../../models/comments");
 const crypto_1 = __importDefault(require("crypto"));
@@ -42,6 +42,7 @@ const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         //     {'_id': req.params.id},
         //     { $push: { comments: comment }}
         // )
+        yield comment.save();
         res.json(comment);
     }
     catch (error) {
@@ -87,7 +88,7 @@ const allComments = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.allComments = allComments;
 const deleteComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const comments = yield comments_1.Comment.deleteMany({ replies: [] });
+        const comments = yield comments_1.Comment.find({ _id: '623678cbcb8c883ac7f1dee9' });
         res.json(`${comments} deleted`);
     }
     catch (error) {
@@ -95,3 +96,17 @@ const deleteComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.deleteComment = deleteComment;
+const findComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        console.log(req.params.id);
+        const comment = yield comments_1.Comment.findOne({ _id: req.params.id });
+        if (!comment) {
+            res.json("This comment doesn't exist");
+        }
+        res.json(comment);
+    }
+    catch (error) {
+        res.json(error);
+    }
+});
+exports.findComment = findComment;

@@ -11,15 +11,12 @@ export const createComment = async (req: Request, res: Response) => {
         //     res.json("This event doesn't exist")
         // }
 
-        
         const comment = new Comment({
             event_id: req.params.id,
             date: new Date(),
             content: req.body.content,
             likes: [],
             replies: [],
-
-            
         })
         // const commentId = crypto.randomBytes(16).toString('hex')
         // const comment: CommentInterface = {
@@ -34,6 +31,7 @@ export const createComment = async (req: Request, res: Response) => {
         //     {'_id': req.params.id},
         //     { $push: { comments: comment }}
         // )
+        await comment.save()
         res.json(comment)
     } catch (error) {
         res.json(error)
@@ -85,8 +83,22 @@ export const allComments = async (req: Request, res: Response) => {
 
 export const deleteComment = async (req: Request, res: Response) => {
     try {
-       const comments = await Comment.deleteMany({replies:[]})
+       const comments = await Comment.find({_id: '623678cbcb8c883ac7f1dee9'})
         res.json(`${comments} deleted`)
+    } catch (error) {
+        res.json(error)
+    }
+}
+
+export const findComment = async (req: Request, res: Response) => {
+    try {
+        console.log(req.params.id)
+        const comment = await Comment.findOne({ _id: req.params.id })
+        if(!comment){
+            res.json("This comment doesn't exist")
+        }
+
+        res.json(comment)
     } catch (error) {
         res.json(error)
     }

@@ -11,7 +11,7 @@ import { uploadProf, uploadEvent } from '../middleware/cloudinary'
 
 //event middleware
 import { allEvents, event, deleteEvent, interested, deleteAllEvent} from '../middleware/eventMiddleware'
-import {reply, createComment, allComments, deleteComment} from '../middleware/events/comments'
+import {reply, createComment, allComments, deleteComment, findComment} from '../middleware/events/comments'
 import { createEvent } from '../middleware/events/createEvent'
 import {getEvents} from '../middleware/events/getEvents'
 
@@ -23,6 +23,7 @@ router.get('/', getUsers)
 router.get('/events', allEvents)
 router.get('/profile', requiresAuth, getProfile)
 router.get("/eventProfile/:id", event)
+router.get("/comment/:id", findComment)
 router.get('/getEvents', requiresAuth, getEvents)
 router.get('/comments', allComments)
 
@@ -31,11 +32,11 @@ router.post('/login', login)
 router.post('/event', requiresAuth, createEvent)
 router.post('/event/:id/createComment',requiresAuth, createComment)
 router.post("/event/:event_id/comment/:comment_id/replyComment", requiresAuth, reply)
-router.post('/upload',upload.single('image'), requiresAuth, uploadProf)
 router.post('/event/:id/uploadEvent', upload.array('image'), requiresAuth, uploadEvent)
 router.post('/event/:id/interested', requiresAuth, interested)
 router.post('user/subscribe', requiresAuth, subscribe)
 
+router.patch('/upload',upload.single('image'), requiresAuth, uploadProf)
 router.patch('/user/:id', requiresAuth, updateUsers)
 
 

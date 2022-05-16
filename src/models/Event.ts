@@ -28,7 +28,6 @@ const eventSchema = new Schema({
     location: {type: String, required: true},
     description: {type: String, required: true},
     media: {type: [], required: true},
-    interestedUsers: {type: [], default: [], required: true},
     numberInterested: {type: Number, default: 0, required: true},
     numberComments: {type: Number, default: 0, required: true},
     slug: String
