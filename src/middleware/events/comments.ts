@@ -1,10 +1,13 @@
 import { Request, Response, NextFunction } from 'express'
 import { Event } from '../../models/Event'
-import { CommentInterface, Comment } from '../../models/comments'
+import { User } from '../../models/User'
+import { CommentInterface, Comment } from '../../models/Comment'
 import crypto from 'crypto'
 
 export const createComment = async (req: Request, res: Response) => {
     try {
+        const user = await User.findOne({ _id: req.body.payload._id })
+        const userId = user!._id
         // const event = await Event.findOne({ _id: req.params.id })
         
         // if(!event){
@@ -12,12 +15,14 @@ export const createComment = async (req: Request, res: Response) => {
         // }
 
         const comment = new Comment({
-            event_id: req.params.id,
+            user: userId,
+            event: req.params.id,
             date: new Date(),
             content: req.body.content,
             likes: [],
             replies: [],
         })
+        await comment.save()
         // const commentId = crypto.randomBytes(16).toString('hex')
         // const comment: CommentInterface = {
         //     comment_id: commentId,
@@ -27,11 +32,10 @@ export const createComment = async (req: Request, res: Response) => {
         //     likes: [],
         //     replies: []
         // }
-        // await Event.updateOne(
-        //     {'_id': req.params.id},
-        //     { $push: { comments: comment }}
-        // )
-        await comment.save()
+        await Event.updateOne(
+            {'_id': req.params.id},
+            { $push: { comments: comment }}
+        )
         res.json(comment)
     } catch (error) {
         res.json(error)

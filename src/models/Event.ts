@@ -1,6 +1,6 @@
 import mongoose, { Schema, model, connect } from 'mongoose'
 import {UserAttributes, UserInterface, userSchema} from './User'
-import { CommentInterface } from './comments'
+import { CommentInterface } from './Comment'
 import jwt from 'jsonwebtoken'
 const privateKey = process.env.PRIVATEKEY
 
