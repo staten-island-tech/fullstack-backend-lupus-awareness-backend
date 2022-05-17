@@ -8,6 +8,7 @@ export const createComment = async (req: Request, res: Response) => {
     try {
         const user = await User.findOne({ _id: req.body.payload._id })
         const userId = user!._id
+        let initial = 0
         // const event = await Event.findOne({ _id: req.params.id })
         
         // if(!event){
@@ -23,6 +24,7 @@ export const createComment = async (req: Request, res: Response) => {
             replies: [],
         })
         await comment.save()
+
         // const commentId = crypto.randomBytes(16).toString('hex')
         // const comment: CommentInterface = {
         //     comment_id: commentId,
@@ -34,7 +36,7 @@ export const createComment = async (req: Request, res: Response) => {
         // }
         await Event.updateOne(
             {'_id': req.params.id},
-            { $push: { comments: comment }}
+            { $set: { comments: comment }}
         )
         res.json(comment)
     } catch (error) {
