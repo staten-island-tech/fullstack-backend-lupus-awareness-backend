@@ -21,7 +21,10 @@ const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     try {
         const user = yield User_1.User.findOne({ _id: req.body.payload._id });
         const userId = user._id;
-        let initial = 0;
+        const event = yield Event_1.Event.findOne({ _id: req.params.id });
+        let initial = event.numberComments;
+        let commentNumber = initial + 1;
+        // console.log(event?.numberComments)
         // const event = await Event.findOne({ _id: req.params.id })
         // if(!event){
         //     res.json("This event doesn't exist")
@@ -44,7 +47,8 @@ const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         //     likes: [],
         //     replies: []
         // }
-        yield Event_1.Event.updateOne({ '_id': req.params.id }, { $set: { comments: comment } });
+        yield Event_1.Event.updateOne({ '_id': req.params.id }, { $set: { numberComments: commentNumber } });
+        console.log(commentNumber);
         res.json(comment);
     }
     catch (error) {

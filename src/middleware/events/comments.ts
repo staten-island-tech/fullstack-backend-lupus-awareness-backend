@@ -8,7 +8,10 @@ export const createComment = async (req: Request, res: Response) => {
     try {
         const user = await User.findOne({ _id: req.body.payload._id })
         const userId = user!._id
-        let initial = 0
+        const event = await Event.findOne({ _id: req.params.id})
+        let initial = event!.numberComments
+        let commentNumber = initial + 1
+        // console.log(event?.numberComments)
         // const event = await Event.findOne({ _id: req.params.id })
         
         // if(!event){
@@ -36,9 +39,12 @@ export const createComment = async (req: Request, res: Response) => {
         // }
         await Event.updateOne(
             {'_id': req.params.id},
-            { $set: { comments: comment }}
+            { $set: { numberComments : commentNumber }}
         )
+
+        console.log(commentNumber)
         res.json(comment)
+        
     } catch (error) {
         res.json(error)
     }
