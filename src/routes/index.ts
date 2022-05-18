@@ -11,7 +11,7 @@ import { uploadProf, uploadEvent } from '../middleware/cloudinary'
 
 //event middleware
 import { allEvents, event, deleteEvent, interested, deleteAllEvent} from '../middleware/eventMiddleware'
-import {reply, createComment, allComments, deleteComment, findComment} from '../middleware/events/comments'
+import {reply, createComment, allComments, deleteComment, findComment, test} from '../middleware/events/comments'
 import { createEvent } from '../middleware/events/createEvent'
 import {getEvents} from '../middleware/events/getEvents'
 
@@ -26,6 +26,7 @@ router.get("/eventProfile/:id", event)
 router.get("/comment/:id", findComment)
 router.get('/getEvents', requiresAuth, getEvents)
 router.get('/comments', allComments)
+router.get('/comments/:id', test)
 
 router.post('/register', userJoi, register)
 router.post('/login', login)

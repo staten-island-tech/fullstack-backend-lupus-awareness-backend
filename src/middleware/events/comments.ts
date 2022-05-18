@@ -50,6 +50,7 @@ export const createComment = async (req: Request, res: Response) => {
     }
 }
 
+
 export const reply = async (req: Request, res: Response) => {
     try {
         const commentId = req.params.comment_id
@@ -115,5 +116,20 @@ export const findComment = async (req: Request, res: Response) => {
         res.json(error)
     }
 }
+
+export const test = async (req: Request, res: Response) => {
+    try {
+        const event = await Event.findOne({ _id: req.params.id})
+        .populate('comments')
+        .exec(function (err, event) {
+            if (err) return handleError(err);
+            console.log('succesfful')
+        res.json(event!.comments)
+    } catch (error) {
+        res.json(error)
+    }
+}
+
+
 
 
