@@ -41,7 +41,12 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             avatar: existingUser.avatar
         };
         const userToken = jsonwebtoken_1.default.sign(payload, process.env.PRIVATEKEY);
-        res.header('auth-token', userToken).send(userToken);
+        res.cookie('auth-token', userToken, {
+            expires: new Date(new Date().getTime() + 100 * 1000),
+            secure: true,
+            sameSite: 'none',
+            httpOnly: true
+        }).send();
     }
     catch (error) {
         res.json(error);

@@ -30,7 +30,12 @@ export const login = async (req: Request, res: Response) => {
             avatar: existingUser!.avatar
         }
         const userToken = jwt.sign(payload, process.env.PRIVATEKEY as string)
-        res.header('auth-token', userToken).send(userToken)
+        res.cookie('auth-token', userToken, {
+            expires: new Date(new Date().getTime() + 100 * 1000),
+            secure: true,
+            sameSite: 'none',
+            httpOnly: true
+        }).send()
     } catch (error) {
         res.json(error)
     }

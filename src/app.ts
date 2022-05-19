@@ -20,7 +20,10 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser())
 
-app.use(cors())
+app.use(cors({ 
+  origin: 'http://localhost:8080',
+  credentials: true
+}))
 
 //raw requests are now usable properties on req.body
 app.use(express.json())
