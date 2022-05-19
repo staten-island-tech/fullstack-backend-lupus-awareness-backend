@@ -28,7 +28,7 @@ router.get("/eventProfile/:id", eventMiddleware_1.event);
 router.get("/comment/:id", comments_1.findComment);
 router.get('/getEvents', requiresAuth, getEvents_1.getEvents);
 router.get('/comments', comments_1.allComments);
-router.get('/comments/:id', comments_1.test);
+router.get('/comments/:id', requiresAuth, comments_1.test);
 router.post('/register', validation_schema_1.userJoi, register_1.register);
 router.post('/login', login_1.login);
 router.post('/event', requiresAuth, createEvent_1.createEvent);

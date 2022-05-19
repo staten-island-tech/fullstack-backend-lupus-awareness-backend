@@ -26,7 +26,7 @@ router.get("/eventProfile/:id", event)
 router.get("/comment/:id", findComment)
 router.get('/getEvents', requiresAuth, getEvents)
 router.get('/comments', allComments)
-router.get('/comments/:id', test)
+router.get('/comments/:id', requiresAuth, test)
 
 router.post('/register', userJoi, register)
 router.post('/login', login)
