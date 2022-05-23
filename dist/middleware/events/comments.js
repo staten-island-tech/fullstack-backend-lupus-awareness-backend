@@ -121,17 +121,16 @@ const test = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const event = yield Event_1.Event.findOne({ _id: req.params.id })
             .populate('comments')
             .exec(function (err, event) {
-            if (err)
-                return handleError(err);
+            if (err) {
+                res.json(err);
+            }
+            ;
             console.log('succesfful');
             res.json(event.comments);
         });
-        try { }
-        catch (error) {
-            res.json(error);
-        }
     }
-    finally {
+    catch (error) {
+        res.json(error);
     }
 });
 exports.test = test;

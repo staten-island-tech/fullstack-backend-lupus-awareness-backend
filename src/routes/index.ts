@@ -8,6 +8,7 @@ import {register} from '../middleware/user/register'
 // import { requiresAuth } from '../middleware/user/token'
 const requiresAuth = require('../middleware/user/token')
 import { uploadProf, uploadEvent } from '../middleware/cloudinary'
+import { showInterest } from '../middleware/events/userInterested'
 
 //event middleware
 import { allEvents, event, deleteEvent, interested, deleteAllEvent} from '../middleware/eventMiddleware'
@@ -36,6 +37,7 @@ router.post("/event/:event_id/comment/:comment_id/replyComment", requiresAuth, r
 router.post('/event/:id/uploadEvent', upload.array('image'), requiresAuth, uploadEvent)
 router.post('/event/:id/interested', requiresAuth, interested)
 router.post('user/subscribe', requiresAuth, subscribe)
+router.post('/event/:id/showInterest', requiresAuth, showInterest)
 
 router.patch('/upload',upload.single('image'), requiresAuth, uploadProf)
 router.patch('/user/:id', requiresAuth, updateUsers)

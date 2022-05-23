@@ -13,6 +13,7 @@ const register_1 = require("../middleware/user/register");
 // import { requiresAuth } from '../middleware/user/token'
 const requiresAuth = require('../middleware/user/token');
 const cloudinary_1 = require("../middleware/cloudinary");
+const userInterested_1 = require("../middleware/events/userInterested");
 //event middleware
 const eventMiddleware_1 = require("../middleware/eventMiddleware");
 const comments_1 = require("../middleware/events/comments");
@@ -37,6 +38,7 @@ router.post("/event/:event_id/comment/:comment_id/replyComment", requiresAuth, c
 router.post('/event/:id/uploadEvent', upload.array('image'), requiresAuth, cloudinary_1.uploadEvent);
 router.post('/event/:id/interested', requiresAuth, eventMiddleware_1.interested);
 router.post('user/subscribe', requiresAuth, userMiddleware_1.subscribe);
+router.post('/event/:id/showInterest', requiresAuth, userInterested_1.showInterest);
 router.patch('/upload', upload.single('image'), requiresAuth, cloudinary_1.uploadProf);
 router.patch('/user/:id', requiresAuth, userMiddleware_1.updateUsers);
 router.delete('/user/:id', userMiddleware_1.deleteUser);
