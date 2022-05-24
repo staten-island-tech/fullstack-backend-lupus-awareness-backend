@@ -118,7 +118,7 @@ export const findComment = async (req: Request, res: Response) => {
     }
 }
 
-export const test = async (req: Request, res: Response) => {
+export const populateComments = async (req: Request, res: Response) => {
     try {
         const event = await Event.findOne({ _id: req.params.id})
         .populate('comments')

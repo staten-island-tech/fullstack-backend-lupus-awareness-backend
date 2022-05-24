@@ -8,11 +8,11 @@ import {register} from '../middleware/user/register'
 // import { requiresAuth } from '../middleware/user/token'
 const requiresAuth = require('../middleware/user/token')
 import { uploadProf, uploadEvent } from '../middleware/cloudinary'
-import { showInterest } from '../middleware/events/userInterested'
+import { showInterest, allInterested, populateUser } from '../middleware/events/userInterested'
 
 //event middleware
 import { allEvents, event, deleteEvent, interested, deleteAllEvent} from '../middleware/eventMiddleware'
-import {reply, createComment, allComments, deleteComment, findComment, test} from '../middleware/events/comments'
+import {reply, createComment, allComments, deleteComment, findComment, populateComments} from '../middleware/events/comments'
 import { createEvent } from '../middleware/events/createEvent'
 import {getEvents} from '../middleware/events/getEvents'
 
@@ -27,7 +27,9 @@ router.get("/eventProfile/:id", event)
 router.get("/comment/:id", findComment)
 router.get('/getEvents', requiresAuth, getEvents)
 router.get('/comments', allComments)
-router.get('/comments/:id', requiresAuth, test)
+router.get('/comments/:id', requiresAuth, populateComments)
+router.get('/interested', allInterested)
+router.get('/interested/:id', requiresAuth, populateUser)
 
 router.post('/register', userJoi, register)
 router.post('/login', login)

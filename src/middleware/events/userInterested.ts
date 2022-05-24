@@ -5,8 +5,15 @@ import { interestedInterface, Interested} from '../../models/Interested'
 
 export const showInterest = async (req: Request, res: Response) => {
     try {
+
+        // if(doesExist)
+
         const user = await User.findOne({ _id: req.body.payload._id })
         const userId = user!._id
+
+        let doesExist = await Interested.findOne({ event: req.params.id, user: userId });
+        console.log(doesExist)
+
         const event = await Event.findOne({ _id: req.params.id})
         let initial = event!.numberInterested
         let interestNumber = initial + 1
@@ -33,15 +40,45 @@ export const showInterest = async (req: Request, res: Response) => {
         //     likes: [],
         //     replies: []
         // }
-        // await Event.updateOne(
-        //     {'_id': req.params.id},
-        //     { $set: { numberComments : commentNumber }}
-        // )
+        await Event.updateOne(
+            {'_id': req.params.id},
+            { $set: { numberInterested : interestNumber }}
+        )
 
-        // console.log(commentNumber)
+        console.log(interestNumber)
         res.json(interest)
         
     } catch (error) {
         res.json(error)
     }
 }
+
+
+export const allInterested = async (req: Request, res: Response) => {
+    try {
+        const interested = await Interested.find()
+        res.json(interested)
+    } catch (error) {
+        res.json(error)
+    }
+}
+
+export const populateUser = async (req: Request, res: Response) => {
+    try {
+        const event = await Event.findOne({ _id: req.params.id})
+        .populate('interested')
+        .exec(function (err, event) {
+            if (err) {
+                res.json(err)
+            };
+            console.log('succesfful')
+            res.json(event)
+        })
+    } catch (error) {
+        res.json(error)
+    }
+}
+
+
+
+
