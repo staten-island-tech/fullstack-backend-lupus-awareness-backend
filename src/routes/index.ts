@@ -6,7 +6,8 @@ import {getUsers, updateUsers, deleteUser, deleteAllUser, getProfile, subscribe}
 import {login} from '../middleware/user/login'
 import {register} from '../middleware/user/register'
 // import { requiresAuth } from '../middleware/user/token'
-const requiresAuth = require('../middleware/user/token')
+import { requiresAuth } from '../middleware/user/token'
+import { sendUser } from '../middleware/user/token'
 import { uploadProf, uploadEvent } from '../middleware/cloudinary'
 
 //event middleware
@@ -14,12 +15,12 @@ import { allEvents, event, deleteEvent, interested, deleteAllEvent} from '../mid
 import {reply, createComment, allComments, deleteComment, findComment, test} from '../middleware/events/comments'
 import { createEvent } from '../middleware/events/createEvent'
 import {getEvents} from '../middleware/events/getEvents'
-
 import {userJoi} from '../middleware/validation_schema'
 
 const router = express.Router()
 
 router.get('/', getUsers)
+router.get('/auth', requiresAuth, sendUser)
 router.get('/events', allEvents)
 router.get('/profile', requiresAuth, getProfile)
 router.get("/eventProfile/:id", event)
