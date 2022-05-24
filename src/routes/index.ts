@@ -4,6 +4,7 @@ const upload = require('../middleware/events/multer')
 //user middleware
 import {getUsers, updateUsers, deleteUser, deleteAllUser, getProfile, subscribe} from '../middleware/userMiddleware'
 import {login} from '../middleware/user/login'
+import { logout } from '../middleware/user/logout'
 import {register} from '../middleware/user/register'
 // import { requiresAuth } from '../middleware/user/token'
 import { requiresAuth } from '../middleware/user/token'
@@ -31,6 +32,7 @@ router.get('/comments/:id', test)
 
 router.post('/register', userJoi, register)
 router.post('/login', login)
+router.post('/logout', logout)
 router.post('/event', requiresAuth, createEvent)
 router.post('/event/:id/createComment', requiresAuth, createComment)
 router.post("/event/:event_id/comment/:comment_id/replyComment", requiresAuth, reply)

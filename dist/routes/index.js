@@ -9,6 +9,7 @@ const upload = require('../middleware/events/multer');
 //user middleware
 const userMiddleware_1 = require("../middleware/userMiddleware");
 const login_1 = require("../middleware/user/login");
+const logout_1 = require("../middleware/user/logout");
 const register_1 = require("../middleware/user/register");
 // import { requiresAuth } from '../middleware/user/token'
 const token_1 = require("../middleware/user/token");
@@ -33,6 +34,7 @@ router.get('/comments', comments_1.allComments);
 router.get('/comments/:id', comments_1.test);
 router.post('/register', validation_schema_1.userJoi, register_1.register);
 router.post('/login', login_1.login);
+router.post('/logout', logout_1.logout);
 router.post('/event', token_1.requiresAuth, createEvent_1.createEvent);
 router.post('/event/:id/createComment', token_1.requiresAuth, comments_1.createComment);
 router.post("/event/:event_id/comment/:comment_id/replyComment", token_1.requiresAuth, comments_1.reply);
