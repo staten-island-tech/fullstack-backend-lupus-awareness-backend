@@ -25,7 +25,7 @@ export const showInterest = async (req: Request, res: Response) => {
         // }
 
         const interest = new Interested({
-            user: user,
+            user: userId,
             event: req.params.id,
             date: new Date(),
         })
@@ -72,7 +72,7 @@ export const populateUser = async (req: Request, res: Response) => {
                 res.json(err)
             };
             console.log('succesfful')
-            res.json(event)
+            res.json(event!.interested)
         })
     } catch (error) {
         res.json(error)

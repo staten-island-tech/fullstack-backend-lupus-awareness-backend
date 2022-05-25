@@ -29,7 +29,7 @@ const showInterest = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         //     res.json("This event doesn't exist")
         // }
         const interest = new Interested_1.Interested({
-            user: user,
+            user: userId,
             event: req.params.id,
             date: new Date(),
         });
@@ -72,7 +72,7 @@ const populateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             }
             ;
             console.log('succesfful');
-            res.json(event);
+            res.json(event.interested);
         });
     }
     catch (error) {
