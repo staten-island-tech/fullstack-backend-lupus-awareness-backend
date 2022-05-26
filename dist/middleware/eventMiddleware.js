@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteAllEvent = exports.interested = exports.updateEvents = exports.deleteEvent = exports.event = exports.allEvents = void 0;
+exports.deleteAllEvent = exports.updateEvents = exports.deleteEvent = exports.event = exports.allEvents = void 0;
 const User_1 = require("../models/User");
 const Event_1 = require("../models/Event");
 const allEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -76,30 +76,6 @@ const updateEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.updateEvents = updateEvents;
-const interested = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const payload = req.body.payload;
-        const event = yield Event_1.Event.findOne({ _id: req.params.id });
-        const user = yield User_1.User.findOne({ _id: payload._id });
-        // if(user?.interestedEvents._id = event._id){
-        //     res.json('You are already interested in this event')
-        //     return
-        // }
-        res.json(user);
-        // await Event.findOneAndUpdate(
-        //     {_id: req.params.id},
-        //     { $push: { interestedUsers: user}}
-        // )
-        // await User.findOneAndUpdate(
-        //     {_id: payload._id},
-        //     { $push: { interestedEvents: event}}
-        // )
-    }
-    catch (error) {
-        console.log(error);
-    }
-});
-exports.interested = interested;
 const deleteAllEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const event = yield Event_1.Event.deleteMany({ role: 'viewer' });
