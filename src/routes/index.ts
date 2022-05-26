@@ -11,7 +11,7 @@ import { uploadProf, uploadEvent } from '../middleware/cloudinary'
 import { showInterest, allInterested, populateUser } from '../middleware/events/userInterested'
 
 //event middleware
-import { allEvents, event, deleteEvent, interested, deleteAllEvent} from '../middleware/eventMiddleware'
+import { allEvents, event, deleteEvent, deleteAllEvent} from '../middleware/eventMiddleware'
 import {reply, createComment, allComments, deleteComment, findComment, populateComments} from '../middleware/events/comments'
 import { createEvent } from '../middleware/events/createEvent'
 import {getEvents} from '../middleware/events/getEvents'
@@ -37,8 +37,7 @@ router.post('/event', requiresAuth, createEvent)
 router.post('/event/:id/createComment', requiresAuth, createComment)
 router.post("/event/:event_id/comment/:comment_id/replyComment", requiresAuth, reply)
 router.post('/event/:id/uploadEvent', upload.array('image'), requiresAuth, uploadEvent)
-router.post('/event/:id/interested', requiresAuth, interested)
-router.post('user/subscribe', requiresAuth, subscribe)
+router.post('/user/:id', requiresAuth, subscribe)
 router.post('/event/:id/showInterest', requiresAuth, showInterest)
 
 router.patch('/upload',upload.single('image'), requiresAuth, uploadProf)

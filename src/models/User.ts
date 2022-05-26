@@ -23,8 +23,8 @@ export interface UserAttributes extends UserData{
 export interface UserInterface extends UserData {
     email: string,
     password: string,
-    subscribers: UserInterface[],
-    subscribed: UserInterface[],
+    subscribers: mongoose.Types.ObjectId[],
+    subscribed: mongoose.Types.ObjectId[],
     interestedEvents: mongoose.Types.ObjectId[]
     events: mongoose.Types.ObjectId[],
 }
