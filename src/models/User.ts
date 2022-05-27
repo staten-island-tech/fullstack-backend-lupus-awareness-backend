@@ -2,8 +2,8 @@ import mongoose, { Schema, model, connect } from 'mongoose'
 import jwt from 'jsonwebtoken'
 const privateKey = process.env.PRIVATEKEY
 
-enum Role {
-    Viewer = 'viewer',
+export enum Role {
+    Student = 'student',
     Uploader = 'uploader',
     Admin = 'admin'
 }
@@ -11,7 +11,6 @@ export interface UserData {
     firstName: string,
     lastName: string,
     role: Role,
-    
     avatar: string,
     slug?: string
 }
@@ -35,7 +34,7 @@ const userSchema = new Schema({
     email: { type: String, required: true},
     password: { type: String, required: true},
     // role: {type: Role, default: Role.Viewer, required: true},
-    role: {type: String, default: Role.Viewer, required: true},
+    role: {type: String, default: Role.Student, required: true},
     subscribers: {type:[], default: [], required: true},
     subscribed: {type:[], default: [], required: true},
     interestedEvents: {type:[], default: [], required: true},
