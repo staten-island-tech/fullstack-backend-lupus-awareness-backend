@@ -4,9 +4,11 @@ const upload = require('../middleware/events/multer')
 //user middleware
 import {getUsers, updateUsers, deleteUser, deleteAllUser, getProfile, subscribe} from '../middleware/userMiddleware'
 import {login} from '../middleware/user/login'
+import { logout } from '../middleware/user/logout'
 import {register} from '../middleware/user/register'
 // import { requiresAuth } from '../middleware/user/token'
-const requiresAuth = require('../middleware/user/token')
+import { requiresAuth } from '../middleware/user/token'
+import { sendUser } from '../middleware/user/token'
 import { uploadProf, uploadEvent } from '../middleware/cloudinary'
 import { showInterest, allInterested, populateUser } from '../middleware/events/userInterested'
 
@@ -15,12 +17,12 @@ import { allEvents, event, deleteEvent, deleteAllEvent} from '../middleware/even
 import {reply, createComment, allComments, deleteComment, findComment, populateComments} from '../middleware/events/comments'
 import { createEvent } from '../middleware/events/createEvent'
 import {getEvents} from '../middleware/events/getEvents'
-
 import {userJoi} from '../middleware/validation_schema'
 
 const router = express.Router()
 
 router.get('/', getUsers)
+router.get('/auth', requiresAuth, sendUser)
 router.get('/events', allEvents)
 router.get('/profile', requiresAuth, getProfile)
 router.get("/eventProfile/:id", event)
@@ -33,6 +35,7 @@ router.get('/interested/:id', requiresAuth, populateUser)
 
 router.post('/register', userJoi, register)
 router.post('/login', login)
+router.post('/logout', logout)
 router.post('/event', requiresAuth, createEvent)
 router.post('/event/:id/createComment', requiresAuth, createComment)
 router.post("/event/:event_id/comment/:comment_id/replyComment", requiresAuth, reply)

@@ -12,29 +12,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendUser = exports.requiresAuth = void 0;
+exports.checkCookie = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const requiresAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const checkCookie = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const token = req.cookies['auth-token'];
-    console.log(token);
     if (!token)
-        return res.json('access denied');
+        return;
     try {
         const payload = jsonwebtoken_1.default.verify(token, process.env.PRIVATEKEY);
-        req.body.payload = payload;
-        next();
+        res.send(payload);
     }
     catch (error) {
         res.json(error);
     }
 });
-exports.requiresAuth = requiresAuth;
-const sendUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        res.send(req.body.payload);
-    }
-    catch (error) {
-        res.json(error);
-    }
-});
-exports.sendUser = sendUser;
+exports.checkCookie = checkCookie;
