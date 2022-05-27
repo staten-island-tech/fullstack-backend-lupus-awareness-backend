@@ -3,6 +3,7 @@ import { Event } from '../../models/Event'
 import { User } from '../../models/User'
 import { CommentInterface, Comment } from '../../models/Comment'
 import crypto from 'crypto'
+import { error } from 'console'
 
 export const createComment = async (req: Request, res: Response) => {
     try {
@@ -117,14 +118,17 @@ export const findComment = async (req: Request, res: Response) => {
     }
 }
 
-export const test = async (req: Request, res: Response) => {
+export const populateComments = async (req: Request, res: Response) => {
     try {
         const event = await Event.findOne({ _id: req.params.id})
         .populate('comments')
         .exec(function (err, event) {
-            if (err) return handleError(err);
+            if (err) {
+                res.json(err)
+            };
             console.log('succesfful')
-        res.json(event!.comments)
+            res.json(event!.comments)
+        })
     } catch (error) {
         res.json(error)
     }

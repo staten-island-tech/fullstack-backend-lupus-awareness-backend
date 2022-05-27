@@ -19,29 +19,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Event = void 0;
+exports.Interested = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const privateKey = process.env.PRIVATEKEY;
-const eventSchema = new mongoose_1.Schema({
-    user: { type: {}, required: true },
-    date: { type: Date, required: true },
-    hours: { type: Number },
-    location: { type: String, required: true },
-    description: { type: String, required: true },
-    media: { type: [], required: true },
-    numberInterested: { type: Number, default: 0, required: true },
-    numberComments: { type: Number, default: 0, required: true },
-    slug: String
+const interestedSchema = new mongoose_1.Schema({
+    user: { type: Object, trim: true, required: true },
+    date: { type: Date, trim: true, required: true },
+    event: { type: mongoose_1.default.Schema.Types.ObjectId, required: true, ref: "Event" }
 });
-const Event = mongoose_1.default.model('Event', eventSchema);
-exports.Event = Event;
-eventSchema.virtual("comments", {
-    ref: "Comment",
-    localField: "_id",
-    foreignField: "event"
-});
-eventSchema.virtual("interested", {
-    ref: "Interested",
-    localField: "_id",
-    foreignField: "event"
-});
+const Interested = mongoose_1.default.model('Interested', interestedSchema);
+exports.Interested = Interested;

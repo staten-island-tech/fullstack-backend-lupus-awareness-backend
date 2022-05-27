@@ -70,34 +70,6 @@ export const updateEvents = async (req: Request, res: Response) => {
     }
 }
 
-export const interested = async (req: Request, res: Response) => {
-    try {
-        const payload = req.body.payload
-        const event = await Event.findOne( {_id: req.params.id})
-        const user = await User.findOne({ _id: payload._id})
-
-        // if(user?.interestedEvents._id = event._id){
-        //     res.json('You are already interested in this event')
-        //     return
-        // }
-
-        res.json(user)
-
-        // await Event.findOneAndUpdate(
-        //     {_id: req.params.id},
-        //     { $push: { interestedUsers: user}}
-        // )
-
-        // await User.findOneAndUpdate(
-        //     {_id: payload._id},
-        //     { $push: { interestedEvents: event}}
-        // )
-        
-        
-    } catch (error) {
-        console.log(error)
-    }
-}
 export const deleteAllEvent = async (req: Request, res: Response) => {
     try {
    

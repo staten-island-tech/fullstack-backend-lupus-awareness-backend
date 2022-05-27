@@ -65,9 +65,36 @@ export const deleteAllUser = async (req: Request, res: Response) => {
 
 export const subscribe = async (req: Request, res: Response) => {
     try {
-        let user = User.findOne({_id: req.body.payload.id})
+        let me = await User.findOne({_id: req.body.payload._id})
+        let user = await User.findOne({ _id: req.params.id})
+        me!.subscribed.push(user!._id)
+        user!.subscribers.push(me!._id)
+        me!.save()
+        user!.save()
+        // res.json(me!.subscribed)
+        res.json(me)
         console.log(user)
     } catch (error) {
         console.log(error)
     }
 }
+]
+export const unsubscribe = async (req: Request, res: Response) => {
+    try {
+        let me = await User.findOne({_id: req.body.payload._id})
+        let user = await User.findOne({ _id: req.params.id})
+
+        
+        // me!.subscribed.push(user!._id)
+        // user!.subscribers.push(me!._id)
+        me!.save()
+        user!.save()
+        // res.json(me!.subscribed)
+        res.json(me)
+        console.log(user)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+

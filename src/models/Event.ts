@@ -41,4 +41,10 @@ eventSchema.virtual("comments", {
     foreignField: "event"
   });
 
+eventSchema.virtual("interested", {
+  ref: "Interested",
+  localField: "_id",
+  foreignField: "event"
+});
+
 export {Event}

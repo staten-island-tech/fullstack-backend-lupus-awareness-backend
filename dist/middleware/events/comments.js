@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.test = exports.findComment = exports.deleteComment = exports.allComments = exports.reply = exports.createComment = void 0;
+exports.populateComments = exports.findComment = exports.deleteComment = exports.allComments = exports.reply = exports.createComment = void 0;
 const Event_1 = require("../../models/Event");
 const User_1 = require("../../models/User");
 const Comment_1 = require("../../models/Comment");
@@ -116,22 +116,21 @@ const findComment = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.findComment = findComment;
-const test = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const populateComments = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const event = yield Event_1.Event.findOne({ _id: req.params.id })
             .populate('comments')
             .exec(function (err, event) {
-            if (err)
-                return handleError(err);
+            if (err) {
+                res.json(err);
+            }
+            ;
             console.log('succesfful');
             res.json(event.comments);
         });
-        try { }
-        catch (error) {
-            res.json(error);
-        }
     }
-    finally {
+    catch (error) {
+        res.json(error);
     }
 });
-exports.test = test;
+exports.populateComments = populateComments;

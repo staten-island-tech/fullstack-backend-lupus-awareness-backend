@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.subscribe = exports.deleteAllUser = exports.getProfile = exports.deleteUser = exports.updateUsers = exports.getUsers = void 0;
+exports.unsubscribe = exports.subscribe = exports.deleteAllUser = exports.getProfile = exports.deleteUser = exports.updateUsers = exports.getUsers = void 0;
 const User_1 = require("../models/User");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
@@ -77,7 +77,14 @@ const deleteAllUser = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 exports.deleteAllUser = deleteAllUser;
 const subscribe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        let user = User_1.User.findOne({ _id: req.body.payload.id });
+        let me = yield User_1.User.findOne({ _id: req.body.payload._id });
+        let user = yield User_1.User.findOne({ _id: req.params.id });
+        me.subscribed.push(user._id);
+        user.subscribers.push(me._id);
+        me.save();
+        user.save();
+        // res.json(me!.subscribed)
+        res.json(me);
         console.log(user);
     }
     catch (error) {
@@ -85,3 +92,20 @@ const subscribe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.subscribe = subscribe;
+const unsubscribe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        let me = yield User_1.User.findOne({ _id: req.body.payload._id });
+        let user = yield User_1.User.findOne({ _id: req.params.id });
+        // me!.subscribed.push(user!._id)
+        // user!.subscribers.push(me!._id)
+        me.save();
+        user.save();
+        // res.json(me!.subscribed)
+        res.json(me);
+        console.log(user);
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+exports.unsubscribe = unsubscribe;
