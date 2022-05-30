@@ -45,6 +45,11 @@ export const showInterest = async (req: Request, res: Response) => {
             { $set: { numberInterested : interestNumber }}
         )
 
+        await User.findOneAndUpdate(
+            {_id: req.body.payload._id},
+            { $push: { interestedEvents: req.params.id}}
+        )
+
         console.log(interestNumber)
         res.json(interest)
         
