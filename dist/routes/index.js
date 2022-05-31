@@ -45,7 +45,7 @@ router.post('/event/:id/uploadEvent', upload.array('image'), token_1.requiresAut
 router.post('/user/subscribe/:id', token_1.requiresAuth, userMiddleware_1.subscribe);
 router.post('/user/unsubscribe/:id', token_1.requiresAuth, userMiddleware_1.unsubscribe);
 router.post('/event/:id/showInterest', token_1.requiresAuth, userInterested_1.showInterest);
-router.patch('/upload', upload.single('image'), token_1.requiresAuth, cloudinary_1.uploadProf);
+router.patch('/user/profilePic', upload.single('image'), token_1.requiresAuth, cloudinary_1.uploadProf);
 router.patch('/user/:id', token_1.requiresAuth, userMiddleware_1.updateUsers);
 router.delete('/user/:id', userMiddleware_1.deleteUser);
 router.delete('/user', userMiddleware_1.deleteAllUser);

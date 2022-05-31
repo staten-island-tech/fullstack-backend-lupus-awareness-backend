@@ -11,23 +11,24 @@ const cloudinary = require("cloudinary").v2
   //Upload profile image
   export const uploadProf = async(req: Request, res: Response, next: NextFunction) => {
     try {
-      let user = await User.findOne({ _id: req.body.payload._id });
-      console.log(user!._id)
-      const imageFile = req.file?.path
-      console.log(imageFile)
+      res.json(req.body.payload)
+      // let user = await User.findOne({ _id: req.body.payload._id });
+      // console.log(user!._id)
+      // const imageFile = req.file?.path
+      // console.log(imageFile)
 
-        cloudinary.uploader.upload(imageFile,{
-          folder:"Fullstack/Profile"
-        }, function(error: TypeError, result: any) {console.log(result, error)})
-        .then(async (result:any) =>{
-            const image = result.url
-            console.log(image)
-            await User.updateOne(
-              {'_id': req.body.payload._id},
-              { $set: { avatar: image }}
-          )
-            res.json(user)
-        });
+      //   cloudinary.uploader.upload(imageFile,{
+      //     folder:"Fullstack/Profile"
+      //   }, function(error: TypeError, result: any) {console.log(result, error)})
+      //   .then(async (result:any) =>{
+      //       const image = result.url
+      //       console.log(image)
+      //       await User.updateOne(
+      //         {'_id': req.body.payload._id},
+      //         { $set: { avatar: image }}
+      //     )
+      //       res.json(user)
+      //   });
     } catch (error) {
         res.json(error)
         console.log(error)
