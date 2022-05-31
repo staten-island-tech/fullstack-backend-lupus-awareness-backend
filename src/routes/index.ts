@@ -44,7 +44,7 @@ router.post('/user/subscribe/:id', requiresAuth, subscribe)
 router.post('/user/unsubscribe/:id', requiresAuth, unsubscribe)
 router.post('/event/:id/showInterest', requiresAuth, showInterest)
 
-router.patch('/user/profilePic', upload.single('image'), requiresAuth ,  uploadProf)
+router.patch('/user/profilePic', upload.single('image'),  requiresAuth , uploadProf)
 router.patch('/user/:id', requiresAuth, updateUsers)
 
 
