@@ -10,7 +10,8 @@ export const requiresAuth = async (req: Request, res: Response, next: NextFuncti
         console.log(req.body)
        const payload: Object = jwt.verify(token, process.env.PRIVATEKEY as string)
        req.body.payload = payload
-       console.log(req.body)
+       req.payload = payload
+       console.log(req.payload)
        next()
     } catch (error) {
         res.json(error)

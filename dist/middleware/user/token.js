@@ -24,7 +24,8 @@ const requiresAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
         console.log(req.body);
         const payload = jsonwebtoken_1.default.verify(token, process.env.PRIVATEKEY);
         req.body.payload = payload;
-        console.log(req.body);
+        req.payload = payload;
+        console.log(req.payload);
         next();
     }
     catch (error) {

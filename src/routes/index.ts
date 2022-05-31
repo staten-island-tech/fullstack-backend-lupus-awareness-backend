@@ -39,12 +39,12 @@ router.post('/logout', logout)
 router.post('/event', requiresAuth, createEvent)
 router.post('/event/:id/createComment', requiresAuth, createComment)
 router.post("/event/:event_id/comment/:comment_id/replyComment", requiresAuth, reply)
-router.post('/event/:id/uploadEvent', upload.array('image'), requiresAuth, uploadEvent)
+router.post('/event/:id/uploadEvent', requiresAuth,  upload.array('image'),uploadEvent)
 router.post('/user/subscribe/:id', requiresAuth, subscribe)
 router.post('/user/unsubscribe/:id', requiresAuth, unsubscribe)
 router.post('/event/:id/showInterest', requiresAuth, showInterest)
 
-router.patch('/user/profilePic', upload.single('image'),  requiresAuth , uploadProf)
+router.patch('/user/profilePic',  requiresAuth , upload.single('image'),uploadProf)
 router.patch('/user/:id', requiresAuth, updateUsers)
 
 
