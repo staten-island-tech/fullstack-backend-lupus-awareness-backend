@@ -8,15 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.populateComments = exports.findComment = exports.deleteComment = exports.allComments = exports.reply = exports.createComment = void 0;
+exports.populateComments = exports.findComment = exports.deleteComment = exports.allComments = exports.createComment = void 0;
 const Event_1 = require("../../models/Event");
 const User_1 = require("../../models/User");
 const Comment_1 = require("../../models/Comment");
-const crypto_1 = __importDefault(require("crypto"));
 const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield User_1.User.findOne({ _id: req.body.payload._id });
@@ -56,32 +52,33 @@ const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.createComment = createComment;
-const reply = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const commentId = req.params.comment_id;
-        const eventId = req.params.event_id;
-        console.log(commentId);
-        const event = yield Event_1.Event.findOne({ _id: eventId });
-        if (!event) {
-            res.json("This event doesn't exist");
-        }
-        const replyId = crypto_1.default.randomBytes(16).toString('hex');
-        // const reply: CommentInterface = {
-        //     comment_id: replyId,
-        //     user: event!.user,
-        //     date: new Date,
-        //     content: req.body.content,
-        //     likes: [],
-        //     replies: []
-        // }
-        yield Event_1.Event.findOneAndUpdate({ '_id': eventId, "comments.comment_id": commentId }, { $push: { "comments.$.replies": exports.reply } });
-        res.json(event);
-    }
-    catch (error) {
-        res.json(error);
-    }
-});
-exports.reply = reply;
+// export const reply = async (req: Request, res: Response) => {
+//     try {
+//         const commentId = req.params.comment_id
+//         const eventId = req.params.event_id
+//         console.log(commentId)
+//         const event = await Event.findOne({ _id: eventId})
+//         if(!event){
+//             res.json("This event doesn't exist")
+//         }
+//         const replyId = crypto.randomBytes(16).toString('hex')
+//         // const reply: CommentInterface = {
+//         //     comment_id: replyId,
+//         //     user: event!.user,
+//         //     date: new Date,
+//         //     content: req.body.content,
+//         //     likes: [],
+//         //     replies: []
+//         // }
+//         await Event.findOneAndUpdate(
+//             {'_id': eventId,"comments.comment_id": commentId},
+//             { $push: { "comments.$.replies": reply }}
+//         )
+//         res.json(event)
+//     } catch (error) {
+//         res.json(error)
+//     }
+// }
 const allComments = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const comments = yield Comment_1.Comment.find();

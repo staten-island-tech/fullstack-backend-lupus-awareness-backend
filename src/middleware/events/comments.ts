@@ -52,37 +52,37 @@ export const createComment = async (req: Request, res: Response) => {
 }
 
 
-export const reply = async (req: Request, res: Response) => {
-    try {
-        const commentId = req.params.comment_id
-        const eventId = req.params.event_id
-        console.log(commentId)
+// export const reply = async (req: Request, res: Response) => {
+//     try {
+//         const commentId = req.params.comment_id
+//         const eventId = req.params.event_id
+//         console.log(commentId)
 
-        const event = await Event.findOne({ _id: eventId})
+//         const event = await Event.findOne({ _id: eventId})
 
-        if(!event){
-            res.json("This event doesn't exist")
-        }
+//         if(!event){
+//             res.json("This event doesn't exist")
+//         }
 
-        const replyId = crypto.randomBytes(16).toString('hex')
-        // const reply: CommentInterface = {
-        //     comment_id: replyId,
-        //     user: event!.user,
-        //     date: new Date,
-        //     content: req.body.content,
-        //     likes: [],
-        //     replies: []
-        // }
+//         const replyId = crypto.randomBytes(16).toString('hex')
+//         // const reply: CommentInterface = {
+//         //     comment_id: replyId,
+//         //     user: event!.user,
+//         //     date: new Date,
+//         //     content: req.body.content,
+//         //     likes: [],
+//         //     replies: []
+//         // }
 
-        await Event.findOneAndUpdate(
-            {'_id': eventId,"comments.comment_id": commentId},
-            { $push: { "comments.$.replies": reply }}
-        )
-        res.json(event)
-    } catch (error) {
-        res.json(error)
-    }
-}
+//         await Event.findOneAndUpdate(
+//             {'_id': eventId,"comments.comment_id": commentId},
+//             { $push: { "comments.$.replies": reply }}
+//         )
+//         res.json(event)
+//     } catch (error) {
+//         res.json(error)
+//     }
+// }
 
 
 export const allComments = async (req: Request, res: Response) => {
