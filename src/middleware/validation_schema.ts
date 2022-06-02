@@ -11,9 +11,8 @@ export const userJoi = async(req: Request, res: Response, next: NextFunction) =>
                 password: Joi.string().min(6).required()
             }
         )
-        const result = await joiSchema.validateAsync(req.body)
-        res.json(result)
-        next()     
+        await joiSchema.validateAsync(req.body)
+        next()
     } catch (error) {
         res.json(error)
     }

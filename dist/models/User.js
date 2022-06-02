@@ -23,22 +23,22 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userSchema = exports.User = void 0;
+exports.userSchema = exports.User = exports.Role = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const privateKey = process.env.PRIVATEKEY;
 var Role;
 (function (Role) {
-    Role["Viewer"] = "viewer";
+    Role["Student"] = "student";
     Role["Uploader"] = "uploader";
     Role["Admin"] = "admin";
-})(Role || (Role = {}));
+})(Role = exports.Role || (exports.Role = {}));
 const userSchema = new mongoose_1.Schema({
     firstName: { type: String, trim: true, required: true },
     lastName: { type: String, trim: true, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
     // role: {type: Role, default: Role.Viewer, required: true},
-    role: { type: String, default: Role.Viewer, required: true },
+    role: { type: String, default: Role.Student, required: true },
     subscribers: { type: [], default: [], required: true },
     subscribed: { type: [], default: [], required: true },
     interestedEvents: { type: [], default: [], required: true },

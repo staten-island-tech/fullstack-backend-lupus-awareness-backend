@@ -13,7 +13,7 @@ export const register = async (req: Request, res: Response) => {
         const user = new User(req.body)
         user.password = await bcrypt.hash(req.body.password, 10);
         await user.save();
-    res.json(user)
+        res.json(user)
     } catch (error) {
         console.log(error)
     }

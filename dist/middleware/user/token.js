@@ -15,17 +15,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendUser = exports.requiresAuth = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const requiresAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    // const token = req.cookies['auth-token']
-    const token = req.header('auth-token');
-    console.log(token);
+    const token = req.cookies['auth-token'];
     if (!token)
         return res.json('access denied');
     try {
-        console.log(req.body);
         const payload = jsonwebtoken_1.default.verify(token, process.env.PRIVATEKEY);
         req.body.payload = payload;
-        req.payload = payload;
-        console.log(req.payload);
         next();
     }
     catch (error) {
