@@ -16,7 +16,6 @@ exports.sendUser = exports.requiresAuth = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const requiresAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const token = req.cookies['auth-token'];
-    console.log(token);
     if (!token)
         return res.json('access denied');
     try {

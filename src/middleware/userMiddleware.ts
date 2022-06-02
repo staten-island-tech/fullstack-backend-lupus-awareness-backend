@@ -78,7 +78,7 @@ export const subscribe = async (req: Request, res: Response) => {
         console.log(error)
     }
 }
-]
+
 export const unsubscribe = async (req: Request, res: Response) => {
     try {
         let me = await User.findOne({_id: req.body.payload._id})
