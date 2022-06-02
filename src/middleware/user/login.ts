@@ -11,16 +11,11 @@ export const login = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
         const existingUser = await User.findOne({ email })
-        if (!existingUser) {
-            res.json('email not registered')
-        }
+        if (!existingUser) { return res.json('email not registered')}
         console.log(existingUser)
         const validPassword = bcrypt.compareSync(password, existingUser!.password)
         console.log(validPassword)
-        if (!validPassword) {
-            res.json('not valid')
-            return
-        }
+        if (!validPassword) { return res.json('Password not valid')}
         console.log('valid')
         const payload: UserAttributes = {
             _id: existingUser!._id,

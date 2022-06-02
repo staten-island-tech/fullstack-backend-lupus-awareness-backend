@@ -23,14 +23,13 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { email, password } = req.body;
         const existingUser = yield User_1.User.findOne({ email });
         if (!existingUser) {
-            res.json('email not registered');
+            return res.json('email not registered');
         }
         console.log(existingUser);
         const validPassword = bcryptjs_1.default.compareSync(password, existingUser.password);
         console.log(validPassword);
         if (!validPassword) {
-            res.json('not valid');
-            return;
+            return res.json('Password not valid');
         }
         console.log('valid');
         const payload = {
