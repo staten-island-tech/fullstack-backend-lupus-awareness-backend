@@ -12,7 +12,7 @@ export const userJoi = async(req: Request, res: Response, next: NextFunction) =>
             }
         )
         const result = await joiSchema.validateAsync(req.body)
-        console.log(result)
+        res.json(result)
         next()     
     } catch (error) {
         res.json(error)

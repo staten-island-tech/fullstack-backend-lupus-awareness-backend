@@ -23,7 +23,7 @@ const userJoi = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
             password: joi_1.default.string().min(6).required()
         });
         const result = yield joiSchema.validateAsync(req.body);
-        console.log(result);
+        res.json(result);
         next();
     }
     catch (error) {
