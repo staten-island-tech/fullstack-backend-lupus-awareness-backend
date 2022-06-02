@@ -44,6 +44,7 @@ const showInterest = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         //     replies: []
         // }
         yield Event_1.Event.updateOne({ '_id': req.params.id }, { $set: { numberInterested: interestNumber } });
+        yield User_1.User.findOneAndUpdate({ _id: req.body.payload._id }, { $push: { interestedEvents: req.params.id } });
         console.log(interestNumber);
         res.json(interest);
     }

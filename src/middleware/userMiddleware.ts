@@ -83,12 +83,21 @@ export const unsubscribe = async (req: Request, res: Response) => {
     try {
         let me = await User.findOne({_id: req.body.payload._id})
         let user = await User.findOne({ _id: req.params.id})
+        if(user!.subscribers.includes(req.body.payload._id)){
+            await User.findOneAndUpdate(
+                {_id: req.body.payload._id},
+                { $pull: { subscribed: user!._id}}
+            )
+            await User.findOneAndUpdate(
+                {_id: req.params.id},
+                { $pull: { subscribers: me!._id}}
+            )
 
-        
-        // me!.subscribed.push(user!._id)
-        // user!.subscribers.push(me!._id)
-        me!.save()
-        user!.save()
+
+        }
+        // me!.save()
+        // user!.save()
+
         // res.json(me!.subscribed)
         res.json(me)
         console.log(user)

@@ -2,7 +2,7 @@ import express from 'express'
 const upload = require('../middleware/events/multer')
 
 //user middleware
-import {getUsers, updateUsers, deleteUser, deleteAllUser, getProfile, subscribe} from '../middleware/userMiddleware'
+import {getUsers, updateUsers, deleteUser, deleteAllUser, getProfile, subscribe, unsubscribe} from '../middleware/userMiddleware'
 import {login} from '../middleware/user/login'
 import { logout } from '../middleware/user/logout'
 import {register} from '../middleware/user/register'
@@ -14,7 +14,7 @@ import { showInterest, allInterested, populateUser } from '../middleware/events/
 
 //event middleware
 import { allEvents, event, deleteEvent, deleteAllEvent} from '../middleware/eventMiddleware'
-import {reply, createComment, allComments, deleteComment, findComment, populateComments} from '../middleware/events/comments'
+import { createComment, allComments, deleteComment, findComment, populateComments} from '../middleware/events/comments'
 import { createEvent } from '../middleware/events/createEvent'
 import {getEvents} from '../middleware/events/getEvents'
 import {userJoi} from '../middleware/validation_schema'
@@ -38,12 +38,13 @@ router.post('/login', login)
 router.post('/logout', logout)
 router.post('/event', requiresAuth, createEvent)
 router.post('/event/:id/createComment', requiresAuth, createComment)
-router.post("/event/:event_id/comment/:comment_id/replyComment", requiresAuth, reply)
-router.post('/event/:id/uploadEvent', upload.array('image'), requiresAuth, uploadEvent)
-router.post('/user/:id', requiresAuth, subscribe)
+// router.post("/event/:event_id/comment/:comment_id/replyComment", requiresAuth, reply)
+router.post('/event/:id/uploadEvent', requiresAuth,  upload.array('image'),uploadEvent)
+router.post('/user/subscribe/:id', requiresAuth, subscribe)
+router.post('/user/unsubscribe/:id', requiresAuth, unsubscribe)
 router.post('/event/:id/showInterest', requiresAuth, showInterest)
 
-router.patch('/upload',upload.single('image'), requiresAuth, uploadProf)
+router.patch('/user/profilePic',  requiresAuth , upload.single('image'),uploadProf)
 router.patch('/user/:id', requiresAuth, updateUsers)
 
 

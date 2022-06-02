@@ -96,10 +96,12 @@ const unsubscribe = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     try {
         let me = yield User_1.User.findOne({ _id: req.body.payload._id });
         let user = yield User_1.User.findOne({ _id: req.params.id });
-        // me!.subscribed.push(user!._id)
-        // user!.subscribers.push(me!._id)
-        me.save();
-        user.save();
+        if (user.subscribers.includes(req.body.payload._id)) {
+            yield User_1.User.findOneAndUpdate({ _id: req.body.payload._id }, { $pull: { subscribed: user._id } });
+            yield User_1.User.findOneAndUpdate({ _id: req.params.id }, { $pull: { subscribers: me._id } });
+        }
+        // me!.save()
+        // user!.save()
         // res.json(me!.subscribed)
         res.json(me);
         console.log(user);
