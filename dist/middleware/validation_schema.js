@@ -22,8 +22,7 @@ const userJoi = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
             email: joi_1.default.string().required().email(),
             password: joi_1.default.string().min(6).required()
         });
-        const result = yield joiSchema.validateAsync(req.body);
-        res.json(result);
+        yield joiSchema.validateAsync(req.body);
         next();
     }
     catch (error) {
