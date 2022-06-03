@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express'
 
 export const requiresAuth = async (req: Request, res: Response, next: NextFunction) => {
     const token = req.cookies['auth-token']
+
     if(!token) return res.json('access denied')
     try {
        const payload: Object = jwt.verify(token, process.env.PRIVATEKEY as string)

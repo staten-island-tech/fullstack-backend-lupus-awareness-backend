@@ -134,6 +134,16 @@ export const populateComments = async (req: Request, res: Response) => {
     }
 }
 
+export const likeComment = async (req: Request, res: Response) => {
+    try {
+        const comment = Comment.findOne({ _id: req.params.id})
+        res.json(comment)
+    } catch (error) {
+        res.json(error)
+    }
+}
+
+
 
 
 

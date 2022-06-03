@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.populateComments = exports.findComment = exports.deleteComment = exports.allComments = exports.createComment = void 0;
+exports.likeComment = exports.populateComments = exports.findComment = exports.deleteComment = exports.allComments = exports.createComment = void 0;
 const Event_1 = require("../../models/Event");
 const User_1 = require("../../models/User");
 const Comment_1 = require("../../models/Comment");
@@ -131,3 +131,13 @@ const populateComments = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.populateComments = populateComments;
+const likeComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const comment = Comment_1.Comment.findOne({ _id: req.params.id });
+        res.json(comment);
+    }
+    catch (error) {
+        res.json(error);
+    }
+});
+exports.likeComment = likeComment;
