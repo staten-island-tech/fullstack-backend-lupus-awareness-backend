@@ -9,11 +9,8 @@ dotenv.config()
 
 export const getUsers = async (req: Request, res: Response) => {
     try {
-        let count = 0
-        let limitedNumber = count + 5
-        count = limitedNumber
-        // const Users = await User.find().limit(limitedNumber)
-        res.json(count)
+        const Users = await User.find()
+        res.json(Users)
     } catch (error) {
         res.json(error)
     }

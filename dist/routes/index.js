@@ -28,6 +28,7 @@ exports.router = router;
 router.get('/', userMiddleware_1.getUsers);
 router.get('/auth', token_1.requiresAuth, token_2.sendUser);
 router.get('/events', queryEvents_1.queryEvents);
+router.get('/allEvents', eventMiddleware_1.allEvents);
 router.get('/profile', token_1.requiresAuth, userMiddleware_1.getProfile);
 router.get("/eventProfile/:id", eventMiddleware_1.event);
 router.get("/comment/:id", comments_1.findComment);
