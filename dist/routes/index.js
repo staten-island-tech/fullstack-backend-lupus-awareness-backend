@@ -17,6 +17,7 @@ const token_2 = require("../middleware/user/token");
 const cloudinary_1 = require("../middleware/cloudinary");
 const userInterested_1 = require("../middleware/events/userInterested");
 //event middleware
+const queryEvents_1 = require("../middleware/events/queryEvents");
 const eventMiddleware_1 = require("../middleware/eventMiddleware");
 const comments_1 = require("../middleware/events/comments");
 const createEvent_1 = require("../middleware/events/createEvent");
@@ -26,7 +27,7 @@ const router = express_1.default.Router();
 exports.router = router;
 router.get('/', userMiddleware_1.getUsers);
 router.get('/auth', token_1.requiresAuth, token_2.sendUser);
-router.get('/events', eventMiddleware_1.allEvents);
+router.get('/events', queryEvents_1.queryEvents);
 router.get('/profile', token_1.requiresAuth, userMiddleware_1.getProfile);
 router.get("/eventProfile/:id", eventMiddleware_1.event);
 router.get("/comment/:id", comments_1.findComment);
