@@ -9,30 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createEvent = void 0;
-const User_1 = require("../../models/User");
+exports.queryEvents = void 0;
 const Event_1 = require("../../models/Event");
-const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    if (req.body.payload.role === User_1.Role.Student) {
-        return res.json('Students cannot create events');
-    }
+const queryEvents = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const event = new Event_1.Event({
-            user: req.body.payload,
-            name: req.body.name,
-            date: new Date(),
-            duration: req.body.duration,
-            location: req.body.location,
-            description: req.body.description,
-            media: req.body.media,
-            tags: req.body.tags
-        });
-        yield event.save();
-        yield User_1.User.findOneAndUpdate({ _id: req.body.payload._id }, { $push: { events: event._id } });
-        res.json(event);
+        let events = yield Event_1.Event.find();
+        res.json(events);
     }
     catch (error) {
         res.json(error);
     }
 });
-exports.createEvent = createEvent;
+exports.queryEvents = queryEvents;

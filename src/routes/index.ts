@@ -13,6 +13,7 @@ import { uploadProf, uploadEvent } from '../middleware/cloudinary'
 import { showInterest, allInterested, populateUser } from '../middleware/events/userInterested'
 
 //event middleware
+import {queryEvents} from '../middleware/events/queryEvents'
 import { allEvents, event, deleteEvent, deleteAllEvent} from '../middleware/eventMiddleware'
 import { createComment, allComments, deleteComment, findComment, populateComments} from '../middleware/events/comments'
 import { createEvent } from '../middleware/events/createEvent'
@@ -23,7 +24,7 @@ const router = express.Router()
 
 router.get('/', getUsers)
 router.get('/auth', requiresAuth, sendUser)
-router.get('/events', allEvents)
+router.get('/events', queryEvents)
 router.get('/profile', requiresAuth, getProfile)
 router.get("/eventProfile/:id", event)
 router.get("/comment/:id", findComment)

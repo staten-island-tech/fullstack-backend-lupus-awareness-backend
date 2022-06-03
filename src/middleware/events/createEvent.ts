@@ -7,10 +7,13 @@ export const createEvent = async(req: Request, res: Response, next: NextFunction
     try {
         const event = new Event({
             user: req.body.payload,
+            name: req.body.name,
             date: new Date(),
+            duration: req.body.duration,
             location: req.body.location,
             description: req.body.description,
-            media: req.body.media
+            media: req.body.media,
+            tags: req.body.tags
             });
         await event.save();
         await User.findOneAndUpdate({ _id: req.body.payload._id },
