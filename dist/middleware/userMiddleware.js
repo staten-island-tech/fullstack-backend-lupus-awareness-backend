@@ -18,7 +18,9 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const Users = yield User_1.User.find();
+        let count = 0;
+        // let count = count + 5
+        // const Users = await User.find().limit(limitedNumber)
         res.json(Users);
     }
     catch (error) {
