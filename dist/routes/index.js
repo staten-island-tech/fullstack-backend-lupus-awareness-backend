@@ -42,7 +42,7 @@ router.post('/login', login_1.login);
 router.post('/logout', logout_1.logout);
 router.post('/event', token_1.requiresAuth, createEvent_1.createEvent);
 router.post('/event/:id/createComment', token_1.requiresAuth, comments_1.createComment);
-// router.post("/event/:event_id/comment/:comment_id/replyComment", requiresAuth, reply)
+router.post("/event/:event_id/comment/:comment_id/replyComment", token_1.requiresAuth, comments_1.reply);
 router.post('/event/:id/uploadEvent', token_1.requiresAuth, upload.array('image'), cloudinary_1.uploadEvent);
 router.post('/user/subscribe/:id', token_1.requiresAuth, userMiddleware_1.subscribe);
 router.post('/user/unsubscribe/:id', token_1.requiresAuth, userMiddleware_1.unsubscribe);

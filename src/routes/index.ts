@@ -15,7 +15,7 @@ import { showInterest, allInterested, populateUser } from '../middleware/events/
 //event middleware
 import {queryEvents} from '../middleware/events/queryEvents'
 import { allEvents, event, deleteEvent, deleteAllEvent} from '../middleware/eventMiddleware'
-import { createComment, allComments, deleteComment, findComment, populateComments} from '../middleware/events/comments'
+import { createComment, allComments, deleteComment, findComment, populateComments, reply} from '../middleware/events/comments'
 import { createEvent } from '../middleware/events/createEvent'
 import {getEvents} from '../middleware/events/getEvents'
 import {userJoi} from '../middleware/validation_schema'
@@ -40,7 +40,7 @@ router.post('/login', login)
 router.post('/logout', logout)
 router.post('/event', requiresAuth, createEvent)
 router.post('/event/:id/createComment', requiresAuth, createComment)
-// router.post("/event/:event_id/comment/:comment_id/replyComment", requiresAuth, reply)
+router.post("/event/:event_id/comment/:comment_id/replyComment", requiresAuth, reply)
 router.post('/event/:id/uploadEvent', requiresAuth,  upload.array('image'),uploadEvent)
 router.post('/user/subscribe/:id', requiresAuth, subscribe)
 router.post('/user/unsubscribe/:id', requiresAuth, unsubscribe)
