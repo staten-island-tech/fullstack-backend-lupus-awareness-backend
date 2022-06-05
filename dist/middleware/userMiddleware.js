@@ -22,7 +22,7 @@ const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.json(Users);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 exports.getUsers = getUsers;
@@ -35,7 +35,7 @@ const updateUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.json(updates);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 exports.updateUsers = updateUsers;

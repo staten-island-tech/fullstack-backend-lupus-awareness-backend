@@ -67,7 +67,7 @@ const showInterest = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         res.json(interest);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 exports.showInterest = showInterest;
@@ -77,7 +77,7 @@ const allInterested = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.json(interested);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 exports.allInterested = allInterested;
@@ -95,7 +95,7 @@ const populateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         });
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 exports.populateUser = populateUser;

@@ -47,7 +47,7 @@ export const createComment = async (req: Request, res: Response) => {
         res.json(comment)
         
     } catch (error) {
-        res.json(error)
+        res.status(400).json(error)
     }
 }
 
@@ -80,7 +80,7 @@ export const createComment = async (req: Request, res: Response) => {
 //         )
 //         res.json(event)
 //     } catch (error) {
-//         res.json(error)
+//         res.status(400).json(error)
 //     }
 // }
 
@@ -90,7 +90,7 @@ export const allComments = async (req: Request, res: Response) => {
         const comments = await Comment.find()
         res.json(comments)
     } catch (error) {
-        res.json(error)
+        res.status(400).json(error)
     }
 }
 
@@ -100,7 +100,7 @@ export const deleteComment = async (req: Request, res: Response) => {
        const comments = await Comment.find({_id: '623678cbcb8c883ac7f1dee9'})
         res.json(`${comments} deleted`)
     } catch (error) {
-        res.json(error)
+        res.status(400).json(error)
     }
 }
 
@@ -114,7 +114,7 @@ export const findComment = async (req: Request, res: Response) => {
 
         res.json(comment)
     } catch (error) {
-        res.json(error)
+        res.status(400).json(error)
     }
 }
 
@@ -130,7 +130,7 @@ export const populateComments = async (req: Request, res: Response) => {
             res.json(event!.comments)
         })
     } catch (error) {
-        res.json(error)
+        res.status(400).json(error)
     }
 }
 

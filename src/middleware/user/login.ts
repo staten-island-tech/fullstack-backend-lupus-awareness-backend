@@ -11,12 +11,9 @@ export const login = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
         const existingUser = await User.findOne({ email })
-        if (!existingUser) { return res.json('email not registered')}
-        console.log(existingUser)
+        if (!existingUser) { return res.status(400).json('There is no user registered under this email. Meant to register?')}
         const validPassword = bcrypt.compareSync(password, existingUser!.password)
-        console.log(validPassword)
-        if (!validPassword) { return res.json('Password not valid')}
-        console.log('valid')
+        if (!validPassword) { return res.status(400).json('Invalid Password')}
         const payload: UserAttributes = {
             _id: existingUser!._id,
             firstName: existingUser!.firstName,
@@ -30,9 +27,9 @@ export const login = async (req: Request, res: Response) => {
             secure: true,
             sameSite: 'none',
             httpOnly: true
-        }).send()
+        }).json('Successfully logged in.')
     } catch (error) {
-        res.json(error)
+        res.status(400).json(error)
     }
 }
 

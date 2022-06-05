@@ -23,7 +23,7 @@ const getEvents = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         res.json(userEvents);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 exports.getEvents = getEvents;

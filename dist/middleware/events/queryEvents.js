@@ -17,7 +17,7 @@ const queryEvents = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         res.json(events);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 exports.queryEvents = queryEvents;

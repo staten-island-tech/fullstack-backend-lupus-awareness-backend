@@ -26,7 +26,7 @@ export const allEvents = async (req: Request, res: Response) => {
         // })
         res.json(events)
     } catch (error) {
-        res.json(error)
+        res.status(400).json(error)
     }
 }
 
@@ -40,7 +40,7 @@ export const event = async (req: Request, res: Response) => {
 
         res.json(event)
     } catch (error) {
-        res.json(error)
+        res.status(400).json(error)
     }
 }
 
@@ -66,7 +66,7 @@ export const updateEvents = async (req: Request, res: Response) => {
         await event.save()
         res.json(updates)
     } catch (error) {
-        res.json(error)
+        res.status(400).json(error)
     }
 }
 

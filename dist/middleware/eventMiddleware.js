@@ -33,7 +33,7 @@ const allEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.json(events);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 exports.allEvents = allEvents;
@@ -46,7 +46,7 @@ const event = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.json(event);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 exports.event = event;
@@ -72,7 +72,7 @@ const updateEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         res.json(updates);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 exports.updateEvents = updateEvents;

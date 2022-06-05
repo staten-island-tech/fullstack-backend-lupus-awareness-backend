@@ -15,7 +15,7 @@ const searchUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         const params = req.params.query.split(' ');
         if (params.length === 0) {
-            return res.json('Invalid search');
+            return res.status(400).json('Invalid search');
         }
         if (params.length === 1) {
             let users = yield User_1.User.find({
@@ -32,7 +32,7 @@ const searchUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         return res.json(users);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 exports.searchUser = searchUser;

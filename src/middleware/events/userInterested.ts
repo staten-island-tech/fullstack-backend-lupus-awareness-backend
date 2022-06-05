@@ -75,7 +75,7 @@ export const showInterest = async (req: Request, res: Response) => {
         res.json(interest)
         
     } catch (error) {
-        res.json(error)
+        res.status(400).json(error)
     }
 }
 
@@ -85,7 +85,7 @@ export const allInterested = async (req: Request, res: Response) => {
         const interested = await Interested.find()
         res.json(interested)
     } catch (error) {
-        res.json(error)
+        res.status(400).json(error)
     }
 }
 
@@ -101,7 +101,7 @@ export const populateUser = async (req: Request, res: Response) => {
             res.json(event!.interested)
         })
     } catch (error) {
-        res.json(error)
+        res.status(400).json(error)
     }
 }
 

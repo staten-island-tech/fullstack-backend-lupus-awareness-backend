@@ -12,6 +12,6 @@ export const getEvents = async(req: Request, res: Response, next: NextFunction) 
         })
         res.json(userEvents)
     } catch (error) {
-        res.json(error)
+        res.status(400).json(error)
     }
 }

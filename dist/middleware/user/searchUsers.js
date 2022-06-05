@@ -17,7 +17,7 @@ const searchUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.json(Users);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 exports.searchUsers = searchUsers;

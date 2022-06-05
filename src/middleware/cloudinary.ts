@@ -30,7 +30,7 @@ const cloudinary = require("cloudinary").v2
             res.json(user)
         });
     } catch (error) {
-        res.json(error)
+        res.status(400).json(error)
         console.log(error)
     }
 }
@@ -58,7 +58,7 @@ export const uploadEvent = async(req: Request, res: Response, next: NextFunction
     })
     res.json(imageFiles)
   } catch (error) {
-      res.json(error)
+      res.status(400).json(error)
       console.log(error)
   }
 }

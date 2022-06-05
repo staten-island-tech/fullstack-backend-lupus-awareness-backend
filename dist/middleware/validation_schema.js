@@ -15,18 +15,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.userJoi = void 0;
 const joi_1 = __importDefault(require("joi"));
 const userJoi = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const joiSchema = joi_1.default.object({
+        firstName: joi_1.default.string().required(),
+        lastName: joi_1.default.string().required(),
+        email: joi_1.default.string().required().email(),
+        password: joi_1.default.string().min(6).required()
+    });
     try {
-        const joiSchema = joi_1.default.object({
-            firstName: joi_1.default.string().required(),
-            lastName: joi_1.default.string().required(),
-            email: joi_1.default.string().required().email(),
-            password: joi_1.default.string().min(6).required()
-        });
         yield joiSchema.validateAsync(req.body);
         next();
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 exports.userJoi = userJoi;

@@ -23,7 +23,7 @@ const checkCookie = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         res.send(payload);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 exports.checkCookie = checkCookie;

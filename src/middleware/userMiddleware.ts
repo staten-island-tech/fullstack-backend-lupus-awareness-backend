@@ -12,7 +12,7 @@ export const getUsers = async (req: Request, res: Response) => {
         const Users = await User.find()
         res.json(Users)
     } catch (error) {
-        res.json(error)
+        res.status(400).json(error)
     }
 }
 
@@ -24,7 +24,7 @@ export const updateUsers = async (req: Request, res: Response) => {
         await user.save()
         res.json(updates)
     } catch (error) {
-        res.json(error)
+        res.status(400).json(error)
     }
 }
 

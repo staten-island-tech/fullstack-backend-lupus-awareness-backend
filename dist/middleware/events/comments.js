@@ -48,7 +48,7 @@ const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.json(comment);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 exports.createComment = createComment;
@@ -76,7 +76,7 @@ exports.createComment = createComment;
 //         )
 //         res.json(event)
 //     } catch (error) {
-//         res.json(error)
+//         res.status(400).json(error)
 //     }
 // }
 const allComments = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -85,7 +85,7 @@ const allComments = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.json(comments);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 exports.allComments = allComments;
@@ -95,7 +95,7 @@ const deleteComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.json(`${comments} deleted`);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 exports.deleteComment = deleteComment;
@@ -109,7 +109,7 @@ const findComment = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.json(comment);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 exports.findComment = findComment;
@@ -127,7 +127,7 @@ const populateComments = (req, res) => __awaiter(void 0, void 0, void 0, functio
         });
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 exports.populateComments = populateComments;

@@ -25,7 +25,7 @@ const requiresAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
         next();
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 module.exports = requiresAuth;

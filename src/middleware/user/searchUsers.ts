@@ -7,7 +7,7 @@ export const searchUsers = async (req: Request, res: Response) => {
         const Users = await User.find()
         res.json(Users)
     } catch (error) {
-        res.json(error)
+        res.status(400).json(error)
     }
 }
 

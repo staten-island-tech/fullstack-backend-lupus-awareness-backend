@@ -39,7 +39,7 @@ const uploadProf = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         }));
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
         console.log(error);
     }
 });
@@ -64,7 +64,7 @@ const uploadEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         res.json(imageFiles);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
         console.log(error);
     }
 });

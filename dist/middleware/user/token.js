@@ -17,14 +17,14 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const requiresAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const token = req.cookies['auth-token'];
     if (!token)
-        return res.json('access denied');
+        return res.status(400).json('You are not logged in');
     try {
         const payload = jsonwebtoken_1.default.verify(token, process.env.PRIVATEKEY);
         req.body.payload = payload;
         next();
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 exports.requiresAuth = requiresAuth;
@@ -33,7 +33,7 @@ const sendUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
         res.send(req.body.payload);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 exports.sendUser = sendUser;

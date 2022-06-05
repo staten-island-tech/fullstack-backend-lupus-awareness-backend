@@ -6,6 +6,6 @@ export const queryEvents = async(req: Request, res: Response, next: NextFunction
         let events = await Event.find()
         res.json(events)
     } catch (error) {
-        res.json(error)
+        res.status(400).json(error)
     }
 }
