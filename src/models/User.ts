@@ -3,9 +3,9 @@ import jwt from 'jsonwebtoken'
 const privateKey = process.env.PRIVATEKEY
 
 export enum Role {
-    Student = 'student',
-    Uploader = 'uploader',
-    Admin = 'admin'
+    Student = 'Student',
+    Organization = 'Organization',
+    Admin = 'Admin'
 }
 export interface UserData {
     firstName: string,

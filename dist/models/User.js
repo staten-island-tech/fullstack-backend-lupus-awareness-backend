@@ -28,9 +28,9 @@ const mongoose_1 = __importStar(require("mongoose"));
 const privateKey = process.env.PRIVATEKEY;
 var Role;
 (function (Role) {
-    Role["Student"] = "student";
-    Role["Uploader"] = "uploader";
-    Role["Admin"] = "admin";
+    Role["Student"] = "Student";
+    Role["Organization"] = "Organization";
+    Role["Admin"] = "Admin";
 })(Role = exports.Role || (exports.Role = {}));
 const userSchema = new mongoose_1.Schema({
     firstName: { type: String, trim: true, required: true },
