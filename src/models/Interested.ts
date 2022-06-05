@@ -1,14 +1,14 @@
-import { object } from 'joi'
+import { object, string } from 'joi'
 import mongoose, { Schema, model, connect } from 'mongoose'
 import {UserAttributes, UserInterface, userSchema} from './User'
 
 interface interestedInterface {
-    user: UserAttributes,
+    userID: String,
     date: Date,
 }
 
 const interestedSchema = new Schema({
-    user:  {type: Object, trim: true, required: true},
+    userID:  {type: String, trim: true, required: true},
     date: {type: Date, trim: true, required: true},
     event: {type: mongoose.Schema.Types.ObjectId, required: true, ref: "Event"}
 })

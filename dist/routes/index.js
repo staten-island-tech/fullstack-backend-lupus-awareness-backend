@@ -37,6 +37,7 @@ router.get('/comments', comments_1.allComments);
 router.get('/comments/:id', token_1.requiresAuth, comments_1.populateComments);
 router.get('/interested', userInterested_1.allInterested);
 router.get('/interested/:id', token_1.requiresAuth, userInterested_1.populateUser);
+router.get('/user/interestedEvents', token_1.requiresAuth, userInterested_1.userInterested);
 router.post('/register', validation_schema_1.userJoi, register_1.register);
 router.post('/login', login_1.login);
 router.post('/logout', logout_1.logout);

@@ -10,7 +10,7 @@ import {register} from '../middleware/user/register'
 import { requiresAuth } from '../middleware/user/token'
 import { sendUser } from '../middleware/user/token'
 import { uploadProf, uploadEvent } from '../middleware/cloudinary'
-import { showInterest, allInterested, populateUser } from '../middleware/events/userInterested'
+import { showInterest, allInterested, populateUser, userInterested } from '../middleware/events/userInterested'
 import { searchUser } from '../middleware/user/searchUser'
 
 //event middleware
@@ -34,6 +34,7 @@ router.get('/comments', allComments)
 router.get('/comments/:id', requiresAuth, populateComments)
 router.get('/interested', allInterested)
 router.get('/interested/:id', requiresAuth, populateUser)
+router.get('/user/interestedEvents', requiresAuth, userInterested)
 
 router.post('/register', userJoi, register)
 router.post('/login', login)

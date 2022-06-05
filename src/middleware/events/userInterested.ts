@@ -23,17 +23,15 @@ export const showInterest = async (req: Request, res: Response) => {
 
         // console.log(event)
 
-        // const doesExist = await Interested.findOne({ event: req.params.id, user: userId });
-        // const checkExist = (currentValue: any) => currentValue.user === doesExist?._id
-        // console.log(event.every(checkExist))
-        // if(event.includes(userId)){
-        //     console.log("true")
-        // }else{
-        //     console.log("not true")
-        // }
-
-        // let doesExist = await Interested.findOne({ event: req.params.id, user: userId });
+        // const doesExist = await Interested.findOne({ event: req.params.id });
         // console.log(doesExist)
+
+        let doesExist = await Interested.findOne({ event: req.params.id, userID: userId });
+        if(doesExist){
+            res.json("You've already shown interest to this event")
+            return
+        }
+        console.log(doesExist)
 
         const event1 = await Event.findOne({ _id: req.params.id})
         let initial = event1!.numberInterested
@@ -46,7 +44,7 @@ export const showInterest = async (req: Request, res: Response) => {
         // }
 
         const interest = new Interested({
-            user: userId,
+            userID: userId,
             event: req.params.id,
             date: new Date(),
         })
@@ -105,6 +103,14 @@ export const populateUser = async (req: Request, res: Response) => {
     }
 }
 
-
+//get all the events a user is interested in
+export const userInterested = async (req: Request, res: Response) => {
+    try {
+        const interested = await Interested.find({ userID: req.body.payload._id})
+        res.json(interested)
+    } catch (error) {
+        res.json(error)
+    }
+}
 
 
