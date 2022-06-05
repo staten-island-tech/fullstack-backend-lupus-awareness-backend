@@ -14,9 +14,7 @@ const User_1 = require("../../models/User");
 const Event_1 = require("../../models/Event");
 const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.body);
-    if (req.body.payload.role === User_1.Role.Student) {
-        return res.json('Students cannot create events');
-    }
+    // if(req.body.payload.role === Role.Student) {return res.json('Students cannot create events')}
     try {
         const event = new Event_1.Event({
             user: req.body.payload,
