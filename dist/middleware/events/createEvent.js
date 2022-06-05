@@ -13,6 +13,7 @@ exports.createEvent = void 0;
 const User_1 = require("../../models/User");
 const Event_1 = require("../../models/Event");
 const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.body);
     if (req.body.payload.role === User_1.Role.Student) {
         return res.json('Students cannot create events');
     }
@@ -20,8 +21,9 @@ const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         const event = new Event_1.Event({
             user: req.body.payload,
             name: req.body.name,
-            date: new Date(),
-            duration: req.body.duration,
+            hours: req.body.hours,
+            start: req.body.start,
+            end: req.body.end,
             location: req.body.location,
             description: req.body.description,
             media: req.body.media,
@@ -32,7 +34,7 @@ const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         res.json(event);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).send(error);
     }
 });
 exports.createEvent = createEvent;
