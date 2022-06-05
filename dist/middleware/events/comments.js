@@ -57,11 +57,13 @@ const reply = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const commentId = req.params.comment_id;
         const eventId = req.params.event_id;
         console.log(commentId);
-        const event = yield Event_1.Event.findOne({ _id: eventId });
-        if (!event) {
-            res.json("This event doesn't exist");
-        }
-        const comment = new Comment_1.Comment({
+        const comment = yield Comment_1.Comment.findOne({ _id: commentId });
+        // res.json(comment!.replies)
+        // const event = await Event.findOne({ _id: eventId})
+        // if(!event){
+        //     res.json("This event doesn't exist")
+        // }
+        const reply = new Comment_1.Comment({
             user: req.body.payload._id,
             event: req.params.id,
             date: new Date(),
@@ -69,6 +71,10 @@ const reply = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             likes: [],
             replies: [],
         });
+        comment.replies.push(reply);
+        reply.save();
+        comment === null || comment === void 0 ? void 0 : comment.save();
+        res.json(comment);
         // const replyId = crypto.randomBytes(16).toString('hex')
         // // const reply: CommentInterface = {
         // //     comment_id: replyId,
@@ -78,7 +84,10 @@ const reply = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         // //     likes: [],
         // //     replies: []
         // // }
-        yield Event_1.Event.findOneAndUpdate({ '_id': eventId, "comments.comment_id": commentId }, { $push: { "comments.$.replies": comment } });
+        // await Event.findOneAndUpdate(
+        //     {'_id': eventId,"comments.comment_id": commentId},
+        //     { $push: { "comments.$.replies": comment }}
+        // )
         res.json(event);
     }
     catch (error) {
