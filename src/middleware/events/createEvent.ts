@@ -12,7 +12,7 @@ export const createEvent = async(req: Request, res: Response, next: NextFunction
             hours: req.body.hours,
             start: req.body.start,
             end: req.body.end,
-            location: req.body.location,
+            // location: req.body.location,
             description: req.body.description,
             media: req.body.media,
             tags: req.body.tags

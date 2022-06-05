@@ -27,13 +27,13 @@ exports.Event = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const privateKey = process.env.PRIVATEKEY;
 const eventSchema = new mongoose_1.Schema({
-    user: { type: {}, required: true },
+    user: { type: {}, required: false },
     name: { type: String, required: true },
     start: { type: Date, required: true },
     end: { type: Date, required: true },
     hours: { type: Number },
     // location: {type: String, required: true},
-    // description: {type: String, required: true},
+    description: { type: String, required: true },
     media: { type: [], required: true },
     tags: { type: [], required: true },
     numberInterested: { type: Number, default: 0, required: true },
