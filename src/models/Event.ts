@@ -25,13 +25,13 @@ interface eventInterface extends EventData {
 }
 
 const eventSchema = new Schema({
-    user: {type: {}, required: true},
+    // user: {type: {}, required: true},
     name: {type: String, required: true},
     date: {type: Date, required: true},
     duration: {type: Number, required: true},
     hours: {type: Number},
-    location: {type: String, required: true},
-    description: {type: String, required: true},
+    // location: {type: String, required: true},
+    // description: {type: String, required: true},
     media: {type: [], required: true},
     tags: {type: [], required: true},
     numberInterested: {type: Number, default: 0, required: true},
