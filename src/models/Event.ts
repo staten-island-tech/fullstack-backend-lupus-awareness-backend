@@ -25,7 +25,7 @@ interface eventInterface extends EventData {
 }
 
 const eventSchema = new Schema({
-    // user: {type: {}, required: true},
+    user: {type: {}, required: true},
     name: {type: String, required: true},
     date: {type: Date, required: true},
     duration: {type: Number, required: true},
