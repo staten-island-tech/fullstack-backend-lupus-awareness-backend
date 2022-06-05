@@ -11,6 +11,7 @@ import { requiresAuth } from '../middleware/user/token'
 import { sendUser } from '../middleware/user/token'
 import { uploadProf, uploadEvent } from '../middleware/cloudinary'
 import { showInterest, allInterested, populateUser } from '../middleware/events/userInterested'
+import { searchUser } from '../middleware/user/searchUser'
 
 //event middleware
 import {queryEvents} from '../middleware/events/queryEvents'
@@ -25,8 +26,7 @@ const router = express.Router()
 router.get('/', getUsers)
 router.get('/auth', requiresAuth, sendUser)
 router.get('/events', queryEvents)
-router.get('/allEvents', allEvents)
-router.get('/profile', requiresAuth, getProfile)
+router.get('/searchUser/:query',  searchUser)
 router.get("/eventProfile/:id", event)
 router.get("/comment/:id", findComment)
 router.get('/getEvents', requiresAuth, getEvents)
