@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import {User} from '../../models/User'
+import {User, Role} from '../../models/User'
 import { Event } from '../../models/Event'
 
 export const getEvents = async(req: Request, res: Response, next: NextFunction) => {
@@ -10,7 +10,7 @@ export const getEvents = async(req: Request, res: Response, next: NextFunction) 
                 $in: user.events
             }
         })
-        res.send(userEvents)
+        res.json(userEvents)
     } catch (error) {
         res.json(error)
     }

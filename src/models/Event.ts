@@ -7,8 +7,8 @@ const privateKey = process.env.PRIVATEKEY
 export interface EventData {
     user: UserAttributes,
     name: String,
-    date: Date,
-    duration: Number,
+    start: Date,
+    end: Date,
     hours?: number,
     location: string,
     description: string,
@@ -27,8 +27,8 @@ interface eventInterface extends EventData {
 const eventSchema = new Schema({
     user: {type: {}, required: true},
     name: {type: String, required: true},
-    date: {type: Date, required: true},
-    duration: {type: Number, required: true},
+    start: {type: Date, required: true},
+    end: {type: Date, required: true},
     hours: {type: Number},
     // location: {type: String, required: true},
     // description: {type: String, required: true},

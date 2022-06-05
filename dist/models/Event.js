@@ -29,8 +29,8 @@ const privateKey = process.env.PRIVATEKEY;
 const eventSchema = new mongoose_1.Schema({
     user: { type: {}, required: true },
     name: { type: String, required: true },
-    date: { type: Date, required: true },
-    duration: { type: Number, required: true },
+    start: { type: Date, required: true },
+    end: { type: Date, required: true },
     hours: { type: Number },
     // location: {type: String, required: true},
     // description: {type: String, required: true},

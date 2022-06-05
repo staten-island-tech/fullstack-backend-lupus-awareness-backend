@@ -20,7 +20,7 @@ const getEvents = (req, res, next) => __awaiter(void 0, void 0, void 0, function
                 $in: user.events
             }
         });
-        res.send(userEvents);
+        res.json(userEvents);
     }
     catch (error) {
         res.json(error);

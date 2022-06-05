@@ -12,12 +12,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.logout = void 0;
 const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log(req.cookies);
         const token = req.cookies['auth-token'];
-        console.log(token);
         if (!token)
-            return res.json('you are not signed in');
-        res.clearCookie('auth-token');
+            return res.status(400).json('You are not signed in');
+        res.clearCookie('auth-token').status(200).json('You have successfully logged out');
     }
     catch (error) {
         res.json(error);

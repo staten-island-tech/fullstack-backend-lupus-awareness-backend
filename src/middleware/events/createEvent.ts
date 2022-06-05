@@ -3,13 +3,15 @@ import {User, Role} from '../../models/User'
 import { Event } from '../../models/Event'
 
 export const createEvent = async(req: Request, res: Response, next: NextFunction) => {
+    console.log(req.body)
     if(req.body.payload.role === Role.Student) {return res.json('Students cannot create events')}
     try {
         const event = new Event({
             user: req.body.payload,
             name: req.body.name,
-            date: new Date(),
-            duration: req.body.duration,
+            hours: req.body.hours,
+            start: req.body.start,
+            end: req.body.end,
             location: req.body.location,
             description: req.body.description,
             media: req.body.media,
@@ -21,6 +23,6 @@ export const createEvent = async(req: Request, res: Response, next: NextFunction
         );
         res.json(event)
     } catch (error) {
-        res.json(error)
+        res.status(400).send(error)
     }
 }
