@@ -37,6 +37,14 @@ cloudinary.config({
   api_secret: process.env.API_SECRET, 
 });
 
+app.use(function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  // res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
+});
+
 app.use('/', router)
 app.listen(port, ()=> {
     console.log(`server is up on port ${port}`)
