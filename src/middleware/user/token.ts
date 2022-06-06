@@ -2,8 +2,8 @@ import jwt from 'jsonwebtoken'
 import { Request, Response, NextFunction } from 'express'
 
 export const requiresAuth = async (req: Request, res: Response, next: NextFunction) => {
-    // const token = req.cookies['auth-token']
-    const token = req.header('auth-token')
+    const token = req.cookies['auth-token']
+    // const token = req.header('auth-token')
 
     if(!token) return res.json('access denied')
     try {
