@@ -42,17 +42,19 @@ router.get('/interested', token_1.requiresAuth, getAllInterested_1.getAllInteres
 router.get('/interested/:id', token_1.requiresAuth, userInterested_1.populateUser);
 router.get('/getUserEvents/:id', getUserEvents_1.getUserEvents);
 router.get('/getUser/:id', getUser_1.getUser);
+router.get('/user/interestedEvents', token_1.requiresAuth, userInterested_1.userInterested);
 router.post('/register', validation_schema_1.userJoi, register_1.register);
 router.post('/login', login_1.login);
 router.post('/logout', logout_1.logout);
 router.post('/event', token_1.requiresAuth, createEvent_1.createEvent);
 router.post('/event/:id/createComment', token_1.requiresAuth, comments_1.createComment);
-// router.post("/event/:event_id/comment/:comment_id/replyComment", requiresAuth, reply)
+router.post("/comment/:comment_id/replyComment", token_1.requiresAuth, comments_1.reply);
 router.post('/event/:id/uploadEvent', token_1.requiresAuth, upload.array('image'), cloudinary_1.uploadEvent);
 router.post('/user/subscribe/:id', token_1.requiresAuth, userMiddleware_1.subscribe);
 router.post('/user/unsubscribe/:id', token_1.requiresAuth, userMiddleware_1.unsubscribe);
 router.post('/event/:id/showInterest', token_1.requiresAuth, userInterested_1.showInterest);
-router.patch('/user/profilePic', token_1.requiresAuth, upload.single('image'), cloudinary_1.uploadProf);
+// router.post('/comment/:id', requiresAuth, likeComment)
+router.patch('/user/profilePic', upload.single('image'), token_1.requiresAuth, cloudinary_1.uploadProf);
 router.patch('/user/:id', token_1.requiresAuth, userMiddleware_1.updateUsers);
 // router.delete('/user/:id', deleteUser)
 router.delete('/user', userMiddleware_1.deleteAllUser);

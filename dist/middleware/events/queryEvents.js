@@ -13,7 +13,8 @@ exports.queryEvents = void 0;
 const Event_1 = require("../../models/Event");
 const queryEvents = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        let events = yield Event_1.Event.find();
+        let pageNumber = req.query.page;
+        let events = yield Event_1.Event.find().skip((pageNumber - 1) * 5).limit(5);
         res.json(events);
     }
     catch (error) {

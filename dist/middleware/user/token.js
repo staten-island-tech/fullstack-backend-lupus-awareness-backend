@@ -16,11 +16,13 @@ exports.sendUser = exports.requiresAuth = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const requiresAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const token = req.cookies['auth-token'];
+    // const token = req.header('auth-token')
     if (!token)
         return res.status(400).json('You are not logged in');
     try {
         const payload = jsonwebtoken_1.default.verify(token, process.env.PRIVATEKEY);
         req.body.payload = payload;
+        //    req.payload = payload
         next();
     }
     catch (error) {

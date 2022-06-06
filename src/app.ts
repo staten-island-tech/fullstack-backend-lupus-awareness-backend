@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser())
 
 app.use(cors({ 
-  origin: 'http://localhost:8080',
+  origin: 'http://localhost:8080' || "https://altru.netlify.app/",
   credentials: true
 }))
 
