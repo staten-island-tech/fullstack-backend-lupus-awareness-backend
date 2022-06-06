@@ -10,7 +10,7 @@ export interface EventData {
     start: Date,
     end: Date,
     hours?: number,
-    // location:string,
+    location:string,
     description: string,
     media: string[],
     tags: String[]
@@ -30,7 +30,7 @@ const eventSchema = new Schema({
     start: {type: Date, required: true},
     end: {type: Date, required: true},
     hours: {type: Number},
-    // location: {type: String, required: true},
+    location: {type: String, required: true},
     description: {type: String, required: true},
     media: {type: [], required: true},
     tags: {type: [], required: true},
