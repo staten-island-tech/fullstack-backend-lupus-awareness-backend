@@ -21,7 +21,7 @@ app.use(body_parser_1.default.urlencoded({
 }));
 app.use((0, cookie_parser_1.default)());
 app.use((0, cors_1.default)({
-    origin: 'http://altru.netlify.app/',
+    origin: 'https://altru.netlify.app/',
     credentials: true
 }));
 //raw requests are now usable properties on req.body
@@ -34,13 +34,13 @@ cloudinary.config({
     api_key: process.env.API_KEY,
     api_secret: process.env.API_SECRET,
 });
-app.use(function (req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-    // res.setHeader("Access-Control-Allow-Credentials", true);
-    next();
-});
+// app.use(function (req, res, next) {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+//   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+//   // res.setHeader("Access-Control-Allow-Credentials", true);
+//   next();
+// });
 app.use('/', index_1.router);
 app.listen(port, () => {
     console.log(`server is up on port ${port}`);
