@@ -11,8 +11,8 @@ const cloudinary = require("cloudinary").v2
   //Upload profile image
   export const uploadProf = async(req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json(req.payload._id)
-      let user = await User.findOne({ _id: req.payload._id });
+      res.json(req.body.payload._id)
+      let user = await User.findOne({ _id: req.body.payload._id });
       console.log(user!._id)
       const imageFile = req.file?.path
       console.log(imageFile)
@@ -24,7 +24,7 @@ const cloudinary = require("cloudinary").v2
             const image = result.url
             console.log(image)
             await User.updateOne(
-              {'_id': req.payload._id},
+              {'_id': req.body.payload._id},
               { $set: { avatar: image }}
           )
             res.json(user)

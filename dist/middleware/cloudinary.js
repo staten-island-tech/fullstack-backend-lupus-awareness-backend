@@ -23,8 +23,8 @@ const cloudinary = require("cloudinary").v2;
 const uploadProf = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
-        res.json(req.payload._id);
-        let user = yield User_1.User.findOne({ _id: req.payload._id });
+        res.json(req.body.payload._id);
+        let user = yield User_1.User.findOne({ _id: req.body.payload._id });
         console.log(user._id);
         const imageFile = (_a = req.file) === null || _a === void 0 ? void 0 : _a.path;
         console.log(imageFile);
@@ -34,7 +34,7 @@ const uploadProf = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
             .then((result) => __awaiter(void 0, void 0, void 0, function* () {
             const image = result.url;
             console.log(image);
-            yield User_1.User.updateOne({ '_id': req.payload._id }, { $set: { avatar: image } });
+            yield User_1.User.updateOne({ '_id': req.body.payload._id }, { $set: { avatar: image } });
             res.json(user);
         }));
     }

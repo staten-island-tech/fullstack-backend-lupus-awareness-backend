@@ -49,7 +49,7 @@ router.post('/user/subscribe/:id', token_1.requiresAuth, userMiddleware_1.subscr
 router.post('/user/unsubscribe/:id', token_1.requiresAuth, userMiddleware_1.unsubscribe);
 router.post('/event/:id/showInterest', token_1.requiresAuth, userInterested_1.showInterest);
 // router.post('/comment/:id', requiresAuth, likeComment)
-router.patch('/user/profilePic', token_1.requiresAuth, upload.single('image'), cloudinary_1.uploadProf);
+router.patch('/user/profilePic', upload.single('image'), token_1.requiresAuth, cloudinary_1.uploadProf);
 router.patch('/user/:id', token_1.requiresAuth, userMiddleware_1.updateUsers);
 router.delete('/user/:id', userMiddleware_1.deleteUser);
 router.delete('/user', userMiddleware_1.deleteAllUser);
