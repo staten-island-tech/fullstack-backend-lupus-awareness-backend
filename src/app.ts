@@ -11,7 +11,7 @@ dotenv.config()
 const cloudinary = require("cloudinary").v2
 
 const app = express();
-const port = process.env.PORT || 3000
+const port = process.env.PORT
 
 // Enable the use of request body parsing middleware
 app.use(bodyParser.json());
@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser())
 
 app.use(cors({ 
-  origin: 'https://altru.netlify.app/',
+  origin: 'https://altru.netlify.app',
   credentials: true
 }))
 
