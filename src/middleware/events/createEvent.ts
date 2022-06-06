@@ -4,6 +4,7 @@ import { Event } from '../../models/Event'
 
 export const createEvent = async(req: Request, res: Response, next: NextFunction) => {
     if(req.body.payload.role === Role.Student) {return res.status(400).json('Students cannot create events')}
+    console.log(req.body)
     try {
         const event = new Event({
             user: req.body.payload,

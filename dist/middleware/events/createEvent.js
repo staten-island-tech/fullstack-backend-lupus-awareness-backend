@@ -16,6 +16,7 @@ const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     if (req.body.payload.role === User_1.Role.Student) {
         return res.status(400).json('Students cannot create events');
     }
+    console.log(req.body);
     try {
         const event = new Event_1.Event({
             user: req.body.payload,
