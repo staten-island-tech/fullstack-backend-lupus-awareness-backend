@@ -12,6 +12,8 @@ import { sendUser } from '../middleware/user/token'
 import { uploadProf, uploadEvent } from '../middleware/cloudinary'
 import { showInterest, allInterested, populateUser } from '../middleware/events/userInterested'
 import { searchUser } from '../middleware/user/searchUser'
+import { getAllInterested } from '../middleware/user/getAllInterested'
+import { getUser } from '../middleware/user/getUser'
 
 //event middleware
 import {queryEvents} from '../middleware/events/queryEvents'
@@ -20,6 +22,7 @@ import { createComment, allComments, deleteComment, findComment, populateComment
 import { createEvent } from '../middleware/events/createEvent'
 import {getEvents} from '../middleware/events/getEvents'
 import {userJoi} from '../middleware/validation_schema'
+import { getUserEvents } from '../middleware/events/getUserEvents'
 
 const router = express.Router()
 
@@ -32,8 +35,10 @@ router.get("/comment/:id", findComment)
 router.get('/getEvents', requiresAuth, getEvents)
 router.get('/comments', allComments)
 router.get('/comments/:id', requiresAuth, populateComments)
-router.get('/interested', allInterested)
+router.get('/interested', requiresAuth, getAllInterested)
 router.get('/interested/:id', requiresAuth, populateUser)
+router.get('/getUserEvents/:id', getUserEvents)
+router.get('/getUser/:id', getUser)
 
 router.post('/register', userJoi, register)
 router.post('/login', login)
@@ -50,7 +55,7 @@ router.patch('/user/profilePic',  requiresAuth , upload.single('image'),uploadPr
 router.patch('/user/:id', requiresAuth, updateUsers)
 
 
-router.delete('/user/:id', deleteUser)
+// router.delete('/user/:id', deleteUser)
 router.delete('/user', deleteAllUser)
 router.delete('/event', deleteAllEvent)
 router.delete('/event/:id', requiresAuth, deleteEvent)

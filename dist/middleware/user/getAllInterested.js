@@ -9,16 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUser = void 0;
-const User_1 = require("../../models/User");
-const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.getAllInterested = void 0;
+const Interested_1 = require("../../models/Interested");
+const getAllInterested = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const userID = req.params.id;
-        let user = yield User_1.User.findById(userID);
-        return res.json(user);
+        let events = yield Interested_1.Interested.find(userID, req.body.payload._id);
+        res.json(events);
     }
     catch (error) {
         res.status(400).json(error);
     }
 });
-exports.getUser = getUser;
+exports.getAllInterested = getAllInterested;

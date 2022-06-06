@@ -26,7 +26,7 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const user = new User_1.User(req.body);
         user.password = yield bcryptjs_1.default.hash(req.body.password, 10);
         yield user.save();
-        res.json(user);
+        res.status(200).json(`Welcome, ${user.firstName}`);
     }
     catch (error) {
         console.log(error);

@@ -26,7 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Interested = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const interestedSchema = new mongoose_1.Schema({
-    user: { type: Object, trim: true, required: true },
+    userID: { type: mongoose_1.default.Schema.Types.ObjectId, trim: true, required: true },
     date: { type: Date, trim: true, required: true },
     event: { type: mongoose_1.default.Schema.Types.ObjectId, required: true, ref: "Event" }
 });

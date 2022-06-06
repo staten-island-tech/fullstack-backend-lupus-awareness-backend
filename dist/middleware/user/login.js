@@ -37,6 +37,9 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             avatar: existingUser.avatar
         };
         const userToken = jsonwebtoken_1.default.sign(payload, process.env.PRIVATEKEY);
+        if (req.cookies['auth-token']) {
+            res.clearCookie('auth-token');
+        }
         res.cookie('auth-token', userToken, {
             expires: new Date(new Date().getTime() + 60 * 60 * 24 * 7 * 1000),
             secure: true,
