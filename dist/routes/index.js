@@ -46,7 +46,7 @@ router.get('/user/interestedEvents', token_1.requiresAuth, userInterested_1.user
 router.post('/register', validation_schema_1.userJoi, register_1.register);
 router.post('/login', login_1.login);
 router.post('/logout', logout_1.logout);
-router.post('/event', token_1.requiresAuth, createEvent_1.createEvent);
+router.post('/event', upload.single('image'), token_1.requiresAuth, createEvent_1.createEvent);
 router.post('/event/:id/createComment', token_1.requiresAuth, comments_1.createComment);
 router.post("/comment/:comment_id/replyComment", token_1.requiresAuth, comments_1.reply);
 router.post('/event/:id/uploadEvent', token_1.requiresAuth, upload.array('image'), cloudinary_1.uploadEvent);

@@ -13,7 +13,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const cloudinary = require("cloudinary").v2;
 const app = (0, express_1.default)();
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 // Enable the use of request body parsing middleware
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({
@@ -21,7 +21,7 @@ app.use(body_parser_1.default.urlencoded({
 }));
 app.use((0, cookie_parser_1.default)());
 app.use((0, cors_1.default)({
-    origin: 'https://altru.netlify.app',
+    origin: 'http://localhost:8080',
     credentials: true
 }));
 //raw requests are now usable properties on req.body

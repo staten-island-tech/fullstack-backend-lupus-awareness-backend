@@ -12,7 +12,7 @@ export interface EventData {
     hours?: number,
     location:string,
     description: string,
-    media: string[],
+    media: [],
     tags: String[]
     numberInterested: number,
     numberComments: number,
