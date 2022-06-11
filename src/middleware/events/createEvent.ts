@@ -13,7 +13,34 @@ export const createEvent = async (
   // if(req.body.payload.role === Role.Student) {return res.status(400).json('Students cannot create events')}
   // console.log(req.files)
   try {
-    const media = []
+    // const media = req.files!.map(image =>{
+    //   return image!.path
+    // })
+    // res.json(media)
+
+    // const images = req.files!.map((image: any) => {
+    //   return new Promise((resolve, reject) =>{
+    //     resolve(
+    //             cloudinary.uploader
+    //     .upload(
+    //       image!.path,
+    //       {
+    //         folder: "Fullstack/Event",
+    //       },
+    //       function (error: TypeError, result: any) {
+    //         media.push(result.url)
+    //       }
+    //     )
+    //     )
+    //   }) 
+    // })
+
+    // Promise.all(images)
+    // .then(results => callbackify(results))
+    // .catch(error => callbackify(error));
+    
+    
+
 
     const event = new Event({
         user: req.body.payload,
@@ -23,16 +50,18 @@ export const createEvent = async (
         end: req.body.end,
         location: req.body.location,
         description: req.body.description,
-        media: media,
-        // tags: req.body.tags
+        // media: media,
+        tags: req.body.tags
         });
-    // await event.save();
-    // await User.findOneAndUpdate({ _id: req.body.payload._id },
-    // {$push: {events: event._id}}
-    // );
-    // res.json(event)
+    await event.save();
+    await User.findOneAndUpdate({ _id: req.body.payload._id },
+    {$push: {events: event._id}}
+    );
+    res.json(event)
 
-    const imageFile = req.file!.path;
+
+
+    // const imageFile = req.file!.path;
 // res.json(imageFile)
     // const media = [];
     // const image = imageFiles?.map(image => {
@@ -41,23 +70,23 @@ export const createEvent = async (
 
     // res.json(image)
 
-    cloudinary.uploader
-        .upload(
-          imageFile,
-          {
-            folder: "Fullstack/Event",
-          },
-          function (error: TypeError, result: any) {
-            console.log(result, error)
-          }
-        ).then(async(result :any) => {
-          return new Promise((resolve, reject) => {
-            resolve(media.push(result.url))
-          })
-          // Promise.all(media).then(results => callback(results))
-        })
+    // cloudinary.uploader
+    //     .upload(
+    //       imageFile,
+    //       {
+    //         folder: "Fullstack/Event",
+    //       },
+    //       function (error: TypeError, result: any) {
+    //         console.log(result, error)
+    //       }
+    //     ).then(async(result :any) => {
+    //       return new Promise((resolve, reject) => {
+    //         resolve(media.push(result.url))
+    //       })
+    //       // Promise.all(media).then(results => callback(results))
+    //     })
 
-        res.json(media)
+    //     res.json(media)
 
     // imageFiles?.forEach((el: any) => {
     //   console.log(el.path);
