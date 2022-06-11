@@ -49,7 +49,7 @@ const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
             location: req.body.location,
             description: req.body.description,
             // media: media,
-            tags: req.body.tags
+            // tags: req.body.tags
         });
         yield event.save();
         yield User_1.User.findOneAndUpdate({ _id: req.body.payload._id }, { $push: { events: event._id } });

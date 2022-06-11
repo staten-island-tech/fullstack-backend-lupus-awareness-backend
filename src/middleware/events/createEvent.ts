@@ -51,7 +51,7 @@ export const createEvent = async (
         location: req.body.location,
         description: req.body.description,
         // media: media,
-        tags: req.body.tags
+        // tags: req.body.tags
         });
     await event.save();
     await User.findOneAndUpdate({ _id: req.body.payload._id },
