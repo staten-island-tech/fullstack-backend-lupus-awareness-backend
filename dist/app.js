@@ -13,7 +13,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const cloudinary = require("cloudinary").v2;
 const app = (0, express_1.default)();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 // Enable the use of request body parsing middleware
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({
