@@ -17,6 +17,26 @@ const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     // if(req.body.payload.role === Role.Student) {return res.status(400).json('Students cannot create events')}
     // console.log(req.files)
     try {
+        const image = req.file.path;
+        cloudinary.uploader.upload(image, {
+            folder: "Fullstack/Event"
+        }, function (error, result) { console.log(result, error); })
+            .then((result) => __awaiter(void 0, void 0, void 0, function* () {
+            const event = new Event_1.Event({
+                user: req.body.payload,
+                name: req.body.name,
+                hours: req.body.hours,
+                start: req.body.start,
+                end: req.body.end,
+                location: req.body.location,
+                description: req.body.description,
+                media: result.url,
+                // tags: req.body.tags
+            });
+            yield event.save();
+            yield User_1.User.findOneAndUpdate({ _id: req.body.payload._id }, { $push: { events: event._id } });
+            res.json(event);
+        }));
         // const media = req.files!.map(image =>{
         //   return image!.path
         // })
@@ -40,20 +60,22 @@ const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         // Promise.all(images)
         // .then(results => callbackify(results))
         // .catch(error => callbackify(error));
-        const event = new Event_1.Event({
-            user: req.body.payload,
-            name: req.body.name,
-            hours: req.body.hours,
-            start: req.body.start,
-            end: req.body.end,
-            location: req.body.location,
-            description: req.body.description,
-            // media: media,
-            // tags: req.body.tags
-        });
-        yield event.save();
-        yield User_1.User.findOneAndUpdate({ _id: req.body.payload._id }, { $push: { events: event._id } });
-        res.json(event);
+        // const event = new Event({
+        //     user: req.body.payload,
+        //     name: req.body.name,
+        //     hours: req.body.hours,
+        //     start: req.body.start,
+        //     end: req.body.end,
+        //     location: req.body.location,
+        //     description: req.body.description,
+        //     // media: media,
+        //     // tags: req.body.tags
+        //     });
+        // await event.save();
+        // await User.findOneAndUpdate({ _id: req.body.payload._id },
+        // {$push: {events: event._id}}
+        // );
+        // res.json(event)
         // const imageFile = req.file!.path;
         // res.json(imageFile)
         // const media = [];
