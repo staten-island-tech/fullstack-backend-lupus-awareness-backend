@@ -25,7 +25,7 @@ export const login = async (req: Request, res: Response) => {
         if(req.cookies['auth-token']) {res.clearCookie('auth-token')}
         res.cookie('auth-token', userToken, {
             expires: new Date(new Date().getTime() + 60 * 60 * 24 * 7 * 1000),
-            secure: true,
+            secure: false,
             sameSite: 'none',
             httpOnly: true
         }).json('Successfully logged in.')

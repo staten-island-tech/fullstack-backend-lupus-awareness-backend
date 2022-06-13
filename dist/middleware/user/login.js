@@ -42,7 +42,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         res.cookie('auth-token', userToken, {
             expires: new Date(new Date().getTime() + 60 * 60 * 24 * 7 * 1000),
-            secure: true,
+            secure: false,
             sameSite: 'none',
             httpOnly: true
         }).json('Successfully logged in.');
