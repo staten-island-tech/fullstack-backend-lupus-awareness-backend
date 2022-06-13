@@ -13,47 +13,47 @@ export const createEvent = async (
   // if(req.body.payload.role === Role.Student) {return res.status(400).json('Students cannot create events')}
   // console.log(req.files)
   try {
-    // const image = req.file!.path
+    const image = req.file!.path
+    console.log(image)
+    cloudinary.uploader.upload(image,{
+      folder:"Fullstack/Event"
+    }, function(error: TypeError, result: any) {console.log(result, error)})
+    .then(async (result: any) => {
+        const event = new Event({
+        user: req.body.payload,
+        name: req.body.name,
+        hours: req.body.hours,
+        start: req.body.start,
+        end: req.body.end,
+        location: req.body.location,
+        description: req.body.description,
+        media: result.url,
+        // tags: req.body.tags
+        });
+    await event.save();
+    await User.findOneAndUpdate({ _id: req.body.payload._id },
+    {$push: {events: event._id}}
+    );
+    res.json(event)
 
-    // cloudinary.uploader.upload(image,{
-    //   folder:"Fullstack/Event"
-    // }, function(error: TypeError, result: any) {console.log(result, error)})
-    // .then(async (result: any) => {
-    //     const event = new Event({
-    //     user: req.body.payload,
-    //     name: req.body.name,
-    //     hours: req.body.hours,
-    //     start: req.body.start,
-    //     end: req.body.end,
-    //     location: req.body.location,
-    //     description: req.body.description,
-    //     media: result.url,
-    //     // tags: req.body.tags
-    //     });
-    // await event.save();
-    // await User.findOneAndUpdate({ _id: req.body.payload._id },
-    // {$push: {events: event._id}}
-    // );
-    // res.json(event)
 
-
-    // })
-    const event = new Event({
-          user: req.body.payload,
-          name: req.body.name,
-          hours: req.body.hours,
-          start: req.body.start,
-          end: req.body.end,
-          location: req.body.location,
-          description: req.body.description,
-          media: req.body.media,
-          // tags: req.body.tags
-          });
-      await event.save();
-      await User.findOneAndUpdate({ _id: req.body.payload._id },
-      {$push: {events: event._id}}
-      );
-      res.json(event)
+    })
+    // const event = new Event({
+    //       user: req.body.payload,
+    //       name: req.body.name,
+    //       hours: req.body.hours,
+    //       start: req.body.start,
+    //       end: req.body.end,
+    //       location: req.body.location,
+    //       description: req.body.description,
+    //       media: req.body.media,
+    //       // tags: req.body.tags
+    //       });
+    //   await event.save();
+    //   await User.findOneAndUpdate({ _id: req.body.payload._id },
+    //   {$push: {events: event._id}}
+    //   );
+    //   res.json(event)
     
     // const media = req.files!.map(image =>{
     //   return image!.path
