@@ -1,48 +1,56 @@
 import mongoose, { Schema, model, connect } from 'mongoose'
 import {UserAttributes, UserInterface, userSchema} from './User'
+import { CommentInterface } from './Comment'
 import jwt from 'jsonwebtoken'
 const privateKey = process.env.PRIVATEKEY
 
-interface UserCommentInterface {
-    user?: UserAttributes,
-    date?: Date,
-    content: string,
-    likes?: UserAttributes[]
-    replies?: UserCommentInterface[]
-}
-const commentSchema = new Schema({
-    user: {type: {}, required: false},
-    date: {type: Date, required: false},
-    content: {type: String, required: true},
-    likes: {type: Number, required:false},
-    replies: {type: String, required: false},
-})
-
-interface eventInterface {
+export interface EventData {
     user: UserAttributes,
-    date: Date,
+    name: String,
+    start: Date,
+    end: Date,
     hours?: number,
-    location: string,
+    location:string,
     description: string,
-    media: string[],
-    interestedUsers: UserAttributes[],
-    comments: UserCommentInterface[],
+    media: [],
+    tags: String[]
+    numberInterested: number,
+    numberComments: number,
     slug?: string
 }
 
+interface eventInterface extends EventData {
+    interestedUsers: UserAttributes[],
+    comments: CommentInterface[],
+}
+
 const eventSchema = new Schema({
-    user: {type: {}, required: true},
-    date: {type: Date, required: true},
+    user: {type: {}, required: false},
+    name: {type: String, required: true},
+    start: {type: Date, required: true},
+    end: {type: Date, required: true},
     hours: {type: Number},
     location: {type: String, required: true},
     description: {type: String, required: true},
     media: {type: [], required: true},
-    interestedUsers: {type: [], default: [], required: true},
-    comments: {type: [], default: [], required: true},
+    tags: {type: [], required: true},
+    numberInterested: {type: Number, default: 0, required: true},
+    numberComments: {type: Number, default: 0, required: true},
     slug: String
 })
 
-const Comment = mongoose.model<UserCommentInterface>('Comment', commentSchema)
 const Event = mongoose.model<eventInterface>('Event', eventSchema)
 
-export {Event, Comment}
+eventSchema.virtual("comments", {
+    ref: "Comment",
+    localField: "_id",
+    foreignField: "event"
+  });
+
+eventSchema.virtual("interested", {
+  ref: "Interested",
+  localField: "_id",
+  foreignField: "event"
+});
+
+export {Event}

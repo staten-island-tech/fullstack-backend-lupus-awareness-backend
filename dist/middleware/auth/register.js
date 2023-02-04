@@ -12,21 +12,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userJoi = void 0;
-const joi_1 = __importDefault(require("joi"));
-const userJoi = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const joiSchema = joi_1.default.object({
-        firstName: joi_1.default.string().required(),
-        lastName: joi_1.default.string().required(),
-        email: joi_1.default.string().required().email(),
-        password: joi_1.default.string().min(6).required()
-    });
+exports.register = void 0;
+const User_1 = require("../../models/User");
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield joiSchema.validateAsync(req.body);
-        next();
+        //find an existing user
+        let doesExist = yield User_1.User.findOne({ email: req.body.email });
+        if (doesExist)
+            return res.status(400).send("User already registered.");
+        const user = new User_1.User(req.body);
+        user.password = yield bcryptjs_1.default.hash(req.body.password, 10);
+        yield user.save();
+        res.json(user);
     }
     catch (error) {
-        res.status(400).json(error);
+        console.log(error);
     }
 });
-exports.userJoi = userJoi;
+exports.register = register;

@@ -8,25 +8,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userJoi = void 0;
-const joi_1 = __importDefault(require("joi"));
-const userJoi = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const joiSchema = joi_1.default.object({
-        firstName: joi_1.default.string().required(),
-        lastName: joi_1.default.string().required(),
-        email: joi_1.default.string().required().email(),
-        password: joi_1.default.string().min(6).required()
-    });
+exports.getOthersEvents = void 0;
+const User_1 = require("../../models/User");
+const Event_1 = require("../../models/Event");
+const getOthersEvents = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const params = req.params.query;
     try {
-        yield joiSchema.validateAsync(req.body);
-        next();
+        const user = yield User_1.User.findById(params);
+        const userEvents = yield Event_1.Event.find({
+            '_id': {
+                $in: user.events
+            }
+        });
+        res.json(userEvents);
     }
     catch (error) {
         res.status(400).json(error);
     }
 });
-exports.userJoi = userJoi;
+exports.getOthersEvents = getOthersEvents;

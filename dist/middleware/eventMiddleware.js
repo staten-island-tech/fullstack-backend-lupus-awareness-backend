@@ -9,51 +9,80 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createComment = exports.getEvents = exports.createEvent = void 0;
+exports.deleteAllEvent = exports.updateEvents = exports.deleteEvent = exports.event = exports.allEvents = void 0;
+const User_1 = require("../models/User");
 const Event_1 = require("../models/Event");
-const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const allEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const event = new Event_1.Event({
-            user: req.body.payload,
-            date: new Date(),
-            location: req.body.location,
-            description: req.body.description,
-            media: req.body.media
-        });
-        console.log(event);
-        yield event.save();
+        let events = yield Event_1.Event.find();
+        // events.forEach((el) => {
+        //     let event: EventData = {
+        //       user: el!.user,
+        //       date: el!.date,
+        //       hours: el!.hours,
+        //       location: el!.location,
+        //       description: el!.description,
+        //       media: el!.media,
+        //       numberInterested: el!.numberInterested,
+        //       numberComments: el!.numberComments,
+        //       slug: el!.slug
+        //     } 
+        //     console.log(event)
+        //   //   res.json(event)
+        // })
+        res.json(events);
+    }
+    catch (error) {
+        res.status(400).json(error);
+    }
+});
+exports.allEvents = allEvents;
+const event = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const event = yield Event_1.Event.findOne({ _id: req.params.id });
+        if (!event) {
+            res.json("This event doesn't exist");
+        }
         res.json(event);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
-exports.createEvent = createEvent;
-const getEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.event = event;
+const deleteEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const Events = yield Event_1.Event.find();
-        res.json(Events);
+        const event = yield User_1.User.findByIdAndDelete(req.params.id);
+        if (!event) {
+            res.status(404).send();
+        }
+        res.json(`${event.firstName} ${event.lastName} was deleted from DB`);
     }
     catch (error) {
-        res.json(error);
+        console.log(error);
     }
 });
-exports.getEvents = getEvents;
-const createComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.deleteEvent = deleteEvent;
+const updateEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const event = yield Event_1.Event.findOne({ _id: req.params.id });
-        // res.json(event)
-        const comment = new Event_1.Comment({
-            content: req.body.content
-        });
-        res.json(comment);
-        let commentInfo = yield comment.save();
-        console.log(commentInfo);
-        yield Event_1.Event.updateOne({ _id: req.params.id }, { $push: { comments: commentInfo } });
-        console.log(event);
+        const event = yield Event_1.Event.findById(req.params.id);
+        const updates = Object.keys(req.body);
+        updates.forEach((e) => (event[e] = req.body[e]));
+        yield event.save();
+        res.json(updates);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
-exports.createComment = createComment;
+exports.updateEvents = updateEvents;
+const deleteAllEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const event = yield Event_1.Event.deleteMany({ role: 'viewer' });
+        res.json(`${event} deleted`);
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+exports.deleteAllEvent = deleteAllEvent;

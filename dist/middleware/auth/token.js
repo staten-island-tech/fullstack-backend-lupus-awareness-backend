@@ -12,21 +12,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userJoi = void 0;
-const joi_1 = __importDefault(require("joi"));
-const userJoi = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const joiSchema = joi_1.default.object({
-        firstName: joi_1.default.string().required(),
-        lastName: joi_1.default.string().required(),
-        email: joi_1.default.string().required().email(),
-        password: joi_1.default.string().min(6).required()
-    });
+exports.requiresAuth = void 0;
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const requiresAuth = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const token = req.header('auth-token');
+    if (!token)
+        return res.json('access denied');
     try {
-        yield joiSchema.validateAsync(req.body);
+        const payload = jsonwebtoken_1.default.verify(token, process.env.PRIVATEKEY);
+        req.body.payload = payload;
+        console.log(payload);
         next();
     }
     catch (error) {
         res.status(400).json(error);
     }
 });
-exports.userJoi = userJoi;
+exports.requiresAuth = requiresAuth;

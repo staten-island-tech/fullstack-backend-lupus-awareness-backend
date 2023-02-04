@@ -12,10 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteAllUser = exports.getProfile = exports.deleteUser = exports.updateUsers = exports.login = exports.createUser = exports.getUsers = void 0;
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+exports.unsubscribe = exports.subscribe = exports.deleteAllUser = exports.getProfile = exports.deleteUser = exports.updateUsers = exports.getUsers = void 0;
 const User_1 = require("../models/User");
-const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -24,58 +22,10 @@ const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.json(Users);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 exports.getUsers = getUsers;
-const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        //find an existing user
-        let doesExist = yield User_1.User.findOne({ email: req.body.email });
-        if (doesExist)
-            return res.status(400).send("User already registered.");
-        const user = new User_1.User(req.body);
-        user.password = yield bcryptjs_1.default.hash(req.body.password, 10);
-        yield user.save();
-        res.json(user);
-    }
-    catch (error) {
-        console.log(error);
-    }
-});
-exports.createUser = createUser;
-const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { email, password } = req.body;
-        const existingUser = yield User_1.User.findOne({ email });
-        if (!existingUser) {
-            res.json('email not registered');
-        }
-        console.log(existingUser);
-        const validPassword = bcryptjs_1.default.compareSync(password, existingUser.password);
-        console.log(validPassword);
-        if (!validPassword) {
-            res.json('not valid');
-            return;
-        }
-        console.log('valid');
-        const payload = {
-            firstName: existingUser.firstName,
-            lastName: existingUser.lastName,
-            role: existingUser.role,
-            subscribers: existingUser.subscribers,
-            interestedEvents: existingUser.interestedEvents,
-            events: existingUser.events,
-            avatar: existingUser.avatar
-        };
-        const userToken = jsonwebtoken_1.default.sign(payload, `${process.env.PRIVATEKEY}`);
-        res.header('auth-token', userToken).send(userToken);
-    }
-    catch (error) {
-        res.json(error);
-    }
-});
-exports.login = login;
 const updateUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield User_1.User.findById(req.params.id);
@@ -85,7 +35,7 @@ const updateUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.json(updates);
     }
     catch (error) {
-        res.json(error);
+        res.status(400).json(error);
     }
 });
 exports.updateUsers = updateUsers;
@@ -105,8 +55,10 @@ exports.deleteUser = deleteUser;
 const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         let user = yield User_1.User.findOne({ _id: req.body.payload._id });
+        // res.json(user)
+        console.log(req.body.payload);
         res.json(user);
-        console.log(req.body.payload.email);
+        // console.log(req.body.payload.email)
     }
     catch (error) {
         console.log(error);
@@ -123,3 +75,39 @@ const deleteAllUser = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.deleteAllUser = deleteAllUser;
+const subscribe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        let me = yield User_1.User.findOne({ _id: req.body.payload._id });
+        let user = yield User_1.User.findOne({ _id: req.params.id });
+        me.subscribed.push(user._id);
+        user.subscribers.push(me._id);
+        me.save();
+        user.save();
+        // res.json(me!.subscribed)
+        res.json(me);
+        console.log(user);
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+exports.subscribe = subscribe;
+const unsubscribe = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        let me = yield User_1.User.findOne({ _id: req.body.payload._id });
+        let user = yield User_1.User.findOne({ _id: req.params.id });
+        if (user.subscribers.includes(req.body.payload._id)) {
+            yield User_1.User.findOneAndUpdate({ _id: req.body.payload._id }, { $pull: { subscribed: user._id } });
+            yield User_1.User.findOneAndUpdate({ _id: req.params.id }, { $pull: { subscribers: me._id } });
+        }
+        // me!.save()
+        // user!.save()
+        // res.json(me!.subscribed)
+        res.json(me);
+        console.log(user);
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
+exports.unsubscribe = unsubscribe;

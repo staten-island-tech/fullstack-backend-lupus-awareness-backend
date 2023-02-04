@@ -1,27 +1,31 @@
 import mongoose, { Schema, model, connect } from 'mongoose'
-import { Event } from './Event'
 import jwt from 'jsonwebtoken'
 const privateKey = process.env.PRIVATEKEY
 
-// enum Role {
-//     Viewer = 'viewer',
-//     Uploader = 'uploader',
-//     Admin = 'admin'
-// }
-export interface UserAttributes {
+export enum Role {
+    Student = 'Student',
+    Organization = 'Organization',
+    Admin = 'Admin'
+}
+export interface UserData {
     firstName: string,
     lastName: string,
-        // role: Role,
-    role: String,
-    subscribers: UserInterface[],
-    interestedEvents: Event[]
-    events: Event[],
+    role: Role,
     avatar: string,
     slug?: string
 }
-export interface UserInterface extends UserAttributes {
+
+export interface UserAttributes extends UserData{
+    _id: mongoose.Types.ObjectId
+}
+
+export interface UserInterface extends UserData {
     email: string,
-    password: string
+    password: string,
+    subscribers: mongoose.Types.ObjectId[],
+    subscribed: mongoose.Types.ObjectId[],
+    interestedEvents: mongoose.Types.ObjectId[]
+    events: mongoose.Types.ObjectId[],
 }
 
 const userSchema = new Schema({
@@ -30,13 +34,15 @@ const userSchema = new Schema({
     email: { type: String, required: true},
     password: { type: String, required: true},
     // role: {type: Role, default: Role.Viewer, required: true},
-    role: {type: String, default: 'viewer'},
+    role: {type: String, default: Role.Student, required: true},
     subscribers: {type:[], default: [], required: true},
+    subscribed: {type:[], default: [], required: true},
     interestedEvents: {type:[], default: [], required: true},
     events: {type:[], default: [], required: true},
-    avatar: {type: String, default: null},
+    avatar: {type: String, default: 'https://res.cloudinary.com/lupusawareness/image/upload/v1650405593/wugaaghxaiqoiidbitdi.jpg'},
     slug: String
 })
+
 
 const User = mongoose.model<UserInterface>('User', userSchema)
 

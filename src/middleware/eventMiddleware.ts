@@ -1,55 +1,81 @@
 import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
 import { User, UserAttributes } from '../models/User'
-import { Event, Comment } from '../models/Event'
+import { Event } from '../models/Event'
 import bcrypt from 'bcryptjs'
+import crypto from 'crypto'
+import { userJoi } from './validation_schema'
 
-export const createEvent = async(req: Request, res: Response, next: NextFunction) => {
+export const allEvents = async (req: Request, res: Response) => {
     try {
-        const event = new Event({
-            user: req.body.payload,
-            date: new Date(),
-            location: req.body.location,
-            description: req.body.description,
-            media: req.body.media
-            });
-        console.log(event)
-        await event.save();
-        res.json(event)
+        let events = await Event.find()
+        // events.forEach((el) => {
+        //     let event: EventData = {
+        //       user: el!.user,
+        //       date: el!.date,
+        //       hours: el!.hours,
+        //       location: el!.location,
+        //       description: el!.description,
+        //       media: el!.media,
+        //       numberInterested: el!.numberInterested,
+        //       numberComments: el!.numberComments,
+        //       slug: el!.slug
+        //     } 
+        //     console.log(event)
+        //   //   res.json(event)
+        // })
+        res.json(events)
     } catch (error) {
-        res.json(error)
+        res.status(400).json(error)
     }
 }
 
-export const getEvents = async (req: Request, res: Response) => {
-    try {
-        const Events = await Event.find()
-        res.json(Events)
-    } catch (error) {
-        res.json(error)
-    }
-}
-
-
-export const createComment = async (req: Request, res: Response) => {
+export const event = async (req: Request, res: Response) => {
     try {
         const event = await Event.findOne({ _id: req.params.id })
-        // res.json(event)
-        const comment = new Comment({
-            content: req.body.content
-        })
-        res.json(comment)
-        let commentInfo = await comment.save()
-        console.log(commentInfo)
-        await Event.updateOne(
-            {_id: req.params.id},
-            { $push: { comments: commentInfo }}
-        )
-        console.log(event)
+
+        if(!event){
+            res.json("This event doesn't exist")
+        }
+
+        res.json(event)
     } catch (error) {
-        res.json(error)
+        res.status(400).json(error)
     }
 }
 
 
+export const deleteEvent = async (req: Request, res: Response) => {
+    try {
+   
+        const event = await User.findByIdAndDelete(req.params.id)
+        if(!event){
+            res.status(404).send()
+        }
+        res.json(`${event!.firstName} ${event!.lastName} was deleted from DB`)
+    } catch (error) {
+        console.log(error)
+    }
+}
 
+export const updateEvents = async (req: Request, res: Response) => {
+    try {
+        const event : any = await Event.findById(req.params.id)
+        const updates: string[] = Object.keys(req.body)
+        updates.forEach((e: string) => ( event![e] = req.body[e]))
+        await event.save()
+        res.json(updates)
+    } catch (error) {
+        res.status(400).json(error)
+    }
+}
+
+export const deleteAllEvent = async (req: Request, res: Response) => {
+    try {
+   
+        const event = await Event.deleteMany({role: 'viewer'})
+        res.json(`${event} deleted`)
+    } catch (error) {
+        console.log(error)
+    }
+}
